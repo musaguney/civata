@@ -1,6 +1,6 @@
 // Settings
 const SETTINGS = {
-  appName: 'Cartzilla',
+  appName: 'Kilic Civata',
   // To clear cache on devices, always change SETTINGS.appVersion number after making changes.
   // The app will serve fresh content right away or after 2-3 refreshes (open / close)
   appVersion: '3.1.1',
@@ -12,7 +12,7 @@ const SETTINGS = {
     // HTML files
     // 'offline.html',
     // Manifest
-     'manifest.json',
+     'assets/manifest.json',
     // App icons
      'assets/app-icons/icon-32x32.png',
      'assets/app-icons/icon-180x180.png',

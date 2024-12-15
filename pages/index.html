@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="tr" data-bs-theme="light" data-pwa="true">
 
@@ -15,31 +16,34 @@
   <meta name="keywords"
     content="online shop, e-commerce, online store, market, multipurpose, product landing, cart, checkout, ui kit, light and dark mode, bootstrap, html5, css3, javascript, gallery, slider, mobile, pwa">
   <meta name="author" content="Mustafa Kılıç">
+  <meta name="csrf-token" content="{{ csrf_token }}">
 
   <!-- Webmanifest + Favicon / App icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <link rel="manifest" href="../manifest.json">
-  <link rel="icon" type="image/png" href="../assets/app-icons/icon-32x32.png" sizes="32x32">
-  <link rel="apple-touch-icon" href="../assets/app-icons/icon-180x180.png">
+  <link rel="manifest" href="{% static 'manifest.json' %}">
+  <link rel="icon" type="image/png" href="{% static 'app-icons/icon-32x32.png' %}" sizes="32x32">
+  <link rel="apple-touch-icon" href="{% static 'app-icons/icon-180x180.png' %}">
+  
 
   <!-- Theme switcher (color modes) -->
-  <script src="../assets/js/theme-switcher.js"></script>
+  <script src="{% static 'js/theme-switcher.js' %}"></script>
 
   <!-- Preloaded local web font (Inter) -->
-  <link rel="preload" href="../assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{% static 'fonts/inter-variable-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
 
   <!-- Font icons -->
-  <link rel="preload" href="../assets/icons/cartzilla-icons.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../assets/icons/cartzilla-icons.min.css">
+  <link rel="preload" href="{% static 'icons/cartzilla-icons.woff2' %}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{% static 'icons/cartzilla-icons.min.css' %}">
 
   <!-- Vendor styles -->
-  <link rel="stylesheet" href="../assets/vendor/swiper/swiper-bundle.min.css">
+  <link rel="stylesheet" href="{% static 'vendor/swiper/swiper-bundle.min.css' %}">
+  
 
   <!-- Bootstrap + Theme styles -->
-  <link rel="preload" href="../assets/css/theme.min.css" as="style">
-  <link rel="preload" href="../assets/css/theme.rtl.min.css" as="style">
-  <link rel="stylesheet" href="../assets/css/theme.min.css" id="theme-styles">
+  <link rel="preload" href="{% static 'css/theme.min.css' %}" as="style">
+  <link rel="preload" href="{% static 'css/theme.rtl.min.css' %}" as="style">
+  <link rel="stylesheet" href="{% static 'css/theme.min.css' %}" id="theme-styles">
 </head>
 
 
@@ -47,121 +51,42 @@
 
 <body>
 
-  <!-- Shopping cart offcanvas -->
-  <div class="offcanvas offcanvas-end pb-sm-2 px-sm-2" id="shoppingCart" tabindex="-1"
-    aria-labelledby="shoppingCartLabel" style="width: 500px">
+  
 
-    <!-- Header -->
-    <div class="offcanvas-header flex-column align-items-start py-3 pt-lg-4">
-      <div class="d-flex align-items-center justify-content-between w-100 mb-3 mb-lg-4">
-        <h4 class="offcanvas-title" id="shoppingCartLabel">Sipariş Özeti</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <p class="fs-sm">Satın alma işleminizi tamamlamak için WhatsApp üzerinden devam ederek fiyat bilgisini öğrenebilir
-        ardından siparişi tamamlayabilirsiniz veya Trendyol mağazamızdan alışveriş yapabilirsiniz.</p>
-      <div class="progress w-100" role="progressbar" aria-label="Free shipping progress" aria-valuenow="75"
-        aria-valuemin="0" aria-valuemax="100" style="height: 4px">
-        <div class="progress-bar bg-warning rounded-pill" style="width: 95%"></div>
-      </div>
-    </div>
-
-    <!-- Items -->
-    <div class="offcanvas-body d-flex flex-column gap-4 pt-2">
-
-      <!-- Item -->
-      <div class="d-flex align-items-center">
-        <a class="flex-shrink-0" href="shop-product-general-electronics.html">
-          <img src="../assets/img/shop/electronics/thumbs/08.png" width="110" alt="iPhone 14">
-        </a>
-        <div class="w-100 min-w-0 ps-2 ps-sm-3">
-          <h5 class="d-flex animate-underline mb-2">
-            <a class="d-block fs-sm fw-medium text-truncate animate-target"
-              href="shop-product-general-electronics.html">Apple iPhone 14 128GB White</a>
-          </h5>
-          <div class="h6 pb-1 mb-2">$899.00</div>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="count-input rounded-2">
-              <button type="button" class="btn btn-icon btn-sm" data-decrement aria-label="Decrement quantity">
-                <i class="ci-minus"></i>
-              </button>
-              <input type="number" class="form-control form-control-sm" value="1" readonly>
-              <button type="button" class="btn btn-icon btn-sm" data-increment aria-label="Increment quantity">
-                <i class="ci-plus"></i>
-              </button>
-            </div>
-            <button type="button" class="btn-close fs-sm" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm"
-              data-bs-title="Remove" aria-label="Remove from cart"></button>
+  <!-- Topbar -->
+  <div class="alert alert-dismissible bg-dark text-white rounded-0 py-2 px-0 m-0 fade show" data-bs-theme="dark">
+    <div class="container position-relative d-flex min-w-0">
+      <div class="d-flex flex-nowrap align-items-center g-2 w-100 min-w-0 mx-auto mt-n1" style="max-width: 458px">
+        <div class="nav me-2">
+          <button type="button" class="nav-link fs-lg p-0" id="topbarPrev" aria-label="Prev">
+            <i class="ci-chevron-left"></i>
+          </button>
+        </div>
+        <div class="swiper fs-sm text-white" data-swiper='{
+          "spaceBetween": 24,
+          "loop": true,
+          "autoplay": {
+            "delay": 4000,
+            "disableOnInteraction": false
+          },
+          "navigation": {
+            "prevEl": "#topbarPrev",
+            "nextEl": "#topbarNext"
+          }
+        }'>
+          <div class="swiper-wrapper min-w-0">
+            <div class="swiper-slide text-truncate text-center">🎉 En iyi fiyat teklifi için ulaşın: <span class="d-none d-sm-inline">+90 212 549 34 55</span></div>
+            <div class="swiper-slide text-truncate text-center">💰 Özel fiyatlar için hemen WhatsApp’tan yazın:  <span class="d-none d-sm-inline">+90 533 264 65 98</span></div>
+            <div class="swiper-slide text-truncate text-center">🕙 Hemen arayın, avantajları kaçırmayın <span class="d-none d-sm-inline">+90 212 549 34 55</span></div>
           </div>
         </div>
-      </div>
-
-      <!-- Item -->
-      <div class="d-flex align-items-center">
-        <a class="position-relative flex-shrink-0" href="shop-product-general-electronics.html">
-          <span class="badge text-bg-danger position-absolute top-0 start-0">-10%</span>
-          <img src="../assets/img/shop/electronics/thumbs/09.png" width="110" alt="iPad Pro">
-        </a>
-        <div class="w-100 min-w-0 ps-2 ps-sm-3">
-          <h5 class="d-flex animate-underline mb-2">
-            <a class="d-block fs-sm fw-medium text-truncate animate-target"
-              href="shop-product-general-electronics.html">Tablet Apple iPad Pro M2</a>
-          </h5>
-          <div class="h6 pb-1 mb-2">$989.00 <del class="text-body-tertiary fs-xs fw-normal">$1,099.00</del></div>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="count-input rounded-2">
-              <button type="button" class="btn btn-icon btn-sm" data-decrement aria-label="Decrement quantity">
-                <i class="ci-minus"></i>
-              </button>
-              <input type="number" class="form-control form-control-sm" value="1" readonly>
-              <button type="button" class="btn btn-icon btn-sm" data-increment aria-label="Increment quantity">
-                <i class="ci-plus"></i>
-              </button>
-            </div>
-            <button type="button" class="btn-close fs-sm" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm"
-              data-bs-title="Remove" aria-label="Remove from cart"></button>
-          </div>
+        <div class="nav ms-2">
+          <button type="button" class="nav-link fs-lg p-0" id="topbarNext" aria-label="Next">
+            <i class="ci-chevron-right"></i>
+          </button>
         </div>
       </div>
-
-      <!-- Item -->
-      <div class="d-flex align-items-center">
-        <a class="flex-shrink-0" href="shop-product-general-electronics.html">
-          <img src="../assets/img/shop/electronics/thumbs/01.png" width="110" alt="Smart Watch">
-        </a>
-        <div class="w-100 min-w-0 ps-2 ps-sm-3">
-          <h5 class="d-flex animate-underline mb-2">
-            <a class="d-block fs-sm fw-medium text-truncate animate-target"
-              href="shop-product-general-electronics.html">Smart Watch Series 7, White</a>
-          </h5>
-          <div class="h6 pb-1 mb-2">$429.00</div>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="count-input rounded-2">
-              <button type="button" class="btn btn-icon btn-sm" data-decrement aria-label="Decrement quantity">
-                <i class="ci-minus"></i>
-              </button>
-              <input type="number" class="form-control form-control-sm" value="1" readonly>
-              <button type="button" class="btn btn-icon btn-sm" data-increment aria-label="Increment quantity">
-                <i class="ci-plus"></i>
-              </button>
-            </div>
-            <button type="button" class="btn-close fs-sm" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm"
-              data-bs-title="Remove" aria-label="Remove from cart"></button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="offcanvas-header flex-column align-items-start">
-      <div class="d-flex align-items-center justify-content-between w-100 mb-3 mb-md-4">
-        <span class="text-light-emphasis">Subtotal:</span>
-        <span class="h6 mb-0">$2,317.00</span>
-      </div>
-      <div class="d-flex w-100 gap-3">
-        <a class="btn btn-lg btn-warning w-100"
-          href="https://www.trendyol.com/magaza/kilic-civata-m-1004242?sst=0">Trendyol</a>
-        <a class="btn btn-lg btn-success w-100" href="checkout-v1-delivery-1.html">WhatsApp</a>
-      </div>
+      <button type="button" class="btn-close position-static flex-shrink-0 p-1 ms-3 ms-md-n4" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   </div>
 
@@ -203,14 +128,13 @@
           </div>
 
           <!-- Sale link visible on screens > 1200px wide (xl breakpoint) -->
-          <a class="d-none d-xl-flex align-items-center text-decoration-none animate-shake navbar-stuck-hide me-3 me-xl-4 me-xxl-5"
-            href="shop-catalog-electronics.html">
-            <div class="btn btn-icon btn-lg fs-lg text-primary bg-body-secondary bg-opacity-75 pe-none rounded-circle">
-              <i class="ci-percent animate-target"></i>
+          <a class="d-none d-xl-flex align-items-center text-decoration-none animate-shake navbar-stuck-hide me-3 me-xl-4 me-xxl-5" href="https://wa.me/905332646598?text=www.kiliccivata.com%20websitenizden%20size%20ulaşıyorum.%20Ürünleriniz%20hakkında%20daha%20detaylı%20bilgi%20alabilir%20miyim?" target="_blank">
+            <div class="btn btn-icon btn-lg fs-lg text-success bg-body-secondary bg-opacity-75 pe-none rounded-circle">
+              <i class="ci-whatsapp animate-target"></i>
             </div>
             <div class="ps-2 text-nowrap">
-              <div class="fs-xs text-body">Dayanıklı ürünler,</div>
-              <div class="fw-medium text-white">Uygun fiyatlar!</div>
+              <div class="fs-xs text-body">WhatsApp</div>
+              <div class="fw-medium text-white">+90 533 264 65 98</div>
             </div>
           </a>
 
@@ -275,12 +199,12 @@
 
 
             <!-- Cart button -->
-            <button type="button" class="btn btn-icon btn-lg btn-secondary position-relative rounded-circle ms-2"
-              data-bs-toggle="offcanvas" data-bs-target="#shoppingCart" aria-controls="shoppingCart"
-              aria-label="Shopping cart">
+            <button type="button" class="btn btn-icon btn-lg btn-secondary position-relative rounded-circle ms-2" onclick="window.location.href='{% url 'sepet' %}'">
               <span
                 class="position-absolute top-0 start-100 mt-n1 ms-n3 badge text-bg-success border border-3 border-dark rounded-pill"
-                style="--cz-badge-padding-y: .25em; --cz-badge-padding-x: .42em">3</span>
+                style="--cz-badge-padding-y: .25em; --cz-badge-padding-x: .42em">
+                <i class="ci-bell"></i>
+              </span>
               <span
                 class="position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 rounded-circle animate-slide-end fs-lg">
                 <i class="ci-shopping-cart animate-target ms-n1"></i>
@@ -320,7 +244,7 @@
                     <!-- Buttton visible on screens > 991px wide (lg breakpoint) -->
                     <div class="cursor-pointer d-none d-lg-block" data-bs-toggle="dropdown" data-bs-trigger="hover"
                       data-bs-theme="dark">
-                      <a class="position-absolute top-0 start-0 w-100 h-100" href="shop-categories-electronics.html">
+                      <a class="position-absolute top-0 start-0 w-100 h-100" href="#">
                         <span class="visually-hidden">Ürünler</span>
                       </a>
                       <button type="button"
@@ -339,715 +263,66 @@
                     </button>
 
                     <!-- Mega menu -->
-                    <ul class="dropdown-menu dropdown-menu-static w-100 rounded-top-0 rounded-bottom-4 py-1 p-lg-1"
-                      style="--cz-dropdown-spacer: 0; --cz-dropdown-item-padding-y: .625rem; --cz-dropdown-item-spacer: 0">
+                    <ul class="dropdown-menu dropdown-menu-static w-100 rounded-top-0 rounded-bottom-4 py-1 p-lg-1" style="--cz-dropdown-spacer: 0; --cz-dropdown-item-padding-y: .625rem; --cz-dropdown-item-spacer: 0">
                       <li class="d-lg-none pt-2">
-                        <a class="dropdown-item fw-medium" href="shop-categories-electronics.html">
+                        <a class="dropdown-item fw-medium" href="% url 'product_list' %}">
                           <i class="ci-grid fs-xl opacity-60 pe-1 me-2"></i>
                           Tüm Ürünler
                           <i class="ci-chevron-right fs-base ms-auto me-n1"></i>
                         </a>
                       </li>
-
-                      <li class="dropend position-static">
-                        <div class="position-relative rounded pb-1 px-lg-2" tabindex="0" data-bs-toggle="dropdown"
-                          data-bs-trigger="hover">
-                          <a class="dropdown-item fw-medium stretched-link d-none d-lg-flex"
-                            href="shop-catalog-electronics.html">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            <span class="text-truncate">Altı Köşe Başlı Trifon Saplama</span>
-                            <i class="ci-chevron-right fs-base ms-auto me-n1"></i>
-                          </a>
-                          <div class="dropdown-item fw-medium stretched-link d-lg-none">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            Altı Köşe Başlı Trifon Saplama
-                            <i class="ci-chevron-down fs-base ms-auto me-n1"></i>
-                          </div>
-                        </div>
-                        <div class="dropdown-menu rounded-4 p-4"
-                          style="top: 1rem; height: calc(100% - .1875rem); --cz-dropdown-spacer: .3125rem; animation: none;">
-                          <div class="d-flex flex-column flex-lg-row h-100 gap-4">
-                            <div style="min-width: 194px">
-                              <div class="d-flex w-100">
-                                <a class="animate-underline animate-target d-inline h6 text-dark-emphasis text-decoration-none text-truncate"
-                                  href="shop-catalog-electronics.html">Altı Köşe Başlı Trifon Saplama</a>
-                              </div>
-                              <ul class="nav flex-column gap-2 mt-n2">
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Fast Charging</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Built In Cable</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Built In Wall Plug</a>
-                                </li>
-
-                              </ul>
+                      {% for item in menu_data %}
+                        <li class="dropend position-static">
+                          <div class="position-relative rounded pb-1 px-lg-2" tabindex="0" data-bs-toggle="dropdown" data-bs-trigger="hover">
+                            <a class="dropdown-item fw-medium stretched-link d-none d-lg-flex" href="{% url 'product_list' %}?title_type={{ item.category.name|urlencode }}">
+                              <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
+                              <span class="text-truncate">{{ item.category.name }}</span>
+                              <i class="ci-chevron-right fs-base ms-auto me-n1"></i>
+                            </a>
+                            <div class="dropdown-item fw-medium stretched-link d-lg-none">
+                              <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
+                              {{ item.category.name }}
+                              <i class="ci-chevron-down fs-base ms-auto me-n1"></i>
                             </div>
-                            <div class="d-none d-lg-block">
-                              <div class="d-none d-xl-block" style="width: 284px"></div>
-                              <div class="d-xl-none" style="width: 240px"></div>
-                              <div
-                                class="position-relative d-flex flex-column justify-content-center h-100 bg-body-secondary rounded-5 py-4 px-3">
-                                <div class="text-center px-2">
-                                  <div class="fs-sm text-light-emphasis mb-2"><span class="fw-semibold">Kılıç
-                                      Civata</span></div>
-                                  <div class="h2 mb-4">Altı Köşe Başlı Trifon Saplama</div>
+                          </div>
+                          <div class="dropdown-menu rounded-4 p-4" style="top: 1rem; height: calc(100% - .1875rem); --cz-dropdown-spacer: .3125rem; animation: none;">
+                            <div class="d-flex flex-column flex-lg-row h-100 gap-4">
+                              <div style="min-width: 194px">
+                                <div class="d-flex w-100">
+                                  <a class="animate-underline animate-target d-inline h6 text-dark-emphasis text-decoration-none text-truncate" href="{% url 'product_list' %}?title_type={{ item.category.name|urlencode }}">{{ item.category.name }}</a>
                                 </div>
-                                <img src="../assets/img/mega-menu/electronics/10.png" width="252" alt="Powerbank">
-                                <div class="text-center mt-4">
-                                  <a class="btn btn-sm btn-primary stretched-link"
-                                    href="shop-catalog-electronics.html">Shop now</a>
+                                <ul class="nav flex-column gap-2 mt-n2">
+                                  {% for product in item.products %}
+                                  <li class="d-flex w-100 pt-1">
+                                    <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0" href="#">{{ product.name }}</a>
+                                  </li>
+                                  {% endfor %}
+                                  
+                                </ul>
+                              </div>
+                              <div class="d-none d-lg-block">
+                                <div class="d-none d-xl-block" style="width: 284px"></div>
+                                <div class="d-xl-none" style="width: 240px"></div>
+                                <div class="position-relative d-flex flex-column justify-content-center h-100 bg-body-secondary rounded-5 py-4 px-3">
+                                  <div class="text-center px-2">
+                                    <div class="fs-sm text-light-emphasis mb-2"><span class="fw-semibold">Kılıç Civata</span></div>
+                                    <div class="h2 mb-4">{{ item.category.name }}</div>
+                                  </div>
+                                  {% if item.first_product_image %}
+                                  <img src="{{ item.first_product_image }}" width="252" alt="{{ item.category.name }}">
+                                  {% else %}
+                                  <p>Resim Yok</p>
+                                  {% endif %}
+                                  <div class="text-center mt-4">
+                                    <a class="btn btn-sm btn-primary stretched-link" href="{% url 'product_list' %}?title_type={{ category.name|urlencode }}">Shop now</a>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </li>
-                      <!--2.ürün-->
-                      <li class="dropend position-static">
-                        <div class="position-relative rounded pb-1 px-lg-2" tabindex="0" data-bs-toggle="dropdown"
-                          data-bs-trigger="hover">
-                          <a class="dropdown-item fw-medium stretched-link d-none d-lg-flex"
-                            href="shop-catalog-electronics.html">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            <span class="text-truncate">Flanşlı Altı Köşe Başlı Trifon</span>
-                            <i class="ci-chevron-right fs-base ms-auto me-n1"></i>
-                          </a>
-                          <div class="dropdown-item fw-medium stretched-link d-lg-none">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            Flanşlı Altı Köşe Başlı Trifon
-                            <i class="ci-chevron-down fs-base ms-auto me-n1"></i>
-                          </div>
-                        </div>
-                        <div class="dropdown-menu rounded-4 p-4"
-                          style="top: 1rem; height: calc(100% - .1875rem); --cz-dropdown-spacer: .3125rem; animation: none;">
-                          <div class="d-flex flex-column flex-lg-row h-100 gap-4">
-                            <div style="min-width: 194px">
-                              <div class="d-flex w-100">
-                                <a class="animate-underline animate-target d-inline h6 text-dark-emphasis text-decoration-none text-truncate"
-                                  href="shop-catalog-electronics.html">Flanşlı Altı Köşe Başlı Trifon</a>
-                              </div>
-                              <ul class="nav flex-column gap-2 mt-n2">
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Scratch Resistant</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Flashlight</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Lightweight</a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="d-none d-lg-block">
-                              <div class="d-none d-xl-block" style="width: 284px"></div>
-                              <div class="d-xl-none" style="width: 240px"></div>
-                              <div
-                                class="position-relative d-flex flex-column justify-content-center h-100 bg-body-secondary rounded-5 py-4 px-3">
-                                <div class="text-center px-2">
-                                  <div class="fs-sm text-light-emphasis mb-2"><span class="fw-semibold">Kılıç
-                                      Civata</span></div>
-                                  <div class="h2 mb-4">Flanşlı Altı Köşe Başlı Trifon</div>
-                                </div>
-                                <img src="../assets/img/mega-menu/electronics/10.png" width="252" alt="Powerbank">
-                                <div class="text-center mt-4">
-                                  <a class="btn btn-sm btn-primary stretched-link"
-                                    href="shop-catalog-electronics.html">Shop now</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <!--3.ürün-->
-                      <li class="dropend position-static">
-                        <div class="position-relative rounded pb-1 px-lg-2" tabindex="0" data-bs-toggle="dropdown"
-                          data-bs-trigger="hover">
-                          <a class="dropdown-item fw-medium stretched-link d-none d-lg-flex"
-                            href="shop-catalog-electronics.html">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            <span class="text-truncate">Kelepçe Vida</span>
-                            <i class="ci-chevron-right fs-base ms-auto me-n1"></i>
-                          </a>
-                          <div class="dropdown-item fw-medium stretched-link d-lg-none">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            Kelepçe Vida
-                            <i class="ci-chevron-down fs-base ms-auto me-n1"></i>
-                          </div>
-                        </div>
-                        <div class="dropdown-menu rounded-4 p-4"
-                          style="top: 1rem; height: calc(100% - .1875rem); --cz-dropdown-spacer: .3125rem; animation: none;">
-                          <div class="d-flex flex-column flex-lg-row h-100 gap-4">
-                            <div style="min-width: 194px">
-                              <div class="d-flex w-100">
-                                <a class="animate-underline animate-target d-inline h6 text-dark-emphasis text-decoration-none text-truncate"
-                                  href="shop-catalog-electronics.html">Kelepçe Vida</a>
-                              </div>
-                              <ul class="nav flex-column gap-2 mt-n2">
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Scratch Resistant</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Flashlight</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Lightweight</a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="d-none d-lg-block">
-                              <div class="d-none d-xl-block" style="width: 284px"></div>
-                              <div class="d-xl-none" style="width: 240px"></div>
-                              <div
-                                class="position-relative d-flex flex-column justify-content-center h-100 bg-body-secondary rounded-5 py-4 px-3">
-                                <div class="text-center px-2">
-                                  <div class="fs-sm text-light-emphasis mb-2"><span class="fw-semibold">Kılıç
-                                      Civata</span></div>
-                                  <div class="h2 mb-4">Kelepçe Vida</div>
-                                </div>
-                                <img src="../assets/img/mega-menu/electronics/10.png" width="252" alt="Powerbank">
-                                <div class="text-center mt-4">
-                                  <a class="btn btn-sm btn-primary stretched-link"
-                                    href="shop-catalog-electronics.html">Shop now</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="dropend position-static">
-                        <div class="position-relative rounded pb-1 px-lg-2" tabindex="0" data-bs-toggle="dropdown"
-                          data-bs-trigger="hover">
-                          <a class="dropdown-item fw-medium stretched-link d-none d-lg-flex"
-                            href="shop-catalog-electronics.html">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            <span class="text-truncate">DIN 933 Altıköşe Başlı Civata</span>
-                            <i class="ci-chevron-right fs-base ms-auto me-n1"></i>
-                          </a>
-                          <div class="dropdown-item fw-medium stretched-link d-lg-none">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            DIN 933 Altıköşe Başlı Civata
-                            <i class="ci-chevron-down fs-base ms-auto me-n1"></i>
-                          </div>
-                        </div>
-                        <div class="dropdown-menu rounded-4 p-4"
-                          style="top: 1rem; height: calc(100% - .1875rem); --cz-dropdown-spacer: .3125rem; animation: none;">
-                          <div class="d-flex flex-column flex-lg-row h-100 gap-4">
-                            <div style="min-width: 194px">
-                              <div class="d-flex w-100">
-                                <a class="animate-underline animate-target d-inline h6 text-dark-emphasis text-decoration-none text-truncate"
-                                  href="shop-catalog-electronics.html">DIN 933 Altıköşe Başlı Civata</a>
-                              </div>
-                              <ul class="nav flex-column gap-2 mt-n2">
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Scratch Resistant</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Flashlight</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Lightweight</a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="d-none d-lg-block">
-                              <div class="d-none d-xl-block" style="width: 284px"></div>
-                              <div class="d-xl-none" style="width: 240px"></div>
-                              <div
-                                class="position-relative d-flex flex-column justify-content-center h-100 bg-body-secondary rounded-5 py-4 px-3">
-                                <div class="text-center px-2">
-                                  <div class="fs-sm text-light-emphasis mb-2"><span class="fw-semibold">Kılıç
-                                      Civata</span></div>
-                                  <div class="h2 mb-4">DIN 933 Altıköşe Başlı Civata</div>
-                                </div>
-                                <img src="../assets/img/mega-menu/electronics/10.png" width="252" alt="Powerbank">
-                                <div class="text-center mt-4">
-                                  <a class="btn btn-sm btn-primary stretched-link"
-                                    href="shop-catalog-electronics.html">Shop now</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="dropend position-static">
-                        <div class="position-relative rounded pb-1 px-lg-2" tabindex="0" data-bs-toggle="dropdown"
-                          data-bs-trigger="hover">
-                          <a class="dropdown-item fw-medium stretched-link d-none d-lg-flex"
-                            href="shop-catalog-electronics.html">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            <span class="text-truncate">DIN 912 İmbus Civata</span>
-                            <i class="ci-chevron-right fs-base ms-auto me-n1"></i>
-                          </a>
-                          <div class="dropdown-item fw-medium stretched-link d-lg-none">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            DIN 912 İmbus Civata
-                            <i class="ci-chevron-down fs-base ms-auto me-n1"></i>
-                          </div>
-                        </div>
-                        <div class="dropdown-menu rounded-4 p-4"
-                          style="top: 1rem; height: calc(100% - .1875rem); --cz-dropdown-spacer: .3125rem; animation: none;">
-                          <div class="d-flex flex-column flex-lg-row h-100 gap-4">
-                            <div style="min-width: 194px">
-                              <div class="d-flex w-100">
-                                <a class="animate-underline animate-target d-inline h6 text-dark-emphasis text-decoration-none text-truncate"
-                                  href="shop-catalog-electronics.html">DIN 912 İmbus Civata</a>
-                              </div>
-                              <ul class="nav flex-column gap-2 mt-n2">
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Scratch Resistant</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Flashlight</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Lightweight</a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="d-none d-lg-block">
-                              <div class="d-none d-xl-block" style="width: 284px"></div>
-                              <div class="d-xl-none" style="width: 240px"></div>
-                              <div
-                                class="position-relative d-flex flex-column justify-content-center h-100 bg-body-secondary rounded-5 py-4 px-3">
-                                <div class="text-center px-2">
-                                  <div class="fs-sm text-light-emphasis mb-2"><span class="fw-semibold">Kılıç
-                                      Civata</span></div>
-                                  <div class="h2 mb-4">DIN 912 İmbus Civata</div>
-                                </div>
-                                <img src="../assets/img/mega-menu/electronics/10.png" width="252" alt="Powerbank">
-                                <div class="text-center mt-4">
-                                  <a class="btn btn-sm btn-primary stretched-link"
-                                    href="shop-catalog-electronics.html">Shop now</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="dropend position-static">
-                        <div class="position-relative rounded pb-1 px-lg-2" tabindex="0" data-bs-toggle="dropdown"
-                          data-bs-trigger="hover">
-                          <a class="dropdown-item fw-medium stretched-link d-none d-lg-flex"
-                            href="shop-catalog-electronics.html">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            <span class="text-truncate">ISO 7380 Bombe Baş İmbus</span>
-                            <i class="ci-chevron-right fs-base ms-auto me-n1"></i>
-                          </a>
-                          <div class="dropdown-item fw-medium stretched-link d-lg-none">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            ISO 7380 Bombe Baş İmbus
-                            <i class="ci-chevron-down fs-base ms-auto me-n1"></i>
-                          </div>
-                        </div>
-                        <div class="dropdown-menu rounded-4 p-4"
-                          style="top: 1rem; height: calc(100% - .1875rem); --cz-dropdown-spacer: .3125rem; animation: none;">
-                          <div class="d-flex flex-column flex-lg-row h-100 gap-4">
-                            <div style="min-width: 194px">
-                              <div class="d-flex w-100">
-                                <a class="animate-underline animate-target d-inline h6 text-dark-emphasis text-decoration-none text-truncate"
-                                  href="shop-catalog-electronics.html">ISO 7380 Bombe Baş İmbus</a>
-                              </div>
-                              <ul class="nav flex-column gap-2 mt-n2">
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Scratch Resistant</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Flashlight</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Lightweight</a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="d-none d-lg-block">
-                              <div class="d-none d-xl-block" style="width: 284px"></div>
-                              <div class="d-xl-none" style="width: 240px"></div>
-                              <div
-                                class="position-relative d-flex flex-column justify-content-center h-100 bg-body-secondary rounded-5 py-4 px-3">
-                                <div class="text-center px-2">
-                                  <div class="fs-sm text-light-emphasis mb-2"><span class="fw-semibold">Kılıç
-                                      Civata</span></div>
-                                  <div class="h2 mb-4">ISO 7380 Bombe Baş İmbus</div>
-                                </div>
-                                <img src="../assets/img/mega-menu/electronics/10.png" width="252" alt="Powerbank">
-                                <div class="text-center mt-4">
-                                  <a class="btn btn-sm btn-primary stretched-link"
-                                    href="shop-catalog-electronics.html">Shop now</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="dropend position-static">
-                        <div class="position-relative rounded pb-1 px-lg-2" tabindex="0" data-bs-toggle="dropdown"
-                          data-bs-trigger="hover">
-                          <a class="dropdown-item fw-medium stretched-link d-none d-lg-flex"
-                            href="shop-catalog-electronics.html">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            <span class="text-truncate">DIN 6921 Altıköşe Flanşlı Civata</span>
-                            <i class="ci-chevron-right fs-base ms-auto me-n1"></i>
-                          </a>
-                          <div class="dropdown-item fw-medium stretched-link d-lg-none">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            DIN 6921 Altıköşe Flanşlı Civata
-                            <i class="ci-chevron-down fs-base ms-auto me-n1"></i>
-                          </div>
-                        </div>
-                        <div class="dropdown-menu rounded-4 p-4"
-                          style="top: 1rem; height: calc(100% - .1875rem); --cz-dropdown-spacer: .3125rem; animation: none;">
-                          <div class="d-flex flex-column flex-lg-row h-100 gap-4">
-                            <div style="min-width: 194px">
-                              <div class="d-flex w-100">
-                                <a class="animate-underline animate-target d-inline h6 text-dark-emphasis text-decoration-none text-truncate"
-                                  href="shop-catalog-electronics.html">DIN 6921 Altıköşe Flanşlı Civata</a>
-                              </div>
-                              <ul class="nav flex-column gap-2 mt-n2">
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Scratch Resistant</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Flashlight</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Lightweight</a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="d-none d-lg-block">
-                              <div class="d-none d-xl-block" style="width: 284px"></div>
-                              <div class="d-xl-none" style="width: 240px"></div>
-                              <div
-                                class="position-relative d-flex flex-column justify-content-center h-100 bg-body-secondary rounded-5 py-4 px-3">
-                                <div class="text-center px-2">
-                                  <div class="fs-sm text-light-emphasis mb-2"><span class="fw-semibold">Kılıç
-                                      Civata</span></div>
-                                  <div class="h2 mb-4">DIN 6921 Altıköşe Flanşlı Civata</div>
-                                </div>
-                                <img src="../assets/img/mega-menu/electronics/10.png" width="252" alt="Powerbank">
-                                <div class="text-center mt-4">
-                                  <a class="btn btn-sm btn-primary stretched-link"
-                                    href="shop-catalog-electronics.html">Shop now</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="dropend position-static">
-                        <div class="position-relative rounded pb-1 px-lg-2" tabindex="0" data-bs-toggle="dropdown"
-                          data-bs-trigger="hover">
-                          <a class="dropdown-item fw-medium stretched-link d-none d-lg-flex"
-                            href="shop-catalog-electronics.html">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            <span class="text-truncate">DIN 7991 Havşa Baş Imbus Civata</span>
-                            <i class="ci-chevron-right fs-base ms-auto me-n1"></i>
-                          </a>
-                          <div class="dropdown-item fw-medium stretched-link d-lg-none">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            DIN 7991 Havşa Baş Imbus Civata
-                            <i class="ci-chevron-down fs-base ms-auto me-n1"></i>
-                          </div>
-                        </div>
-                        <div class="dropdown-menu rounded-4 p-4"
-                          style="top: 1rem; height: calc(100% - .1875rem); --cz-dropdown-spacer: .3125rem; animation: none;">
-                          <div class="d-flex flex-column flex-lg-row h-100 gap-4">
-                            <div style="min-width: 194px">
-                              <div class="d-flex w-100">
-                                <a class="animate-underline animate-target d-inline h6 text-dark-emphasis text-decoration-none text-truncate"
-                                  href="shop-catalog-electronics.html">DIN 7991 Havşa Baş Imbus Civata</a>
-                              </div>
-                              <ul class="nav flex-column gap-2 mt-n2">
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Scratch Resistant</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Flashlight</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Lightweight</a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="d-none d-lg-block">
-                              <div class="d-none d-xl-block" style="width: 284px"></div>
-                              <div class="d-xl-none" style="width: 240px"></div>
-                              <div
-                                class="position-relative d-flex flex-column justify-content-center h-100 bg-body-secondary rounded-5 py-4 px-3">
-                                <div class="text-center px-2">
-                                  <div class="fs-sm text-light-emphasis mb-2"><span class="fw-semibold">Kılıç
-                                      Civata</span></div>
-                                  <div class="h2 mb-4">DIN 7991 Havşa Baş Imbus Civata</div>
-                                </div>
-                                <img src="../assets/img/mega-menu/electronics/10.png" width="252" alt="Powerbank">
-                                <div class="text-center mt-4">
-                                  <a class="btn btn-sm btn-primary stretched-link"
-                                    href="shop-catalog-electronics.html">Shop now</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="dropend position-static">
-                        <div class="position-relative rounded pb-1 px-lg-2" tabindex="0" data-bs-toggle="dropdown"
-                          data-bs-trigger="hover">
-                          <a class="dropdown-item fw-medium stretched-link d-none d-lg-flex"
-                            href="shop-catalog-electronics.html">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            <span class="text-truncate">Saplamalar</span>
-                            <i class="ci-chevron-right fs-base ms-auto me-n1"></i>
-                          </a>
-                          <div class="dropdown-item fw-medium stretched-link d-lg-none">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            Saplamalar
-                            <i class="ci-chevron-down fs-base ms-auto me-n1"></i>
-                          </div>
-                        </div>
-                        <div class="dropdown-menu rounded-4 p-4"
-                          style="top: 1rem; height: calc(100% - .1875rem); --cz-dropdown-spacer: .3125rem; animation: none;">
-                          <div class="d-flex flex-column flex-lg-row h-100 gap-4">
-                            <div style="min-width: 194px">
-                              <div class="d-flex w-100">
-                                <a class="animate-underline animate-target d-inline h6 text-dark-emphasis text-decoration-none text-truncate"
-                                  href="shop-catalog-electronics.html">Saplamalar</a>
-                              </div>
-                              <ul class="nav flex-column gap-2 mt-n2">
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Scratch Resistant</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Flashlight</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Lightweight</a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="d-none d-lg-block">
-                              <div class="d-none d-xl-block" style="width: 284px"></div>
-                              <div class="d-xl-none" style="width: 240px"></div>
-                              <div
-                                class="position-relative d-flex flex-column justify-content-center h-100 bg-body-secondary rounded-5 py-4 px-3">
-                                <div class="text-center px-2">
-                                  <div class="fs-sm text-light-emphasis mb-2"><span class="fw-semibold">Kılıç
-                                      Civata</span></div>
-                                  <div class="h2 mb-4">DIN 7991 Havşa Baş Imbus Civata</div>
-                                </div>
-                                <img src="../assets/img/mega-menu/electronics/10.png" width="252" alt="Powerbank">
-                                <div class="text-center mt-4">
-                                  <a class="btn btn-sm btn-primary stretched-link"
-                                    href="shop-catalog-electronics.html">Shop now</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="dropend position-static">
-                        <div class="position-relative rounded pb-1 px-lg-2" tabindex="0" data-bs-toggle="dropdown"
-                          data-bs-trigger="hover">
-                          <a class="dropdown-item fw-medium stretched-link d-none d-lg-flex"
-                            href="shop-catalog-electronics.html">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            <span class="text-truncate">Ahşap Vidası</span>
-                            <i class="ci-chevron-right fs-base ms-auto me-n1"></i>
-                          </a>
-                          <div class="dropdown-item fw-medium stretched-link d-lg-none">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            Ahşap Vidası
-                            <i class="ci-chevron-down fs-base ms-auto me-n1"></i>
-                          </div>
-                        </div>
-                        <div class="dropdown-menu rounded-4 p-4"
-                          style="top: 1rem; height: calc(100% - .1875rem); --cz-dropdown-spacer: .3125rem; animation: none;">
-                          <div class="d-flex flex-column flex-lg-row h-100 gap-4">
-                            <div style="min-width: 194px">
-                              <div class="d-flex w-100">
-                                <a class="animate-underline animate-target d-inline h6 text-dark-emphasis text-decoration-none text-truncate"
-                                  href="shop-catalog-electronics.html">Ahşap Vidası</a>
-                              </div>
-                              <ul class="nav flex-column gap-2 mt-n2">
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Scratch Resistant</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Flashlight</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Lightweight</a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="d-none d-lg-block">
-                              <div class="d-none d-xl-block" style="width: 284px"></div>
-                              <div class="d-xl-none" style="width: 240px"></div>
-                              <div
-                                class="position-relative d-flex flex-column justify-content-center h-100 bg-body-secondary rounded-5 py-4 px-3">
-                                <div class="text-center px-2">
-                                  <div class="fs-sm text-light-emphasis mb-2"><span class="fw-semibold">Kılıç
-                                      Civata</span></div>
-                                  <div class="h2 mb-4">Ahşap Vidası</div>
-                                </div>
-                                <img src="../assets/img/mega-menu/electronics/10.png" width="252" alt="Powerbank">
-                                <div class="text-center mt-4">
-                                  <a class="btn btn-sm btn-primary stretched-link"
-                                    href="shop-catalog-electronics.html">Shop now</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="dropend position-static">
-                        <div class="position-relative rounded pb-1 px-lg-2" tabindex="0" data-bs-toggle="dropdown"
-                          data-bs-trigger="hover">
-                          <a class="dropdown-item fw-medium stretched-link d-none d-lg-flex"
-                            href="shop-catalog-electronics.html">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            <span class="text-truncate">Trifon Saplama Adaptör</span>
-                            <i class="ci-chevron-right fs-base ms-auto me-n1"></i>
-                          </a>
-                          <div class="dropdown-item fw-medium stretched-link d-lg-none">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            Trifon Saplama Adaptör
-                            <i class="ci-chevron-down fs-base ms-auto me-n1"></i>
-                          </div>
-                        </div>
-                        <div class="dropdown-menu rounded-4 p-4"
-                          style="top: 1rem; height: calc(100% - .1875rem); --cz-dropdown-spacer: .3125rem; animation: none;">
-                          <div class="d-flex flex-column flex-lg-row h-100 gap-4">
-                            <div style="min-width: 194px">
-                              <div class="d-flex w-100">
-                                <a class="animate-underline animate-target d-inline h6 text-dark-emphasis text-decoration-none text-truncate"
-                                  href="shop-catalog-electronics.html">Trifon Saplama Adaptör</a>
-                              </div>
-                              <ul class="nav flex-column gap-2 mt-n2">
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Scratch Resistant</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Flashlight</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Lightweight</a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="d-none d-lg-block">
-                              <div class="d-none d-xl-block" style="width: 284px"></div>
-                              <div class="d-xl-none" style="width: 240px"></div>
-                              <div
-                                class="position-relative d-flex flex-column justify-content-center h-100 bg-body-secondary rounded-5 py-4 px-3">
-                                <div class="text-center px-2">
-                                  <div class="fs-sm text-light-emphasis mb-2"><span class="fw-semibold">Kılıç
-                                      Civata</span></div>
-                                  <div class="h2 mb-4">Trifon Saplama Adaptör</div>
-                                </div>
-                                <img src="../assets/img/mega-menu/electronics/10.png" width="252" alt="Powerbank">
-                                <div class="text-center mt-4">
-                                  <a class="btn btn-sm btn-primary stretched-link"
-                                    href="shop-catalog-electronics.html">Shop now</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="dropend position-static">
-                        <div class="position-relative rounded pb-1 px-lg-2" tabindex="0" data-bs-toggle="dropdown"
-                          data-bs-trigger="hover">
-                          <a class="dropdown-item fw-medium stretched-link d-none d-lg-flex"
-                            href="shop-catalog-electronics.html">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            <span class="text-truncate">Vitrifiye Montaj Seti</span>
-                            <i class="ci-chevron-right fs-base ms-auto me-n1"></i>
-                          </a>
-                          <div class="dropdown-item fw-medium stretched-link d-lg-none">
-                            <i class="ci-check-circle fs-xl opacity-60 pe-1 me-2"></i>
-                            Vitrifiye Montaj Seti
-                            <i class="ci-chevron-down fs-base ms-auto me-n1"></i>
-                          </div>
-                        </div>
-                        <div class="dropdown-menu rounded-4 p-4"
-                          style="top: 1rem; height: calc(100% - .1875rem); --cz-dropdown-spacer: .3125rem; animation: none;">
-                          <div class="d-flex flex-column flex-lg-row h-100 gap-4">
-                            <div style="min-width: 194px">
-                              <div class="d-flex w-100">
-                                <a class="animate-underline animate-target d-inline h6 text-dark-emphasis text-decoration-none text-truncate"
-                                  href="shop-catalog-electronics.html">Vitrifiye Montaj Seti</a>
-                              </div>
-                              <ul class="nav flex-column gap-2 mt-n2">
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Scratch Resistant</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Flashlight</a>
-                                </li>
-                                <li class="d-flex w-100 pt-1">
-                                  <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0"
-                                    href="shop-catalog-electronics.html">Lightweight</a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div class="d-none d-lg-block">
-                              <div class="d-none d-xl-block" style="width: 284px"></div>
-                              <div class="d-xl-none" style="width: 240px"></div>
-                              <div
-                                class="position-relative d-flex flex-column justify-content-center h-100 bg-body-secondary rounded-5 py-4 px-3">
-                                <div class="text-center px-2">
-                                  <div class="fs-sm text-light-emphasis mb-2"><span class="fw-semibold">Kılıç
-                                      Civata</span></div>
-                                  <div class="h2 mb-4">Vitrifiye Montaj Seti</div>
-                                </div>
-                                <img src="../assets/img/mega-menu/electronics/10.png" width="252" alt="Powerbank">
-                                <div class="text-center mt-4">
-                                  <a class="btn btn-sm btn-primary stretched-link"
-                                    href="shop-catalog-electronics.html">Shop now</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
+                        </li>
+                      {% endfor %}
+                      
                     </ul>
                   </div>
                 </div>
@@ -1070,7 +345,7 @@
 
                 </ul>
                 <hr class="d-lg-none my-3">
-                <ul class="navbar-nav ms-auto">
+                <!--<ul class="navbar-nav ms-auto">
                   <li class="nav-item dropdown me-lg-n2 me-xl-n1">
                     <a class="nav-link dropdown-toggle fs-sm px-3" href="#!" role="button" data-bs-toggle="dropdown"
                       data-bs-trigger="hover" aria-expanded="false">TR</a>
@@ -1083,7 +358,7 @@
                   <li class="nav-item dropdown me-lg-n1">
                     <a class="nav-link" href="docs/typography.html">Blog</a>
                   </li>
-                </ul>
+                </ul>-->
               </div>
             </div>
           </div>
@@ -1263,11 +538,73 @@
     <!-- Trending products (Grid) -->
     <section class="container pt-5 mt-2 mt-sm-3 mt-lg-4">
 
+       <!-- Sale Banner (CTA) -->
+      <section class="container pt-5 mt-sm-2 mt-md-3 mt-lg-4">
+        <div class="row g-0">
+          <div class="col-md-3 mb-n4 mb-md-0">
+            <div class="position-relative d-flex flex-column align-items-center justify-content-center h-100 py-5">
+              <div class="position-absolute top-0 start-0 w-100 h-100 d-none d-md-block">
+                <span class="position-absolute top-0 start-0 w-100 h-100 rounded-5 d-none-dark"
+                  style="background-color: #accbee"></span>
+                <span class="position-absolute top-0 start-0 w-100 h-100 rounded-5 d-none d-block-dark"
+                  style="background-color: #1b273a"></span>
+              </div>
+              <div class="position-absolute top-0 start-0 w-100 h-100 d-md-none">
+                <span class="position-absolute top-0 start-0 w-100 h-100 rounded-top-5 d-none-dark"
+                  style="background: linear-gradient(90deg, #accbee 0%, #e7f0fd 100%)"></span>
+                <span class="position-absolute top-0 start-0 w-100 h-100 rounded-top-5 d-none d-block-dark"
+                  style="background: linear-gradient(90deg, #1b273a 0%, #1f2632 100%)"></span>
+              </div>
+              <div class="position-relative z-1 display-1 text-dark-emphasis text-nowrap mb-0">
+                %
+                <span class="d-inline-block ms-n2">
+                  <span class="d-block fs-1">Fırsat</span>
+                  <span class="d-block fs-5"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9 position-relative">
+            <div class="position-absolute top-0 start-0 h-100 overflow-hidden rounded-pill z-2 d-none d-md-block"
+              style="color: var(--cz-body-bg); margin-left: -2px">
+              <svg width="4" height="436" viewBox="0 0 4 436" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 0L1.99998 436" stroke="currentColor" stroke-width="3" stroke-dasharray="8 12"
+                  stroke-linecap="round" />
+              </svg>
+            </div>
+            <div class="position-relative">
+              <span class="position-absolute top-0 start-0 w-100 h-100 rounded-5 d-none-dark rtl-flip"
+                style="background: linear-gradient(90deg, #accbee 0%, #e7f0fd 100%)"></span>
+              <span class="position-absolute top-0 start-0 w-100 h-100 rounded-5 d-none d-block-dark rtl-flip"
+                style="background: linear-gradient(90deg, #1b273a 0%, #1f2632 100%)"></span>
+              <div class="row align-items-center position-relative z-2">
+                <div class="col-md-6 mb-3 mb-md-0">
+                  <div class="text-center text-md-start py-md-5 px-4 ps-md-5 pe-md-0 me-md-n5">
+                    <h3 class="text-uppercase fw-bold ps-xxl-3 pb-2 mb-1">Toplu alımlar için iletişime geçin!</h3>
+                    <p class="text-body-emphasis ps-xxl-3 mb-0">Tel: <span
+                        class="d-inline-block fw-semibold bg-white text-dark rounded-pill py-1 px-2">+90 212 549 34
+                        55</span> </p>
+                  </div>
+                </div>
+                <div class="col-md-6 d-flex justify-content-center justify-content-md-end pb-5 pb-md-0">
+                  <div class="me-xxl-4">
+                    <img src="../assets/img/home/electronics/banner/camera.png" class="d-block rtl-flip" width="420"
+                      alt="Camera">
+                    <div class="d-none d-lg-block" style="margin-bottom: -9%"></div>
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-none d-lg-block" style="padding-bottom: 3%"></div>
+      </section>
+
       <!-- Heading -->
       <div class="d-flex align-items-center justify-content-between border-bottom pb-3 pb-md-4">
-        <h2 class="h3 mb-0">Trending products</h2>
+        <h2 class="h3 mb-0">Öne Çıkanlar</h2>
         <div class="nav ms-3">
-          <a class="nav-link animate-underline px-0 py-2" href="../template/shop-catalog-electronics.html">
+          <a class="nav-link animate-underline px-0 py-2" href="{% url 'product_list' %}">
             <span class="animate-target">Tüm Ürünler</span>
             <i class="ci-chevron-right fs-base ms-1"></i>
           </a>
@@ -1277,1041 +614,127 @@
       <!-- Product grid -->
       <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 pt-4">
 
+        
+        {% for one in index_product %}
         <!-- Item -->
         <div class="col">
-          <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-            <div class="position-relative">
-              <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                <div class="d-flex flex-column gap-2">
-
-                  <button type="button" class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex"
-                    aria-label="Compare">
-                    <i class="ci-refresh-cw fs-base animate-target"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body" data-bs-toggle="dropdown"
-                  aria-expanded="false" aria-label="More actions">
-                  <i class="ci-more-vertical fs-lg"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width: auto">
-
-                  <li>
-                    <a class="dropdown-item" href="#!">
-                      <i class="ci-refresh-cw fs-sm ms-n1 me-2"></i>
-                      Yenile
+            <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
+                <div class="position-relative">
+                    <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
+                        <div class="d-flex flex-column gap-2">
+                            <button type="button" class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex"
+                                aria-label="Compare">
+                                <i class="ci-refresh-cw fs-base animate-target"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
+                        <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body" data-bs-toggle="dropdown"
+                            aria-expanded="false" aria-label="More actions">
+                            <i class="ci-more-vertical fs-lg"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width: auto">
+                            <li>
+                                <a class="dropdown-item" href="#!">
+                                    <i class="ci-refresh-cw fs-sm ms-n1 me-2"></i>
+                                    Yenile
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <a class="d-block rounded-top overflow-hidden p-3 p-sm-4" href="{{ one.trendyol_link }}">
+                        <span class="badge bg-success position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3">{{ one.brand }}</span>
+                        <div class="ratio" style="--cz-aspect-ratio: calc(240 / 258 * 100%)">
+                            <img src="{{ one.image }}" alt="{{ one.name }}">
+                        </div>
                     </a>
-                  </li>
-                </ul>
-              </div>
-              <a class="d-block rounded-top overflow-hidden p-3 p-sm-4"
-                href="../template/shop-product-reviews-electronics.html">
-                <span class="badge bg-success position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3">Kılıç
-                  Civata</span>
-                <div class="ratio" style="--cz-aspect-ratio: calc(240 / 258 * 100%)">
-                  <img src="../assets/img/shop/electronics/01.png" alt="VR Glasses">
                 </div>
-              </a>
-            </div>
-            <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-
-              <h3 class="pb-1 mb-2">
-                <a class="d-block fs-sm fw-medium text-truncate" href="shop-product-general-electronics.html">
-                  <span class="animate-target">VRB01 Virtual Reality Glasses</span>
-                </a>
-              </h3>
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="h5 lh-1 mb-0">₺340.99 <del class="text-body-tertiary fs-sm fw-normal">₺430.00</del></div>
-                <button type="button" class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2"
-                  aria-label="Add to Cart">
-                  <i class="ci-shopping-cart fs-base animate-target"></i>
-                </button>
-              </div>
-            </div>
-            <div
-              class="product-card-details position-absolute top-100 start-0 w-100 bg-body rounded-bottom shadow mt-n2 p-3 pt-1">
-              <span class="position-absolute top-0 start-0 w-100 bg-body mt-n2 py-2"></span>
-              <ul class="list-unstyled d-flex flex-column gap-2 m-0">
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Display:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">OLED 1440x1600</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Graphics:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">Adreno 540</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Sound:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">2x3.5mm jack</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Input:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">4 built-in cameras</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- Item -->
-        <div class="col">
-          <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-            <div class="position-relative">
-              <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                <div class="d-flex flex-column gap-2">
-
-                  <button type="button" class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex"
-                    aria-label="Compare">
-                    <i class="ci-refresh-cw fs-base animate-target"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body" data-bs-toggle="dropdown"
-                  aria-expanded="false" aria-label="More actions">
-                  <i class="ci-more-vertical fs-lg"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width: auto">
-
-                  <li>
-                    <a class="dropdown-item" href="#!">
-                      <i class="ci-refresh-cw fs-sm ms-n1 me-2"></i>
-                      Yenile
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <a class="d-block rounded-top overflow-hidden p-3 p-sm-4"
-                href="../template/shop-product-reviews-electronics.html">
-                <span class="badge bg-success position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3">Kılıç
-                  Civata</span>
-                <div class="ratio" style="--cz-aspect-ratio: calc(240 / 258 * 100%)">
-                  <img src="../assets/img/shop/electronics/01.png" alt="VR Glasses">
-                </div>
-              </a>
-            </div>
-            <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-
-              <h3 class="pb-1 mb-2">
-                <a class="d-block fs-sm fw-medium text-truncate" href="shop-product-general-electronics.html">
-                  <span class="animate-target">VRB01 Virtual Reality Glasses</span>
-                </a>
-              </h3>
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="h5 lh-1 mb-0">₺340.99 <del class="text-body-tertiary fs-sm fw-normal">₺430.00</del></div>
-                <button type="button" class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2"
-                  aria-label="Add to Cart">
-                  <i class="ci-shopping-cart fs-base animate-target"></i>
-                </button>
-              </div>
-            </div>
-            <div
-              class="product-card-details position-absolute top-100 start-0 w-100 bg-body rounded-bottom shadow mt-n2 p-3 pt-1">
-              <span class="position-absolute top-0 start-0 w-100 bg-body mt-n2 py-2"></span>
-              <ul class="list-unstyled d-flex flex-column gap-2 m-0">
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Display:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">OLED 1440x1600</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Graphics:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">Adreno 540</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Sound:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">2x3.5mm jack</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Input:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">4 built-in cameras</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- Item -->
-        <div class="col">
-          <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-            <div class="position-relative">
-              <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                <div class="d-flex flex-column gap-2">
-
-                  <button type="button" class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex"
-                    aria-label="Compare">
-                    <i class="ci-refresh-cw fs-base animate-target"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body" data-bs-toggle="dropdown"
-                  aria-expanded="false" aria-label="More actions">
-                  <i class="ci-more-vertical fs-lg"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width: auto">
-
-                  <li>
-                    <a class="dropdown-item" href="#!">
-                      <i class="ci-refresh-cw fs-sm ms-n1 me-2"></i>
-                      Yenile
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <a class="d-block rounded-top overflow-hidden p-3 p-sm-4"
-                href="../template/shop-product-reviews-electronics.html">
-                <span class="badge bg-success position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3">Kılıç
-                  Civata</span>
-                <div class="ratio" style="--cz-aspect-ratio: calc(240 / 258 * 100%)">
-                  <img src="../assets/img/shop/electronics/01.png" alt="VR Glasses">
-                </div>
-              </a>
-            </div>
-            <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-
-              <h3 class="pb-1 mb-2">
-                <a class="d-block fs-sm fw-medium text-truncate" href="shop-product-general-electronics.html">
-                  <span class="animate-target">VRB01 Virtual Reality Glasses</span>
-                </a>
-              </h3>
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="h5 lh-1 mb-0">₺340.99 <del class="text-body-tertiary fs-sm fw-normal">₺430.00</del></div>
-                <button type="button" class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2"
-                  aria-label="Add to Cart">
-                  <i class="ci-shopping-cart fs-base animate-target"></i>
-                </button>
-              </div>
-            </div>
-            <div
-              class="product-card-details position-absolute top-100 start-0 w-100 bg-body rounded-bottom shadow mt-n2 p-3 pt-1">
-              <span class="position-absolute top-0 start-0 w-100 bg-body mt-n2 py-2"></span>
-              <ul class="list-unstyled d-flex flex-column gap-2 m-0">
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Display:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">OLED 1440x1600</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Graphics:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">Adreno 540</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Sound:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">2x3.5mm jack</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Input:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">4 built-in cameras</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- Item -->
-        <div class="col">
-          <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-            <div class="position-relative">
-              <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                <div class="d-flex flex-column gap-2">
-
-                  <button type="button" class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex"
-                    aria-label="Compare">
-                    <i class="ci-refresh-cw fs-base animate-target"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body" data-bs-toggle="dropdown"
-                  aria-expanded="false" aria-label="More actions">
-                  <i class="ci-more-vertical fs-lg"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width: auto">
-
-                  <li>
-                    <a class="dropdown-item" href="#!">
-                      <i class="ci-refresh-cw fs-sm ms-n1 me-2"></i>
-                      Yenile
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <a class="d-block rounded-top overflow-hidden p-3 p-sm-4"
-                href="../template/shop-product-reviews-electronics.html">
-                <span class="badge bg-success position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3">Kılıç
-                  Civata</span>
-                <div class="ratio" style="--cz-aspect-ratio: calc(240 / 258 * 100%)">
-                  <img src="../assets/img/shop/electronics/01.png" alt="VR Glasses">
-                </div>
-              </a>
-            </div>
-            <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-
-              <h3 class="pb-1 mb-2">
-                <a class="d-block fs-sm fw-medium text-truncate" href="shop-product-general-electronics.html">
-                  <span class="animate-target">VRB01 Virtual Reality Glasses</span>
-                </a>
-              </h3>
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="h5 lh-1 mb-0">₺340.99 <del class="text-body-tertiary fs-sm fw-normal">₺430.00</del></div>
-                <button type="button" class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2"
-                  aria-label="Add to Cart">
-                  <i class="ci-shopping-cart fs-base animate-target"></i>
-                </button>
-              </div>
-            </div>
-            <div
-              class="product-card-details position-absolute top-100 start-0 w-100 bg-body rounded-bottom shadow mt-n2 p-3 pt-1">
-              <span class="position-absolute top-0 start-0 w-100 bg-body mt-n2 py-2"></span>
-              <ul class="list-unstyled d-flex flex-column gap-2 m-0">
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Display:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">OLED 1440x1600</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Graphics:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">Adreno 540</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Sound:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">2x3.5mm jack</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Input:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">4 built-in cameras</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- Item -->
-        <div class="col">
-          <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-            <div class="position-relative">
-              <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                <div class="d-flex flex-column gap-2">
-
-                  <button type="button" class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex"
-                    aria-label="Compare">
-                    <i class="ci-refresh-cw fs-base animate-target"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body" data-bs-toggle="dropdown"
-                  aria-expanded="false" aria-label="More actions">
-                  <i class="ci-more-vertical fs-lg"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width: auto">
-
-                  <li>
-                    <a class="dropdown-item" href="#!">
-                      <i class="ci-refresh-cw fs-sm ms-n1 me-2"></i>
-                      Yenile
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <a class="d-block rounded-top overflow-hidden p-3 p-sm-4"
-                href="../template/shop-product-reviews-electronics.html">
-                <span class="badge bg-success position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3">Kılıç
-                  Civata</span>
-                <div class="ratio" style="--cz-aspect-ratio: calc(240 / 258 * 100%)">
-                  <img src="../assets/img/shop/electronics/01.png" alt="VR Glasses">
-                </div>
-              </a>
-            </div>
-            <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-
-              <h3 class="pb-1 mb-2">
-                <a class="d-block fs-sm fw-medium text-truncate" href="shop-product-general-electronics.html">
-                  <span class="animate-target">VRB01 Virtual Reality Glasses</span>
-                </a>
-              </h3>
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="h5 lh-1 mb-0">₺340.99 <del class="text-body-tertiary fs-sm fw-normal">₺430.00</del></div>
-                <button type="button" class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2"
-                  aria-label="Add to Cart">
-                  <i class="ci-shopping-cart fs-base animate-target"></i>
-                </button>
-              </div>
-            </div>
-            <div
-              class="product-card-details position-absolute top-100 start-0 w-100 bg-body rounded-bottom shadow mt-n2 p-3 pt-1">
-              <span class="position-absolute top-0 start-0 w-100 bg-body mt-n2 py-2"></span>
-              <ul class="list-unstyled d-flex flex-column gap-2 m-0">
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Display:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">OLED 1440x1600</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Graphics:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">Adreno 540</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Sound:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">2x3.5mm jack</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Input:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">4 built-in cameras</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- Item -->
-        <div class="col">
-          <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-            <div class="position-relative">
-              <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                <div class="d-flex flex-column gap-2">
-
-                  <button type="button" class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex"
-                    aria-label="Compare">
-                    <i class="ci-refresh-cw fs-base animate-target"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body" data-bs-toggle="dropdown"
-                  aria-expanded="false" aria-label="More actions">
-                  <i class="ci-more-vertical fs-lg"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width: auto">
-
-                  <li>
-                    <a class="dropdown-item" href="#!">
-                      <i class="ci-refresh-cw fs-sm ms-n1 me-2"></i>
-                      Yenile
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <a class="d-block rounded-top overflow-hidden p-3 p-sm-4"
-                href="../template/shop-product-reviews-electronics.html">
-                <span class="badge bg-success position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3">Kılıç
-                  Civata</span>
-                <div class="ratio" style="--cz-aspect-ratio: calc(240 / 258 * 100%)">
-                  <img src="../assets/img/shop/electronics/01.png" alt="VR Glasses">
-                </div>
-              </a>
-            </div>
-            <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-
-              <h3 class="pb-1 mb-2">
-                <a class="d-block fs-sm fw-medium text-truncate" href="shop-product-general-electronics.html">
-                  <span class="animate-target">VRB01 Virtual Reality Glasses</span>
-                </a>
-              </h3>
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="h5 lh-1 mb-0">₺340.99 <del class="text-body-tertiary fs-sm fw-normal">₺430.00</del></div>
-                <button type="button" class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2"
-                  aria-label="Add to Cart">
-                  <i class="ci-shopping-cart fs-base animate-target"></i>
-                </button>
-              </div>
-            </div>
-            <div
-              class="product-card-details position-absolute top-100 start-0 w-100 bg-body rounded-bottom shadow mt-n2 p-3 pt-1">
-              <span class="position-absolute top-0 start-0 w-100 bg-body mt-n2 py-2"></span>
-              <ul class="list-unstyled d-flex flex-column gap-2 m-0">
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Display:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">OLED 1440x1600</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Graphics:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">Adreno 540</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Sound:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">2x3.5mm jack</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Input:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">4 built-in cameras</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- Item -->
-        <div class="col">
-          <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-            <div class="position-relative">
-              <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                <div class="d-flex flex-column gap-2">
-
-                  <button type="button" class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex"
-                    aria-label="Compare">
-                    <i class="ci-refresh-cw fs-base animate-target"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body" data-bs-toggle="dropdown"
-                  aria-expanded="false" aria-label="More actions">
-                  <i class="ci-more-vertical fs-lg"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width: auto">
-
-                  <li>
-                    <a class="dropdown-item" href="#!">
-                      <i class="ci-refresh-cw fs-sm ms-n1 me-2"></i>
-                      Yenile
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <a class="d-block rounded-top overflow-hidden p-3 p-sm-4"
-                href="../template/shop-product-reviews-electronics.html">
-                <span class="badge bg-success position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3">Kılıç
-                  Civata</span>
-                <div class="ratio" style="--cz-aspect-ratio: calc(240 / 258 * 100%)">
-                  <img src="../assets/img/shop/electronics/01.png" alt="VR Glasses">
-                </div>
-              </a>
-            </div>
-            <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-
-              <h3 class="pb-1 mb-2">
-                <a class="d-block fs-sm fw-medium text-truncate" href="shop-product-general-electronics.html">
-                  <span class="animate-target">VRB01 Virtual Reality Glasses</span>
-                </a>
-              </h3>
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="h5 lh-1 mb-0">₺340.99 <del class="text-body-tertiary fs-sm fw-normal">₺430.00</del></div>
-                <button type="button" class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2"
-                  aria-label="Add to Cart">
-                  <i class="ci-shopping-cart fs-base animate-target"></i>
-                </button>
-              </div>
-            </div>
-            <div
-              class="product-card-details position-absolute top-100 start-0 w-100 bg-body rounded-bottom shadow mt-n2 p-3 pt-1">
-              <span class="position-absolute top-0 start-0 w-100 bg-body mt-n2 py-2"></span>
-              <ul class="list-unstyled d-flex flex-column gap-2 m-0">
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Display:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">OLED 1440x1600</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Graphics:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">Adreno 540</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Sound:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">2x3.5mm jack</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Input:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">4 built-in cameras</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- Item -->
-        <div class="col">
-          <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-            <div class="position-relative">
-              <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                <div class="d-flex flex-column gap-2">
-
-                  <button type="button" class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex"
-                    aria-label="Compare">
-                    <i class="ci-refresh-cw fs-base animate-target"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body" data-bs-toggle="dropdown"
-                  aria-expanded="false" aria-label="More actions">
-                  <i class="ci-more-vertical fs-lg"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width: auto">
-
-                  <li>
-                    <a class="dropdown-item" href="#!">
-                      <i class="ci-refresh-cw fs-sm ms-n1 me-2"></i>
-                      Yenile
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <a class="d-block rounded-top overflow-hidden p-3 p-sm-4"
-                href="../template/shop-product-reviews-electronics.html">
-                <span class="badge bg-success position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3">Kılıç
-                  Civata</span>
-                <div class="ratio" style="--cz-aspect-ratio: calc(240 / 258 * 100%)">
-                  <img src="../assets/img/shop/electronics/01.png" alt="VR Glasses">
-                </div>
-              </a>
-            </div>
-            <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-
-              <h3 class="pb-1 mb-2">
-                <a class="d-block fs-sm fw-medium text-truncate" href="shop-product-general-electronics.html">
-                  <span class="animate-target">VRB01 Virtual Reality Glasses</span>
-                </a>
-              </h3>
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="h5 lh-1 mb-0">₺340.99 <del class="text-body-tertiary fs-sm fw-normal">₺430.00</del></div>
-                <button type="button" class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2"
-                  aria-label="Add to Cart">
-                  <i class="ci-shopping-cart fs-base animate-target"></i>
-                </button>
-              </div>
-            </div>
-            <div
-              class="product-card-details position-absolute top-100 start-0 w-100 bg-body rounded-bottom shadow mt-n2 p-3 pt-1">
-              <span class="position-absolute top-0 start-0 w-100 bg-body mt-n2 py-2"></span>
-              <ul class="list-unstyled d-flex flex-column gap-2 m-0">
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Display:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">OLED 1440x1600</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Graphics:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">Adreno 540</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Sound:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">2x3.5mm jack</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Input:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">4 built-in cameras</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- Item -->
-        <div class="col">
-          <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-            <div class="position-relative">
-              <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                <div class="d-flex flex-column gap-2">
-
-                  <button type="button" class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex"
-                    aria-label="Compare">
-                    <i class="ci-refresh-cw fs-base animate-target"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body" data-bs-toggle="dropdown"
-                  aria-expanded="false" aria-label="More actions">
-                  <i class="ci-more-vertical fs-lg"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width: auto">
-
-                  <li>
-                    <a class="dropdown-item" href="#!">
-                      <i class="ci-refresh-cw fs-sm ms-n1 me-2"></i>
-                      Yenile
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <a class="d-block rounded-top overflow-hidden p-3 p-sm-4"
-                href="../template/shop-product-reviews-electronics.html">
-                <span class="badge bg-success position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3">Kılıç
-                  Civata</span>
-                <div class="ratio" style="--cz-aspect-ratio: calc(240 / 258 * 100%)">
-                  <img src="../assets/img/shop/electronics/01.png" alt="VR Glasses">
-                </div>
-              </a>
-            </div>
-            <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-
-              <h3 class="pb-1 mb-2">
-                <a class="d-block fs-sm fw-medium text-truncate" href="shop-product-general-electronics.html">
-                  <span class="animate-target">VRB01 Virtual Reality Glasses</span>
-                </a>
-              </h3>
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="h5 lh-1 mb-0">₺340.99 <del class="text-body-tertiary fs-sm fw-normal">₺430.00</del></div>
-                <button type="button" class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2"
-                  aria-label="Add to Cart">
-                  <i class="ci-shopping-cart fs-base animate-target"></i>
-                </button>
-              </div>
-            </div>
-            <div
-              class="product-card-details position-absolute top-100 start-0 w-100 bg-body rounded-bottom shadow mt-n2 p-3 pt-1">
-              <span class="position-absolute top-0 start-0 w-100 bg-body mt-n2 py-2"></span>
-              <ul class="list-unstyled d-flex flex-column gap-2 m-0">
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Display:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">OLED 1440x1600</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Graphics:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">Adreno 540</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Sound:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">2x3.5mm jack</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Input:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">4 built-in cameras</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- Item -->
-        <div class="col">
-          <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-            <div class="position-relative">
-              <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                <div class="d-flex flex-column gap-2">
-
-                  <button type="button" class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex"
-                    aria-label="Compare">
-                    <i class="ci-refresh-cw fs-base animate-target"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body" data-bs-toggle="dropdown"
-                  aria-expanded="false" aria-label="More actions">
-                  <i class="ci-more-vertical fs-lg"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width: auto">
-
-                  <li>
-                    <a class="dropdown-item" href="#!">
-                      <i class="ci-refresh-cw fs-sm ms-n1 me-2"></i>
-                      Yenile
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <a class="d-block rounded-top overflow-hidden p-3 p-sm-4"
-                href="../template/shop-product-reviews-electronics.html">
-                <span class="badge bg-success position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3">Kılıç
-                  Civata</span>
-                <div class="ratio" style="--cz-aspect-ratio: calc(240 / 258 * 100%)">
-                  <img src="../assets/img/shop/electronics/01.png" alt="VR Glasses">
-                </div>
-              </a>
-            </div>
-            <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-
-              <h3 class="pb-1 mb-2">
-                <a class="d-block fs-sm fw-medium text-truncate" href="shop-product-general-electronics.html">
-                  <span class="animate-target">VRB01 Virtual Reality Glasses</span>
-                </a>
-              </h3>
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="h5 lh-1 mb-0">₺340.99 <del class="text-body-tertiary fs-sm fw-normal">₺430.00</del></div>
-                <button type="button" class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2"
-                  aria-label="Add to Cart">
-                  <i class="ci-shopping-cart fs-base animate-target"></i>
-                </button>
-              </div>
-            </div>
-            <div
-              class="product-card-details position-absolute top-100 start-0 w-100 bg-body rounded-bottom shadow mt-n2 p-3 pt-1">
-              <span class="position-absolute top-0 start-0 w-100 bg-body mt-n2 py-2"></span>
-              <ul class="list-unstyled d-flex flex-column gap-2 m-0">
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Display:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">OLED 1440x1600</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Graphics:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">Adreno 540</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Sound:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">2x3.5mm jack</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Input:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">4 built-in cameras</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- Item -->
-        <div class="col">
-          <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-            <div class="position-relative">
-              <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                <div class="d-flex flex-column gap-2">
-
-                  <button type="button" class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex"
-                    aria-label="Compare">
-                    <i class="ci-refresh-cw fs-base animate-target"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body" data-bs-toggle="dropdown"
-                  aria-expanded="false" aria-label="More actions">
-                  <i class="ci-more-vertical fs-lg"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width: auto">
-
-                  <li>
-                    <a class="dropdown-item" href="#!">
-                      <i class="ci-refresh-cw fs-sm ms-n1 me-2"></i>
-                      Yenile
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <a class="d-block rounded-top overflow-hidden p-3 p-sm-4"
-                href="../template/shop-product-reviews-electronics.html">
-                <span class="badge bg-success position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3">Kılıç
-                  Civata</span>
-                <div class="ratio" style="--cz-aspect-ratio: calc(240 / 258 * 100%)">
-                  <img src="../assets/img/shop/electronics/01.png" alt="VR Glasses">
-                </div>
-              </a>
-            </div>
-            <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-
-              <h3 class="pb-1 mb-2">
-                <a class="d-block fs-sm fw-medium text-truncate" href="shop-product-general-electronics.html">
-                  <span class="animate-target">VRB01 Virtual Reality Glasses</span>
-                </a>
-              </h3>
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="h5 lh-1 mb-0">₺340.99 <del class="text-body-tertiary fs-sm fw-normal">₺430.00</del></div>
-                <button type="button" class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2"
-                  aria-label="Add to Cart">
-                  <i class="ci-shopping-cart fs-base animate-target"></i>
-                </button>
-              </div>
-            </div>
-            <div
-              class="product-card-details position-absolute top-100 start-0 w-100 bg-body rounded-bottom shadow mt-n2 p-3 pt-1">
-              <span class="position-absolute top-0 start-0 w-100 bg-body mt-n2 py-2"></span>
-              <ul class="list-unstyled d-flex flex-column gap-2 m-0">
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Display:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">OLED 1440x1600</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Graphics:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">Adreno 540</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Sound:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">2x3.5mm jack</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Input:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">4 built-in cameras</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- Item -->
-        <div class="col">
-          <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-            <div class="position-relative">
-              <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                <div class="d-flex flex-column gap-2">
-
-                  <button type="button" class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex"
-                    aria-label="Compare">
-                    <i class="ci-refresh-cw fs-base animate-target"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body" data-bs-toggle="dropdown"
-                  aria-expanded="false" aria-label="More actions">
-                  <i class="ci-more-vertical fs-lg"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width: auto">
-
-                  <li>
-                    <a class="dropdown-item" href="#!">
-                      <i class="ci-refresh-cw fs-sm ms-n1 me-2"></i>
-                      Yenile
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <a class="d-block rounded-top overflow-hidden p-3 p-sm-4"
-                href="../template/shop-product-reviews-electronics.html">
-                <span class="badge bg-success position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3">Kılıç
-                  Civata</span>
-                <div class="ratio" style="--cz-aspect-ratio: calc(240 / 258 * 100%)">
-                  <img src="../assets/img/shop/electronics/01.png" alt="VR Glasses">
-                </div>
-              </a>
-            </div>
-            <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-
-              <h3 class="pb-1 mb-2">
-                <a class="d-block fs-sm fw-medium text-truncate" href="shop-product-general-electronics.html">
-                  <span class="animate-target">VRB01 Virtual Reality Glasses</span>
-                </a>
-              </h3>
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="h5 lh-1 mb-0">₺340.99 <del class="text-body-tertiary fs-sm fw-normal">₺430.00</del></div>
-                <button type="button" class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2"
-                  aria-label="Add to Cart">
-                  <i class="ci-shopping-cart fs-base animate-target"></i>
-                </button>
-              </div>
-            </div>
-            <div
-              class="product-card-details position-absolute top-100 start-0 w-100 bg-body rounded-bottom shadow mt-n2 p-3 pt-1">
-              <span class="position-absolute top-0 start-0 w-100 bg-body mt-n2 py-2"></span>
-              <ul class="list-unstyled d-flex flex-column gap-2 m-0">
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Display:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">OLED 1440x1600</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Graphics:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">Adreno 540</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Sound:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">2x3.5mm jack</span>
-                </li>
-                <li class="d-flex align-items-center">
-                  <span class="fs-xs">Input:</span>
-                  <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                  <span class="text-dark-emphasis fs-xs fw-medium text-end">4 built-in cameras</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- Sale Banner (CTA) -->
-    <section class="container pt-5 mt-sm-2 mt-md-3 mt-lg-4">
-      <div class="row g-0">
-        <div class="col-md-3 mb-n4 mb-md-0">
-          <div class="position-relative d-flex flex-column align-items-center justify-content-center h-100 py-5">
-            <div class="position-absolute top-0 start-0 w-100 h-100 d-none d-md-block">
-              <span class="position-absolute top-0 start-0 w-100 h-100 rounded-5 d-none-dark"
-                style="background-color: #accbee"></span>
-              <span class="position-absolute top-0 start-0 w-100 h-100 rounded-5 d-none d-block-dark"
-                style="background-color: #1b273a"></span>
-            </div>
-            <div class="position-absolute top-0 start-0 w-100 h-100 d-md-none">
-              <span class="position-absolute top-0 start-0 w-100 h-100 rounded-top-5 d-none-dark"
-                style="background: linear-gradient(90deg, #accbee 0%, #e7f0fd 100%)"></span>
-              <span class="position-absolute top-0 start-0 w-100 h-100 rounded-top-5 d-none d-block-dark"
-                style="background: linear-gradient(90deg, #1b273a 0%, #1f2632 100%)"></span>
-            </div>
-            <div class="position-relative z-1 display-1 text-dark-emphasis text-nowrap mb-0">
-              %
-              <span class="d-inline-block ms-n2">
-                <span class="d-block fs-1">Kampanya</span>
-                <span class="d-block fs-5"></span>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-9 position-relative">
-          <div class="position-absolute top-0 start-0 h-100 overflow-hidden rounded-pill z-2 d-none d-md-block"
-            style="color: var(--cz-body-bg); margin-left: -2px">
-            <svg width="4" height="436" viewBox="0 0 4 436" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 0L1.99998 436" stroke="currentColor" stroke-width="3" stroke-dasharray="8 12"
-                stroke-linecap="round" />
-            </svg>
-          </div>
-          <div class="position-relative">
-            <span class="position-absolute top-0 start-0 w-100 h-100 rounded-5 d-none-dark rtl-flip"
-              style="background: linear-gradient(90deg, #accbee 0%, #e7f0fd 100%)"></span>
-            <span class="position-absolute top-0 start-0 w-100 h-100 rounded-5 d-none d-block-dark rtl-flip"
-              style="background: linear-gradient(90deg, #1b273a 0%, #1f2632 100%)"></span>
-            <div class="row align-items-center position-relative z-2">
-              <div class="col-md-6 mb-3 mb-md-0">
-                <div class="text-center text-md-start py-md-5 px-4 ps-md-5 pe-md-0 me-md-n5">
-                  <h3 class="text-uppercase fw-bold ps-xxl-3 pb-2 mb-1">Çoklu alımlarda indirim için iletişime geçin!
+                <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
+                  <div class="d-flex align-items-center gap-2 mb-2">
+                          
+                    <span class="text-body-tertiary fs-xs">{{ one.quantity }} Adet</span>
+                  </div>
+                  <h3 class="pb-1 mb-2">
+                      <a class="d-block fs-sm fw-medium text-truncate" href="{{ one.trendyol_link }}">
+                          <span class="animate-target">{{ one.name }}</span>
+                      </a>
                   </h3>
-                  <p class="text-body-emphasis ps-xxl-3 mb-0">Tel: <span
-                      class="d-inline-block fw-semibold bg-white text-dark rounded-pill py-1 px-2">+90 212 549 34
-                      55</span> </p>
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="h5 lh-1 mb-0">₺{{ one.price }}</div>
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                    <button type="button" class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2" aria-label="Add to Cart" onclick="addToCart({{one.id}})">
+                      <i class="ci-shopping-cart fs-base animate-target"></i>
+                    </button>
+                  
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-6 d-flex justify-content-center justify-content-md-end pb-5 pb-md-0">
-                <div class="me-xxl-4">
-                  <img src="../assets/img/home/electronics/banner/camera.png" class="d-block rtl-flip" width="420"
-                    alt="Camera">
-                  <div class="d-none d-lg-block" style="margin-bottom: -9%"></div>
+                <div
+                    class="product-card-details position-absolute top-100 start-0 w-100 bg-body rounded-bottom shadow mt-n2 p-3 pt-1">
+                    <span class="position-absolute top-0 start-0 w-100 bg-body mt-n2 py-2"></span>
+                    <ul class="list-unstyled d-flex flex-column gap-2 m-0">
+                        <li class="d-flex align-items-center">
+                            <span class="fs-xs">Çeşit:</span>
+                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
+                            <span class="text-dark-emphasis fs-xs fw-medium text-end">{{ one.product_type }}</span>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <span class="fs-xs">Başlık Tipi:</span>
+                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
+                            <span class="text-dark-emphasis fs-xs fw-medium text-end">{{ one.title_type }}</span>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <span class="fs-xs">Çap:</span>
+                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
+                            <span class="text-dark-emphasis fs-xs fw-medium text-end">{{ one.diameter }}</span>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <span class="fs-xs">Uzunluk:</span>
+                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
+                            <span class="text-dark-emphasis fs-xs fw-medium text-end">{{ one.length }}</span>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <span class="fs-xs">Kaplama:</span>
+                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
+                            <span class="text-dark-emphasis fs-xs fw-medium text-end">{{ one.coating }}</span>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <span class="fs-xs">Malzeme:</span>
+                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
+                            <span class="text-dark-emphasis fs-xs fw-medium text-end">{{ one.material }}</span>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <span class="fs-xs">Dayanım Sınıfı:</span>
+                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
+                            <span class="text-dark-emphasis fs-xs fw-medium text-end">{{ one.strength_class }}</span>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <span class="fs-xs">Adet:</span>
+                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
+                            <span class="text-dark-emphasis fs-xs fw-medium text-end">{{ one.quantity }}</span>
+                        </li>
+                    </ul>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
+        {% endfor %}
+      
+        
+        
+
       </div>
-      <div class="d-none d-lg-block" style="padding-bottom: 3%"></div>
     </section>
 
 
+    
 
 
 
-    <!-- Brands -->
+
+
+    <!-- Brands
     <section class="container pt-4 pt-md-5 pb-5 mt-sm-2 mb-2 mb-sm-3 mb-md-4 mb-lg-5">
       <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3 g-md-4 g-lg-3 g-xl-4">
+
         <div class="col">
           <a class="btn btn-outline-secondary w-100 rounded-4 p-3" href="shop-catalog-electronics.html">
             <img src="../assets/img/shop/electronics/brands/apple-light-mode.svg" class="d-none-dark" alt="Apple">
@@ -2319,42 +742,9 @@
               alt="Apple">
           </a>
         </div>
-        <div class="col">
-          <a class="btn btn-outline-secondary w-100 rounded-4 p-3" href="shop-catalog-electronics.html">
-            <img src="../assets/img/shop/electronics/brands/motorola-light-mode.svg" class="d-none-dark" alt="Apple">
-            <img src="../assets/img/shop/electronics/brands/motorola-dark-mode.svg" class="d-none d-block-dark"
-              alt="Apple">
-          </a>
-        </div>
-        <div class="col">
-          <a class="btn btn-outline-secondary w-100 rounded-4 p-3" href="shop-catalog-electronics.html">
-            <img src="../assets/img/shop/electronics/brands/canon-light-mode.svg" class="d-none-dark" alt="Apple">
-            <img src="../assets/img/shop/electronics/brands/canon-dark-mode.svg" class="d-none d-block-dark"
-              alt="Apple">
-          </a>
-        </div>
-        <div class="col">
-          <a class="btn btn-outline-secondary w-100 rounded-4 p-3" href="shop-catalog-electronics.html">
-            <img src="../assets/img/shop/electronics/brands/samsung-light-mode.svg" class="d-none-dark" alt="Apple">
-            <img src="../assets/img/shop/electronics/brands/samsung-dark-mode.svg" class="d-none d-block-dark"
-              alt="Apple">
-          </a>
-        </div>
-        <div class="col">
-          <a class="btn btn-outline-secondary w-100 rounded-4 p-3" href="shop-catalog-electronics.html">
-            <img src="../assets/img/shop/electronics/brands/sony-light-mode.svg" class="d-none-dark" alt="Apple">
-            <img src="../assets/img/shop/electronics/brands/sony-dark-mode.svg" class="d-none d-block-dark" alt="Apple">
-          </a>
-        </div>
-        <div class="col">
-          <a class="btn btn-outline-secondary w-100 rounded-4 p-3" href="shop-catalog-electronics.html">
-            <img src="../assets/img/shop/electronics/brands/sony-light-mode.svg" class="d-none-dark" alt="Apple">
-            <img src="../assets/img/shop/electronics/brands/sony-dark-mode.svg" class="d-none d-block-dark" alt="Apple">
-          </a>
-        </div>
-
+        
       </div>
-    </section>
+    </section> -->
 
 
     <!-- Subscription form + Vlog -->
@@ -2385,40 +775,7 @@
               </a>
             </div>
           </div>
-          <div class="col-md-6 col-lg-5 col-xl-4 offset-lg-1 offset-xl-2">
-            <ul class="list-unstyled d-flex flex-column gap-4 ps-md-4 ps-lg-0 mb-3">
-              <li class="nav flex-nowrap align-items-center position-relative">
-                <img src="../assets/img/home/electronics/vlog/01.jpg" class="rounded" width="140" alt="Video cover">
-                <div class="ps-3">
-                  <div class="fs-xs text-body-secondary lh-sm mb-2">6:16</div>
-                  <a class="nav-link fs-sm hover-effect-underline stretched-link p-0" href="#!">5 New Cool Gadgets You
-                    Must See on Cartzilla - Cheap Budget</a>
-                </div>
-              </li>
-              <li class="nav flex-nowrap align-items-center position-relative">
-                <img src="../assets/img/home/electronics/vlog/02.jpg" class="rounded" width="140" alt="Video cover">
-                <div class="ps-3">
-                  <div class="fs-xs text-body-secondary lh-sm mb-2">10:20</div>
-                  <a class="nav-link fs-sm hover-effect-underline stretched-link p-0" href="#!">5 Super Useful Gadgets
-                    on Cartzilla You Must Have in 2023</a>
-                </div>
-              </li>
-              <li class="nav flex-nowrap align-items-center position-relative">
-                <img src="../assets/img/home/electronics/vlog/03.jpg" class="rounded" width="140" alt="Video cover">
-                <div class="ps-3">
-                  <div class="fs-xs text-body-secondary lh-sm mb-2">8:40</div>
-                  <a class="nav-link fs-sm hover-effect-underline stretched-link p-0" href="#!">Top 5 New Amazing
-                    Gadgets on Cartzilla You Must See</a>
-                </div>
-              </li>
-            </ul>
-            <div class="nav ps-md-4 ps-lg-0">
-              <a class="btn nav-link animate-underline text-decoration-none px-0" href="#!">
-                <span class="animate-target">View all</span>
-                <i class="ci-chevron-right fs-base ms-1"></i>
-              </a>
-            </div>
-          </div>
+          
         </div>
       </div>
     </section>
@@ -2693,10 +1050,11 @@
 
 
   <!-- Vendor scripts -->
-  <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
 
   <!-- Bootstrap + Theme scripts -->
-  <script src="../assets/js/theme.min.js"></script>
+  <script src="{% static 'js/theme.min.js' %}"></script>
+  <script src="{% static 'js/sepet.js' %}"></script>
 </body>
 
 </html>
