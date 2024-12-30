@@ -8,11 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
 
     <!-- SEO Meta Tags -->
-    <title>Sepet -Kılıç Civata </title>
-    <meta name="description" content="Yerli üretim, yenilikçi çözümler ve rekabetçi fiyatlarla uluslararası kalitenin adresi: Kılıç Civata herzaman yanınızda!">
-    <meta name="keywords" content="vida, civata, saplama">
-    <meta name="author" content="Mustafa Kılıç">
-    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>404 Sayfa -Kılıç Civata</title>
+    <meta name="description" content="aradığınız sayfa, ya silinmiş yada hiç var olmamış olabilir.">
+    <meta name="keywords" content="404 page, 404">
+    <meta name="author" content="Kılıç Civata">
 
     <!-- Webmanifest + Favicon / App icons -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -24,18 +23,12 @@
     <!-- Theme switcher (color modes) -->
     <script src="{% static 'js/theme-switcher.js' %}"></script>
 
-
-
     <!-- Preloaded local web font (Inter) -->
     <link rel="preload" href="{% static 'fonts/inter-variable-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
 
     <!-- Font icons -->
     <link rel="preload" href="{% static 'icons/cartzilla-icons.woff2' %}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="{% static 'icons/cartzilla-icons.min.css' %}">
-
-    <!-- Vendor styles -->
-    <link rel="stylesheet" href="{% static 'vendor/choices.js/choices.min.css' %}">
-    <link rel="stylesheet" href="{% static 'vendor/nouislider/nouislider.min.css' %}">
 
     <!-- Bootstrap + Theme styles -->
     <link rel="preload" href="{% static 'css/theme.min.css' %}" as="style">
@@ -46,6 +39,9 @@
 
   <!-- Body -->
   <body>
+
+
+    
 
     <!-- Navigation bar (Page header) -->
     <header class="navbar navbar-expand-lg navbar-dark bg-dark d-block z-fixed p-0" data-sticky-navbar='{"offset": 500}'>
@@ -327,230 +323,31 @@
     </header>
 
 
+
     <!-- Page content -->
-    <main class="content-wrapper">
+    <main class="content-wrapper d-flex align-items-center justify-content-center">
+      <div class="container">
 
-      <!-- Breadcrumb -->
-      <nav class="container pt-3 my-3 my-md-4" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'home' %}">Anasayfa</a></li>
-          <li class="breadcrumb-item"><a href="{% url 'product_list' %}">Ürünler</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Sepet</li>
-        </ol>
-      </nav>
-
-
-      <!-- Items in the cart + Order summary -->
-      <section class="container pb-5 mb-2 mb-md-3 mb-lg-4 mb-xl-5">
-        <h1 class="h3 mb-4">Sepet</h1>
-        <div class="row">
-
-          <!-- Items list -->
-          <div class="col-lg-8">
-            <div class="pe-lg-2 pe-xl-3 me-xl-3">
-              <p class="fs-sm">Toplam adet miktarı en az <span class="text-dark-emphasis fw-semibold">1000</span> adet olmalıdır. 1000 adetin altındaki siparişler işleme alınmaz. Şuan sepetinizde toplam <span class="text-dark-emphasis fw-semibold">{{ cart.top }}</span> adet miktarı mevcuttur.<span class="text-dark-emphasis fw-semibold"> Anlayışınız için teşekkür ederiz.</span></p>
-              <div class="progress w-100 overflow-visible mb-4" role="progressbar" aria-label="Free shipping progress" aria-valuenow="75" aria-valuemin="0" aria-valuemax="1000" style="height: 4px">
-                <div class="progress-bar bg-warning rounded-pill position-relative overflow-visible" style="width: {{ cart.top_percentage }}%; height: 4px">
-                  <div class="position-absolute top-50 end-0 d-flex align-items-center justify-content-center translate-middle-y bg-body border border-warning rounded-circle me-n1" style="width: 1.5rem; height: 1.5rem">
-                    <i class="ci-star-filled text-warning"></i>
-                  </div>
-                </div>
-              </div>
-
-              <table class="table position-relative z-2 mb-4">
-                <thead>
-                  <tr>
-                    <th scope="col" class="fs-sm fw-normal py-3 ps-0"><span class="text-body">Ürün</span></th>
-                    <th scope="col" class="text-body fs-sm fw-normal py-3 d-none d-xl-table-cell"><span class="text-body">Toplam adet</span></th>
-                    <th scope="col" class="text-body fs-sm fw-normal py-3 d-none d-md-table-cell"><span class="text-body">Miktar</span></th>
-                    <th scope="col" class="text-body fs-sm fw-normal py-3 d-none d-md-table-cell"><span class="text-body">Toplam fiyat</span></th>
-                    <th scope="col" class="py-0 px-0">
-                      <div class="nav justify-content-end">
-                        <button type="button" onclick="clearCart()" class="nav-link d-inline-block text-decoration-underline text-nowrap py-3 px-0">Sepeti sıfırla</button>
-                      </div>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="align-middle">
-                  {% for item in cart.items %}
-                  <tr>
-                    <td class="py-3 ps-0">
-                      <div class="d-flex align-items-center">
-                        <a class="flex-shrink-0" href="{% url 'product_detail' slug=item.slug %}">
-                          <img src="{{ item.image }}" width="110" alt="{{ item.name }}" loading="lazy">
-                        </a>
-                        <div class="w-100 min-w-0 ps-2 ps-xl-3">
-                          <h5 class="d-flex animate-underline mb-2">
-                            <a class="d-block fs-sm fw-medium text-truncate animate-target" href="{% url 'product_detail' slug=item.slug %}">{{ item.name }}</a>
-                          </h5>
-                        </div>
-                      </div>
-                    </td>
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                    <td class="h6 py-3 d-none d-xl-table-cell">{{ item.miktar }} adet</td>
-                    
-                    <td class="py-3 d-none d-md-table-cell">
-                      <div class="count-input">
-                        <button type="button" class="btn btn-icon" onclick="updateCartQuantity({{ item.id }}, 'decrement')" aria-label="Decrement quantity">
-                          <i class="ci-minus"></i>
-                        </button>
-                        <input type="number" class="form-control" value="{{ item.quantity }}" readonly>
-                        <button type="button" class="btn btn-icon" onclick="updateCartQuantity({{ item.id }}, 'increment')" aria-label="Increment quantity">
-                          <i class="ci-plus"></i>
-                        </button>
-                      </div>
-                    </td>
-                    <td class="h6 py-3 d-none d-md-table-cell">
-                      {% if item.subtotal == 0 %}
-                        Teklif Alın
-                      {% else %}
-                        {{ item.subtotal|floatformat:2 }} TL
-                      {% endif %}
-                    </td>
-                    <td class="text-end py-3 px-0">
-                      <button type="button" class="btn-close fs-sm" onclick="removeFromCart({{ item.id }})" aria-label="Remove from cart"></button>
-                    </td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-
-              <div class="nav position-relative z-2 mb-4 mb-lg-0">
-                <a class="nav-link animate-underline px-0" href="{% url 'product_list' %}">
-                  <i class="ci-chevron-left fs-lg me-1"></i>
-                  <span class="animate-target">Alışverişe devam et</span>
-                </a>
-              </div>
-            </div>
+        <!-- Error message -->
+        <section class="text-center py-5 px-2 px-sm-0 my-2 my-md-3 my-lg-4 my-xl-5 mx-auto" style="max-width: 636px">
+          <div class="pb-4 mb-3 mx-auto" style="max-width: 524px">
+            <svg class="text-body-emphasis" viewBox="0 0 524 200" xmlns="http://www.w3.org/2000/svg"><path d="M0.422852 158.785C0.422852 159.89 1.31828 160.785 2.42285 160.785H88.4885V189C88.4885 190.105 89.3839 191 90.4885 191H128.607C129.711 191 130.607 190.105 130.607 189V160.785H150.423C151.527 160.785 152.423 159.89 152.423 158.785V128.127C152.423 127.022 151.527 126.127 150.423 126.127H130.607V11C130.607 9.89543 129.711 9 128.607 9H76.23C75.546 9 74.9094 9.34959 74.5423 9.92679L0.735186 125.991C0.531195 126.312 0.422852 126.684 0.422852 127.064V158.785ZM89.3789 55.5664H89.0558C88.37 55.5664 87.732 55.9178 87.3654 56.4975L44.4037 124.435C44.2922 124.611 44.233 124.816 44.233 125.024C44.233 125.633 44.7267 126.127 45.3356 126.127H89.3789V55.5664Z" fill-rule="evenodd" fill="currentColor"/><path d="M371.423 158.785C371.423 159.89 372.318 160.785 373.423 160.785H459.488V189C459.488 190.105 460.384 191 461.488 191H499.607C500.711 191 501.607 190.105 501.607 189V160.785H521.423C522.527 160.785 523.423 159.89 523.423 158.785V128.127C523.423 127.022 522.527 126.127 521.423 126.127H501.607V11C501.607 9.89543 500.711 9 499.607 9H447.23C446.546 9 445.909 9.34959 445.542 9.92679L371.735 125.991C371.531 126.312 371.423 126.684 371.423 127.064V158.785ZM460.379 55.5664H460.056C459.37 55.5664 458.732 55.9178 458.365 56.4975L415.404 124.435C415.292 124.611 415.233 124.816 415.233 125.024C415.233 125.633 415.727 126.127 416.336 126.127H460.379V55.5664Z" fill-rule="evenodd" fill="currentColor"/><path class="d-none d-block-dark" d="M316.912 38.6614V175.465C316.912 184.041 309.953 191 301.376 191H224.836C216.26 191 209.3 184.041 209.3 175.465V38.6614C209.3 30.0853 216.26 23.1261 224.836 23.1261H228.67C233.184 23.1261 236.842 19.4674 236.842 14.9541V14.9541C236.842 11.6657 239.508 9 242.796 9H283.438C286.726 9 289.392 11.6657 289.392 14.9541V14.9541C289.392 19.4674 293.05 23.1261 297.564 23.1261H301.398C309.963 23.1261 316.912 30.0853 316.912 38.6614Z" fill="#333d4c"/><path class="d-none d-block-dark" d="M215.812 176.426V37.711C215.812 33.2536 219.428 29.6374 223.885 29.6374H302.338C306.795 29.6374 310.411 33.2536 310.411 37.711V176.426C310.411 180.883 306.795 184.5 302.338 184.5H223.885C219.428 184.5 215.812 180.883 215.812 176.426Z" fill="#3f4958"/><path class="d-none-dark" d="M316.912 38.6614V175.465C316.912 184.041 309.953 191 301.376 191H224.836C216.26 191 209.3 184.041 209.3 175.465V38.6614C209.3 30.0853 216.26 23.1261 224.836 23.1261H228.67C233.184 23.1261 236.842 19.4674 236.842 14.9541C236.842 11.6657 239.508 9 242.796 9H283.438C286.726 9 289.392 11.6657 289.392 14.9541C289.392 19.4674 293.05 23.1261 297.564 23.1261H301.398C309.963 23.1261 316.912 30.0853 316.912 38.6614Z" fill="url(#paint0_linear_2927_3489)"/><path class="d-none-dark" d="M215.812 176.426V37.711C215.812 33.2536 219.428 29.6374 223.885 29.6374H302.338C306.795 29.6374 310.411 33.2536 310.411 37.711V176.426C310.411 180.883 306.795 184.5 302.338 184.5H223.885C219.428 184.5 215.812 180.883 215.812 176.426Z" fill="url(#paint1_linear_2927_3489)"/><path class="text-primary" d="M306.522 162.66V175.388C306.522 178.261 304.184 180.599 301.311 180.599H224.912C222.039 180.599 219.701 178.261 219.701 175.388V162.66H306.522Z" fill="currentColor"/><rect class="animate-blink text-primary" x="219.7" y="141" width="86.82" height="17.94" fill="currentColor"/><defs><linearGradient id="paint0_linear_2927_3489" x1="209.3" y1="100" x2="316.912" y2="100" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#accbee"/><stop offset="1" stop-color="#e7f0fd"/></linearGradient><linearGradient id="paint1_linear_2927_3489" x1="263.111" y1="184.5" x2="263.111" y2="29.6374" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d3e6f5"/><stop offset="1" stop-color="#f0f7fc"/></linearGradient></defs></svg>
           </div>
+          <h1>Sayfa bulunamadı...</h1>
+          <p class="pb-3">Aradığınız sayfa taşınmış, silinmiş veya hiç var olmamış olabilir.</p>
+          <a class="btn btn-lg btn-primary" href="{% url 'home' %}">Anasayfa'ya git</a>
+        </section>
 
-
-          <!-- Order summary (sticky sidebar) -->
-          <aside class="col-lg-4" style="margin-top: -100px">
-            <div class="position-sticky top-0" style="padding-top: 100px">
-              <div class="bg-body-tertiary rounded-5 p-4 mb-3">
-                <div class="p-sm-2 p-lg-0 p-xl-2">
-                  <h5 class="border-bottom pb-4 mb-4">Sepet Özeti</h5>
-                  <ul class="list-unstyled fs-sm gap-3 mb-0">
-                    {% for item in cart.items %}
-                    <li class="d-flex justify-content-between">
-                      {{ item.name }}
-                      <span class="text-dark-emphasis fw-medium">{{ item.miktar }} adet</span>
-                    </li>
-                    {% endfor %}
-                    <br><hr>
-                    <li class="d-flex justify-content-between">
-                      <span class="text-dark-emphasis">Toplam adet:</span>
-                      <span class="text-dark-emphasis fw-medium">{{ cart.top }} adet</span>
-                    </li>
-                  </ul>
-                  <div class="border-top pt-4 mt-4">
-                    <div class="d-flex justify-content-between mb-3">
-                      <span class="fs-sm">Toplam Fiyat:</span>
-                      <span class="h5 mb-0">₺ {{ cart.top_money }}</span>
-                    </div>
-                    <span id="totalMiktar" style="display: none;">{{ cart.top }}</span>
-                    <input type="hidden" id="whatsappUrl" value="{{ cart.whatsapp_url }}">
-                    <button id="checkoutButton" class="btn btn-lg btn-success w-100" onclick="handleCheckout()">
-                      WhatsApp'tan sipariş ver 
-                      <i class="ci-chevron-right fs-lg ms-1 me-n1"></i>
-                    </button>
-                    <div class="nav justify-content-center fs-sm mt-3">
-                      Eğer sepetinizde fiyatı belirlenmemiş ürün varsa Toplam fiyatı whatsapp üzerinden 1'e bir görüşmelerde belirlenir.
-                      <!--<span class="text-dark-emphasis fw-medium ms-1">239 bonuses</span>-->
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
-          </aside>
-        </div>
-      </section>
-
+      </div>
     </main>
 
 
     <!-- Page footer -->
-    <footer class="footer position-relative bg-dark">
-      <span class="position-absolute top-0 start-0 w-100 h-100 bg-body d-none d-block-dark"></span>
-      <div class="container position-relative z-1 pt-sm-2 pt-md-3 pt-lg-4" data-bs-theme="dark">
-    
-        <!-- İletişim Bilgileri -->
-        <div class="row py-5">
-          <div class="col-md-4 mb-4 mb-md-0">
-            <h4 class="text-light">Kılıç Civata</h4>
-            <p class="text-body fs-sm">20 yıllık tecrübesi ve geniş ürün yelpazesi olan Kılıç Civata; Vida, civata ve saplamaların üretimini gerçekleştirir ve müşterilere yönelik çözüm alternatifleri sunar.</p>
-            <p class="text-body fs-sm"><strong>Adres:</strong></p>
-            <p class="text-body fs-sm">{{ contact_info.address }}</p>
-            <p class="text-body fs-sm"><strong>E-posta:</strong><a href="mailto:{{ contact_info.email }}" class="text-light">&ensp;{{ contact_info.email }}</a></p>
-            <p class="text-body fs-sm"><strong>WhatsApp:</strong>&ensp;{{ contact_info.whatsapp }}</p>
-            <p class="text-body fs-sm"><strong>Tel:</strong>&ensp;{{ contact_info.phone }}</p>
-            
-            
-          </div>
-          <div class="accordion-item col border-0">
-            <h6 class="accordion-header" id="companyHeading">
-              <span class="text-dark-emphasis d-none d-sm-block">ÜRÜNLER</span>
-              <button type="button" class="accordion-button collapsed py-3 d-sm-none" data-bs-toggle="collapse" data-bs-target="#companyLinks" aria-expanded="false" aria-controls="companyLinks">Ürünler</button>
-            </h6>
-            <div class="accordion-collapse collapse d-sm-block" id="companyLinks" aria-labelledby="companyHeading" data-bs-parent="#footerLinks">
-              <ul class="nav flex-column gap-2 pt-sm-3 pb-3 mt-n1 mb-1">
-                {% for category in categories %}
-                  <li class="d-flex w-100 pt-1">
-                    <a href="{% url 'product_list' %}?title_type={{ category.name|urlencode }}" class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0">
-                      {{ category.name }}
-                    </a>
-                  </li>
-                {% endfor %}
-                
-              </ul>
-            </div>
-            <hr class="d-sm-none my-0">
-          </div>
-    
-          
-    
-          <!-- Sosyal Medya -->
-          <div class="col-md-4">
-            <h5 class="text-light">Sosyal Medya</h5>
-            <ul class="nav flex-column text-light">
-              <li class="ci-instagram d-flex w-100 pt-1">
-                <a href="{{ social_links.instagram }}" target="_blank" class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0">
-                  &ensp;Instagram
-                </a>
-              </li>
-              <br>
-              <li class="ci-facebook d-flex w-100 pt-1">
-                <a href="{{ social_links.facebook }}" target="_blank" class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0">
-                  &ensp;Facebook
-                </a>
-              </li>
-              <br>
-              <li class="ci-mail d-flex w-100 pt-1">
-                <a href="{{ social_links.email }}" class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0">
-                  &ensp;E-posta
-                </a>
-              </li>
-              <br>
-              <li class="ci-external-link d-flex w-100 pt-1">
-                <a href="{{ social_links.sitemap }}" class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0">
-                  &ensp;Sitemap(site haritası)
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-    
-        <!-- Alt Bilgi -->
-        <div class="d-md-flex align-items-center border-top py-4 text-center text-md-start">
-          <p class="text-body fs-xs mb-0">
-            &copy; 2024 <strong>Kılıç Civata</strong>. Tüm hakları saklıdır.
-            Bu site <a href="https://www.instagram.com/musa_guny/" target="_blank" class="text-light">Musa Güney</a>
-            ve <a href="https://www.instagram.com/berkant_yurtsever/" target="_blank" class="text-light">Berkant Yurtsever</a>
-            tarafından geliştirilmiştir.
-          </p>
-        </div>
+    <footer class="footer pt-5 pb-4 mt-2 mt-md-3 mt-lg-4 mt-xl-5">
+      <div class="container text-center pb-sm-2 pb-md-3">
+        <p class="fs-sm mb-0">
+          &copy; Tüm hakları Kılıç Civata' a aittir. . Geliştirici <span class="animate-underline"><a class="animate-target text-dark-emphasis fw-medium text-decoration-none" href="https://www.instagram.com/musa_guny/" target="_blank" rel="noreferrer">Musa Güney</a></span>
+        </p>
       </div>
     </footer>
 
@@ -561,53 +358,13 @@
         Baş
         <i class="ci-arrow-right fs-base ms-1 me-n1 animate-target"></i>
         <span class="position-absolute top-0 start-0 w-100 h-100 border rounded-pill z-0"></span>
-        <svg class="position-absolute top-0 start-0 w-100 h-100 z-1" viewBox="0 0 62 32" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <rect x=".75" y=".75" width="60.5" height="30.5" rx="15.25" stroke="currentColor" stroke-width="1.5"
-            stroke-miterlimit="10" />
+        <svg class="position-absolute top-0 start-0 w-100 h-100 z-1" viewBox="0 0 62 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x=".75" y=".75" width="60.5" height="30.5" rx="15.25" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"/>
         </svg>
       </a>
     </div>
 
-    <!-- Vendor scripts -->
-    <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
-    
-
     <!-- Bootstrap + Theme scripts -->
     <script src="{% static 'js/theme.min.js' %}"></script>
-    <script src="{% static 'js/sepet.js' %}"></script>
-    <script>
-      function handleCheckout() {
-        // Toplam miktarı al
-        const totalMiktar = parseInt(document.getElementById('totalMiktar').innerText);
-
-        if (totalMiktar < 1000) {
-          const messageBox = document.createElement('div');
-          messageBox.textContent = 'Sepetteki ürünlerin toplam adeti 1000\'den az! Lütfen daha fazla ürün ekleyiniz.';
-          messageBox.style.position = 'fixed';
-          messageBox.style.bottom = '20px';
-          messageBox.style.right = '20px';
-          messageBox.style.padding = '10px 20px';
-          messageBox.style.backgroundColor = '#f44336';
-          messageBox.style.color = 'white';
-          messageBox.style.borderRadius = '5px';
-          messageBox.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
-          messageBox.style.zIndex = '1000';
-
-          document.body.appendChild(messageBox);
-
-          setTimeout(() => {
-              messageBox.remove();
-          }, 2000);
-
-          return;
-        }
-
-        // Toplam miktar uygunsa yönlendir
-        const whatsappUrl = document.getElementById('whatsappUrl').value;
-        window.location.href = whatsappUrl;
-      }
-    </script>
-
   </body>
 </html>

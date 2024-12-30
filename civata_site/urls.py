@@ -24,7 +24,7 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('service-worker.js', TemplateView.as_view(template_name="service-worker.js", content_type="application/javascript")),
+    path('service-worker.js', TemplateView.as_view(template_name="assets/service-worker.js", content_type="application/javascript")),
     path('', include('products.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),  # CKEditor uploader rotası
     

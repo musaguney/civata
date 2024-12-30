@@ -1,5 +1,7 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from .forms import SubscriptionForm
 from django.db.models import Count
 from .models import Product
 from .models import Category
@@ -7,11 +9,58 @@ from .filters import ProductFilter
 from django.http import JsonResponse
 from .cart_manager import CartManager
 
+def offline_page(request):
+    return render(request, 'assets/offline.html')
 
+def product_detail(request, slug):
+    # İlgili ürünü getir
+    product = get_object_or_404(Product, slug=slug)
+    
+    # Tüm ürünleri al
+    all_products = Product.objects.all()
+    
+    # Döngü ile kategori ismi aynı olanları filtrele ve mevcut ürünü hariç tut
+    category_products = [
+    {
+        'id': urun.id,
+        'name': urun.name,
+        'price': urun.price,
+        'slug': urun.slug,
+        'main_image': urun.main_image.url if urun.main_image else None,
+        'quantity': urun.quantity,
+    }
+    for urun in all_products 
+    if urun.category.name == product.category.name and urun.slug != product.slug
+    ]
+    
+    return render(request, 'product_detail.html', {
+        'product': product,
+        'category_products': category_products
+    })
+    
+
+def about(request):
+    """Hakkımızda sayfası görünümü."""
+    return render(request, 'about.html')
+
+def contact(request):
+    """iletişim sayfası görünümü."""
+    return render(request, 'contact.html')
+ 
 def home(request):
     """Ana sayfa görünümü."""
     products = Product.objects.all()  # Ana sayfa için ürünler
-    return render(request, 'index.html', {'products': products})
+
+    if request.method == "POST":
+        form = SubscriptionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "E-bültene başarıyla abone oldunuz!")
+            return redirect('home')  # Ana sayfaya yönlendirme
+    else:
+        form = SubscriptionForm()
+
+    return render(request, 'index.html', {'products': products, 'form': form})
    
    
 def sepet(request):
@@ -114,6 +163,14 @@ def product_list(request):
             'count': length_counts_db.get(length, 0)  # Veritabanında yoksa 0
         })
 
+    # category_slug ile filtreleme
+    category_slug = request.GET.get('category', '')
+    if category_slug and category_slug != 'Hepsi':
+        filtered_products = filtered_products.filter(category__category_slug=category_slug)  # Slug ile tam eşleşme     
+
+    
+    
+    
     # Filtreleme seçeneklerini oluştur
     product_type_counts = products.values('product_type').annotate(count=Count('product_type'))
     title_type_counts = products.values('title_type').annotate(count=Count('title_type'))

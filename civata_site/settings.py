@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_filters',
     'ckeditor',
     'ckeditor_uploader',
+    'django.contrib.sitemaps',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,7 @@ TEMPLATES = [
                 # Kendi context processor'ınız
                 'products.context_processors.menu_data',
                 'products.context_processors.index_product',
+                'products.context_processors.footer_context',
             ],
         },
     },
@@ -112,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Istanbul'
 
 USE_I18N = True
 
@@ -144,4 +146,10 @@ CKEDITOR_5_CONFIGS = {
         'height': 300,
         'width': '100%',
     },
+}
+
+# Mesajların saklanma yöntemi
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.SUCCESS: 'alert-success',
 }

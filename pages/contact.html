@@ -8,11 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
 
     <!-- SEO Meta Tags -->
-    <title>Sepet -Kılıç Civata </title>
-    <meta name="description" content="Yerli üretim, yenilikçi çözümler ve rekabetçi fiyatlarla uluslararası kalitenin adresi: Kılıç Civata herzaman yanınızda!">
-    <meta name="keywords" content="vida, civata, saplama">
-    <meta name="author" content="Mustafa Kılıç">
-    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>İletişim - Kılıç Civata</title>
+    <meta name="description" content="Ürünlerimiz hakkında detaylı bilgi almak ve 7/24 destek talepleriniz için iletişime geçin.">
+    <meta name="keywords" content="İletişim, Bize Ulaşın, İletişim Bilgileri, Destek Hattı, kilic civata">
+    <meta name="author" content="Kılıç Civata">
 
     <!-- Webmanifest + Favicon / App icons -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -20,11 +19,10 @@
     <link rel="manifest" href="{% static 'manifest.json' %}">
     <link rel="icon" type="image/png" href="{% static 'app-icons/icon-32x32.png' %}" sizes="32x32">
     <link rel="apple-touch-icon" href="{% static 'app-icons/icon-180x180.png' %}">
+    
 
     <!-- Theme switcher (color modes) -->
     <script src="{% static 'js/theme-switcher.js' %}"></script>
-
-
 
     <!-- Preloaded local web font (Inter) -->
     <link rel="preload" href="{% static 'fonts/inter-variable-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
@@ -34,8 +32,9 @@
     <link rel="stylesheet" href="{% static 'icons/cartzilla-icons.min.css' %}">
 
     <!-- Vendor styles -->
-    <link rel="stylesheet" href="{% static 'vendor/choices.js/choices.min.css' %}">
-    <link rel="stylesheet" href="{% static 'vendor/nouislider/nouislider.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/swiper/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/simplebar/simplebar.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/glightbox/glightbox.min.css' %}">
 
     <!-- Bootstrap + Theme styles -->
     <link rel="preload" href="{% static 'css/theme.min.css' %}" as="style">
@@ -298,7 +297,7 @@
                       <a class="nav-link" href="{% url 'about' %}">Hakkımızda</a>
                     </li>
                     <li class="nav-item me-lg-n2 me-xl-0">
-                      <a class="nav-link" href="{% url 'contact' %}">İletişim</a>
+                      <a class="nav-link active" href="{% url 'contact' %}">İletişim</a>
                     </li>
 
                   </ul>
@@ -330,144 +329,161 @@
     <!-- Page content -->
     <main class="content-wrapper">
 
-      <!-- Breadcrumb -->
-      <nav class="container pt-3 my-3 my-md-4" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'home' %}">Anasayfa</a></li>
-          <li class="breadcrumb-item"><a href="{% url 'product_list' %}">Ürünler</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Sepet</li>
-        </ol>
-      </nav>
 
-
-      <!-- Items in the cart + Order summary -->
-      <section class="container pb-5 mb-2 mb-md-3 mb-lg-4 mb-xl-5">
-        <h1 class="h3 mb-4">Sepet</h1>
-        <div class="row">
-
-          <!-- Items list -->
-          <div class="col-lg-8">
-            <div class="pe-lg-2 pe-xl-3 me-xl-3">
-              <p class="fs-sm">Toplam adet miktarı en az <span class="text-dark-emphasis fw-semibold">1000</span> adet olmalıdır. 1000 adetin altındaki siparişler işleme alınmaz. Şuan sepetinizde toplam <span class="text-dark-emphasis fw-semibold">{{ cart.top }}</span> adet miktarı mevcuttur.<span class="text-dark-emphasis fw-semibold"> Anlayışınız için teşekkür ederiz.</span></p>
-              <div class="progress w-100 overflow-visible mb-4" role="progressbar" aria-label="Free shipping progress" aria-valuenow="75" aria-valuemin="0" aria-valuemax="1000" style="height: 4px">
-                <div class="progress-bar bg-warning rounded-pill position-relative overflow-visible" style="width: {{ cart.top_percentage }}%; height: 4px">
-                  <div class="position-absolute top-50 end-0 d-flex align-items-center justify-content-center translate-middle-y bg-body border border-warning rounded-circle me-n1" style="width: 1.5rem; height: 1.5rem">
-                    <i class="ci-star-filled text-warning"></i>
-                  </div>
-                </div>
-              </div>
-
-              <table class="table position-relative z-2 mb-4">
-                <thead>
-                  <tr>
-                    <th scope="col" class="fs-sm fw-normal py-3 ps-0"><span class="text-body">Ürün</span></th>
-                    <th scope="col" class="text-body fs-sm fw-normal py-3 d-none d-xl-table-cell"><span class="text-body">Toplam adet</span></th>
-                    <th scope="col" class="text-body fs-sm fw-normal py-3 d-none d-md-table-cell"><span class="text-body">Miktar</span></th>
-                    <th scope="col" class="text-body fs-sm fw-normal py-3 d-none d-md-table-cell"><span class="text-body">Toplam fiyat</span></th>
-                    <th scope="col" class="py-0 px-0">
-                      <div class="nav justify-content-end">
-                        <button type="button" onclick="clearCart()" class="nav-link d-inline-block text-decoration-underline text-nowrap py-3 px-0">Sepeti sıfırla</button>
-                      </div>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="align-middle">
-                  {% for item in cart.items %}
-                  <tr>
-                    <td class="py-3 ps-0">
-                      <div class="d-flex align-items-center">
-                        <a class="flex-shrink-0" href="{% url 'product_detail' slug=item.slug %}">
-                          <img src="{{ item.image }}" width="110" alt="{{ item.name }}" loading="lazy">
-                        </a>
-                        <div class="w-100 min-w-0 ps-2 ps-xl-3">
-                          <h5 class="d-flex animate-underline mb-2">
-                            <a class="d-block fs-sm fw-medium text-truncate animate-target" href="{% url 'product_detail' slug=item.slug %}">{{ item.name }}</a>
-                          </h5>
-                        </div>
-                      </div>
-                    </td>
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                    <td class="h6 py-3 d-none d-xl-table-cell">{{ item.miktar }} adet</td>
-                    
-                    <td class="py-3 d-none d-md-table-cell">
-                      <div class="count-input">
-                        <button type="button" class="btn btn-icon" onclick="updateCartQuantity({{ item.id }}, 'decrement')" aria-label="Decrement quantity">
-                          <i class="ci-minus"></i>
-                        </button>
-                        <input type="number" class="form-control" value="{{ item.quantity }}" readonly>
-                        <button type="button" class="btn btn-icon" onclick="updateCartQuantity({{ item.id }}, 'increment')" aria-label="Increment quantity">
-                          <i class="ci-plus"></i>
-                        </button>
-                      </div>
-                    </td>
-                    <td class="h6 py-3 d-none d-md-table-cell">
-                      {% if item.subtotal == 0 %}
-                        Teklif Alın
-                      {% else %}
-                        {{ item.subtotal|floatformat:2 }} TL
-                      {% endif %}
-                    </td>
-                    <td class="text-end py-3 px-0">
-                      <button type="button" class="btn-close fs-sm" onclick="removeFromCart({{ item.id }})" aria-label="Remove from cart"></button>
-                    </td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-
-              <div class="nav position-relative z-2 mb-4 mb-lg-0">
-                <a class="nav-link animate-underline px-0" href="{% url 'product_list' %}">
-                  <i class="ci-chevron-left fs-lg me-1"></i>
-                  <span class="animate-target">Alışverişe devam et</span>
-                </a>
-              </div>
+      <!-- Page title -->
+      <section class="position-relative bg-body-tertiary py-4">
+        <img src="{% static '/img/contact.webp' %}" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover rtl-flip" alt="iletişim">
+        <div class="container position-relative z-2 py-4 py-md-5 my-lg-3 my-xl-4 my-xxl-5">
+          <div class="row pt-lg-2 pb-2 pb-sm-3 pb-lg-4">
+            <div class="col-9 col-md-8 col-lg-6">
+              <h1 class="display-4 mb-lg-4">İletişim</h1>
+              <p class="mb-0">Bizimle iletişime geçmekten çekinmeyin, herhangi bir problemde bir telefon uzağınızdayız..</p>
             </div>
           </div>
-
-
-          <!-- Order summary (sticky sidebar) -->
-          <aside class="col-lg-4" style="margin-top: -100px">
-            <div class="position-sticky top-0" style="padding-top: 100px">
-              <div class="bg-body-tertiary rounded-5 p-4 mb-3">
-                <div class="p-sm-2 p-lg-0 p-xl-2">
-                  <h5 class="border-bottom pb-4 mb-4">Sepet Özeti</h5>
-                  <ul class="list-unstyled fs-sm gap-3 mb-0">
-                    {% for item in cart.items %}
-                    <li class="d-flex justify-content-between">
-                      {{ item.name }}
-                      <span class="text-dark-emphasis fw-medium">{{ item.miktar }} adet</span>
-                    </li>
-                    {% endfor %}
-                    <br><hr>
-                    <li class="d-flex justify-content-between">
-                      <span class="text-dark-emphasis">Toplam adet:</span>
-                      <span class="text-dark-emphasis fw-medium">{{ cart.top }} adet</span>
-                    </li>
-                  </ul>
-                  <div class="border-top pt-4 mt-4">
-                    <div class="d-flex justify-content-between mb-3">
-                      <span class="fs-sm">Toplam Fiyat:</span>
-                      <span class="h5 mb-0">₺ {{ cart.top_money }}</span>
-                    </div>
-                    <span id="totalMiktar" style="display: none;">{{ cart.top }}</span>
-                    <input type="hidden" id="whatsappUrl" value="{{ cart.whatsapp_url }}">
-                    <button id="checkoutButton" class="btn btn-lg btn-success w-100" onclick="handleCheckout()">
-                      WhatsApp'tan sipariş ver 
-                      <i class="ci-chevron-right fs-lg ms-1 me-n1"></i>
-                    </button>
-                    <div class="nav justify-content-center fs-sm mt-3">
-                      Eğer sepetinizde fiyatı belirlenmemiş ürün varsa Toplam fiyatı whatsapp üzerinden 1'e bir görüşmelerde belirlenir.
-                      <!--<span class="text-dark-emphasis fw-medium ms-1">239 bonuses</span>-->
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
-          </aside>
         </div>
       </section>
 
+
+      <!-- Contact details -->
+      <section class="container pt-5 mt-2 mt-sm-3 mt-lg-4 mt-xl-5 mb-n3">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4 pt-lg-2 pt-xl-0">
+
+          <!-- Location -->
+          <div class="col">
+            <div class="d-flex align-items-center">
+              <i class="ci-map-pin fs-lg text-dark-emphasis"></i>
+              <h3 class="h6 ps-2 ms-1 mb-0">Adres</h3>
+            </div>
+            <hr class="text-dark-emphasis opacity-50 my-3 my-md-4">
+            <ul class="list-unstyled">
+              <li>İkitelli OSB İPKAS Plastikçiler Sanayi Sitesi, 3B Blok No:32</li>
+              
+              <li>Başakşehir/ İstanbul</li>
+            </ul>
+          </div>
+
+          <!-- Phones -->
+          <div class="col">
+            <div class="d-flex align-items-center">
+              <i class="ci-phone-outgoing fs-lg text-dark-emphasis"></i>
+              <h3 class="h6 ps-2 ms-1 mb-0">Telefon</h3>
+            </div>
+            <hr class="text-dark-emphasis opacity-50 my-3 my-md-4">
+            <ul class="list-unstyled">
+              <li>Tel: +90 212 549 34 55</li>
+              <li>WhatsApp: +90 533 264 65 98</li>
+            </ul>
+          </div>
+
+          <!-- Emails -->
+          <div class="col">
+            <div class="d-flex align-items-center">
+              <i class="ci-mail fs-lg text-dark-emphasis"></i>
+              <h3 class="h6 ps-2 ms-1 mb-0">E-posta</h3>
+            </div>
+            <hr class="text-dark-emphasis opacity-50 my-3 my-md-4">
+            <ul class="list-unstyled">
+              <li>E-mail: info@kiliccivata.com</li>
+            </ul>
+          </div>
+
+          <!-- Working hours -->
+          <div class="col">
+            <div class="d-flex align-items-center">
+              <i class="ci-clock fs-lg text-dark-emphasis"></i>
+              <h3 class="h6 ps-2 ms-1 mb-0">Çalışma Saatleri</h3>
+            </div>
+            <hr class="text-dark-emphasis opacity-50 my-3 my-md-4">
+            <ul class="list-unstyled">
+              <li>Hafta içi: 09:00 – 17:00</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Support / Help center -->
+      <section class="container py-5 my-2 my-sm-3 my-lg-4 my-xl-5">
+        <div class="d-sm-flex align-items-center justify-content-between py-xxl-3">
+          <div class="mb-4 mb-sm-0 me-sm-4">
+            <h2 class="h3">Desteğe mi ihtiyacınız var?</h2>
+            <p class="mb-0">Yandaki whatsapp butonuna tıklayarak 7/24 kesintisiz destek alabilirsiniz. Ayrıca, aşağıdaki haritadaki ikona tıklayarak üretim atölyemizin konumunu görüntüleyebilirsiniz.</p>
+          </div>
+          <a class="btn btn-lg btn-outline-dark" href="https://wa.me/905332646598?text=www.kiliccivata.com%20websitenizden%20size%20ulaşıyorum.%20Ürünleriniz%20hakkında%20daha%20detaylı%20bilgi%20alabilir%20miyim?" target="_blank">WhatsApp</a>
+        </div>
+      </section>
+
+
+
+
+      <!-- Map -->
+      <section class="position-relative bg-body-tertiary">
+        <a class="position-absolute top-50 start-50 translate-middle z-2 mt-lg-n4" href="https://www.google.com/maps?q=41.0758333,28.7968333&hl=tr&z=16&output=embed" style="width: 50px" data-bs-toggle="popover" data-bs-placement="top" data-bs-trigger="hover" data-bs-content="Haritayı görmek için tıkla!" data-glightbox="width: 100vw; height: 100vh;" data-gallery="map" aria-label="Toggle map">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.5 54.6"><path d="M42.5 19.2C42.5 8.1 33.2-.7 22 0 12.4.7 4.7 8.5 4.2 18c-.2 2.7.3 5.3 1.1 7.7h0s3.4 10.4 17.4 25c.4.4 1 .4 1.4 0 13.6-13.3 17.4-25 17.4-25h0c.6-2 1-4.2 1-6.5z" fill="#ffffff"/><g fill="#222934"><path d="M20.4 31.8c-4.5 0-8.1-3.6-8.1-8.1s3.6-8.1 8.1-8.1 8.1 3.6 8.1 8.1-3.7 8.1-8.1 8.1zm0-14.2a6.06 6.06 0 0 0-6.1 6.1 6.06 6.06 0 0 0 6.1 6.1c3.3 0 6.1-2.7 6.1-6.1s-2.8-6.1-6.1-6.1z"/><circle cx="20.4" cy="23.7" r="3"/><path d="M20.4 54.5c-.6 0-1.1-.2-1.4-.6C5 39.3 1.5 29 1.4 28.5a21.92 21.92 0 0 1-1.2-8c.6-10.1 8.6-18.3 18.7-19C24.6 1.1 30 3 34.1 6.9c4.1 3.8 6.4 9.2 6.4 14.8 0 2.4-.4 4.7-1.2 6.9-.1.5-4 12-17.6 25.3-.3.4-.8.6-1.3.6zm-17-26.2c.8 2 4.9 11.6 17 24.2 13.2-13 17-24.5 17.1-24.6.7-2 1.1-4.1 1.1-6.3 0-5-2.1-9.9-5.8-13.3-3.7-3.5-8.6-5.2-13.7-4.8-9.1.6-16.4 8-16.9 17.1-.1 2.5.2 5 1.1 7.3l.1.4z"/></g></svg>
+        </a>
+        <img src="{% static '/img/map.webp' %}" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Harita - kılıç civata">
+        <div class="d-none d-xxl-block" style="height: 600px"></div>
+        <div class="d-none d-xl-block d-xxl-none" style="height: 500px"></div>
+        <div class="d-none d-lg-block d-xl-none" style="height: 420px"></div>
+        <div class="d-none d-md-block d-lg-none" style="height: 350px"></div>
+        <div class="d-md-none" style="height: 300px"></div>
+        <span class="position-absolute top-0 start-0 z-1 w-100 h-100 bg-body opacity-25"></span>
+      </section>
+
+
+      
+      <!-- <section class="container pt-5 mt-2 mt-sm-3 mt-lg-4 mt-xl-5">
+        <h2 class="text-center pt-xxl-3 pb-lg-2 pb-xl-3">Popular questions</h2>
+        <div class="row justify-content-center">
+          <div class="col-md-10 col-lg-9 col-xl-8">
+
+            
+            <div class="accordion accordion-alt-icon" id="faq">
+
+              
+              <div class="accordion-item">
+                <h3 class="accordion-header" id="faqHeading-1">
+                  <button type="button" class="accordion-button hover-effect-underline collapsed" data-bs-toggle="collapse" data-bs-target="#faqCollapse-1" aria-expanded="false" aria-controls="faqCollapse-1">
+                    <span class="me-2">How long will delivery take?</span>
+                  </button>
+                </h3>
+                <div class="accordion-collapse collapse" id="faqCollapse-1" aria-labelledby="faqHeading-1" data-bs-parent="#faq">
+                  <div class="accordion-body">Delivery times vary based on your location and the chosen shipping method. Generally, our standard delivery takes up to 5 days, while our Express Delivery ensures your order reaches you within 1 day. Please note that these times may be subject to occasional variations due to unforeseen circumstances, but we do our best to meet these estimates.</div>
+                </div>
+              </div>
+
+              
+              <div class="accordion-item">
+                <h3 class="accordion-header" id="faqHeading-2">
+                  <button type="button" class="accordion-button hover-effect-underline collapsed" data-bs-toggle="collapse" data-bs-target="#faqCollapse-2" aria-expanded="false" aria-controls="faqCollapse-2">
+                    <span class="me-2">What payment methods do you accept?</span>
+                  </button>
+                </h3>
+                <div class="accordion-collapse collapse" id="faqCollapse-2" aria-labelledby="faqHeading-2" data-bs-parent="#faq">
+                  <div class="accordion-body">We offer a range of secure payment options to provide you with flexibility and convenience. Accepted methods include major credit/debit cards, PayPal, and other secure online payment gateways. You can find the complete list of accepted payment methods during the checkout process.</div>
+                </div>
+              </div>
+
+              
+              <div class="accordion-item">
+                <h3 class="accordion-header" id="faqHeading-3">
+                  <button type="button" class="accordion-button hover-effect-underline collapsed" data-bs-toggle="collapse" data-bs-target="#faqCollapse-3" aria-expanded="false" aria-controls="faqCollapse-3">
+                    <span class="me-2">Do you ship internationally?</span>
+                  </button>
+                </h3>
+                <div class="accordion-collapse collapse" id="faqCollapse-3" aria-labelledby="faqHeading-3" data-bs-parent="#faq">
+                  <div class="accordion-body">Yes, we proudly offer international shipping to cater to our global customer base. Shipping costs and delivery times will be automatically calculated at the checkout based on your selected destination. Please note that any customs duties or taxes applicable in your country are the responsibility of the customer.</div>
+                </div>
+              </div>
+
+             
+            </div>
+          </div>
+        </div>
+      </section>-->
+
+
+     
     </main>
 
 
@@ -569,45 +585,13 @@
       </a>
     </div>
 
+
     <!-- Vendor scripts -->
     <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
-    
+    <script src="{% static 'vendor/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'vendor/glightbox/glightbox.min.js' %}"></script>
 
     <!-- Bootstrap + Theme scripts -->
     <script src="{% static 'js/theme.min.js' %}"></script>
-    <script src="{% static 'js/sepet.js' %}"></script>
-    <script>
-      function handleCheckout() {
-        // Toplam miktarı al
-        const totalMiktar = parseInt(document.getElementById('totalMiktar').innerText);
-
-        if (totalMiktar < 1000) {
-          const messageBox = document.createElement('div');
-          messageBox.textContent = 'Sepetteki ürünlerin toplam adeti 1000\'den az! Lütfen daha fazla ürün ekleyiniz.';
-          messageBox.style.position = 'fixed';
-          messageBox.style.bottom = '20px';
-          messageBox.style.right = '20px';
-          messageBox.style.padding = '10px 20px';
-          messageBox.style.backgroundColor = '#f44336';
-          messageBox.style.color = 'white';
-          messageBox.style.borderRadius = '5px';
-          messageBox.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
-          messageBox.style.zIndex = '1000';
-
-          document.body.appendChild(messageBox);
-
-          setTimeout(() => {
-              messageBox.remove();
-          }, 2000);
-
-          return;
-        }
-
-        // Toplam miktar uygunsa yönlendir
-        const whatsappUrl = document.getElementById('whatsappUrl').value;
-        window.location.href = whatsappUrl;
-      }
-    </script>
-
   </body>
 </html>

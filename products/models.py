@@ -5,6 +5,8 @@ from django.dispatch import receiver
 import shutil
 from django.conf import settings
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.utils.text import slugify
+from django.urls import reverse
 
 def product_main_image_upload_path(instance, filename):
     """Ana resim dosyasını productmain/{fakeid}/ altına yükler."""
@@ -15,13 +17,23 @@ def product_additional_image_upload_path(instance, filename):
     """Ek resimleri productdetail/{fakeid}/ altına yükler."""
     return f"productdetail/{instance.fakeid}/{filename}"
 
+class Subscriber(models.Model):
+    email = models.EmailField(unique=True)
 
+    def __str__(self):
+        return self.email
 class Category(models.Model):
     name = models.CharField(max_length=255)
+    category_slug = models.SlugField(max_length=255, unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        # category_slug otomatik olarak doldurulur
+        if not self.category_slug:
+            self.category_slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
-
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
@@ -76,6 +88,11 @@ class Product(models.Model):
     seo_meta_description = models.TextField(verbose_name="Meta Açıklaması", blank=True, null=True)
     seo_meta_keywords = models.CharField(max_length=255, verbose_name="Meta Anahtar Kelimeler", blank=True, null=True)
     seo_meta_author = models.CharField(max_length=255, verbose_name="Meta Yazar", default="Kılıç Civata")
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def get_absolute_url(self):
+        # Product detay sayfasının URL'sini döndürür
+        return reverse('product_detail', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.name

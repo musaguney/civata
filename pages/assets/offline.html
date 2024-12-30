@@ -1,0 +1,92 @@
+
+<!DOCTYPE html><html lang="tr" data-bs-theme="light" data-pwa="true"><head>
+  <meta charset="utf-8">
+
+  <!-- Viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+  <!-- SEO Meta Tags -->
+  <title>Offline - Kılıç Civata </title>
+  <meta name="description" content="Kılıç Civata vida, civata, saplama satış sitesi">
+  <meta name="keywords" content="vidalar, civatalar, saplamalar">
+  <meta name="author" content="Kılıç Civata">
+
+  <!-- Webmanifest + Favicon / App icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="manifest" href="/static/manifest.json">
+  <link rel="icon" type="image/png" href="/static/app-icons/icon-32x32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/static/app-icons/icon-180x180.png">
+
+  <!-- Theme switcher (color modes) -->
+  <script src="/static/js/theme-switcher.js"></script>
+
+  <!-- Preloaded local web font (Inter) -->
+  <link rel="preload" href="/static/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+  <!-- Font icons -->
+  <link rel="preload" href="/static/icons/cartzilla-icons.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/icons/cartzilla-icons.min.css">
+
+  <!-- Bootstrap + Theme styles -->
+  <link rel="preload" href="/static/css/theme.min.css" as="style">
+  <link rel="stylesheet" href="/static/css/theme.min.css" id="theme-styles">
+
+</head>
+
+<body>
+
+  <!-- Page content -->
+  <main class="content-wrapper text-center px-2">
+    <div class="d-flex flex-column min-vh-100 w-100 py-4 mx-auto" style="max-width: 600px">
+
+      <!-- Logo -->
+      <header class="navbar px-0 pb-4 mt-n2 mt-sm-0 mb-2 mb-md-3 mb-lg-4">
+        <div class="navbar-brand pt-0 mx-auto">
+          <span class="d-flex flex-shrink-0 text-primary me-2">
+            <!--<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45" height="45" viewBox="0 0 45 45">
+              <image xlink:href="data:image/png;base64,...BASE64_IMAGE_HERE..." x="0" y="0" width="45" height="45"/>
+            </svg>-->
+          </span>
+          <span style="color:#f03d3d;">&nbsp;Kılıç</span>
+          <span style="color: rgb(10, 98, 174);">&nbsp;Civata</span>
+        </div>
+      </header>
+
+      <!-- Image -->
+      <div class="position-relative w-100 mt-auto mx-auto" style="max-width: 533px">
+        <div class="ratio" style="--cz-aspect-ratio: calc(383 / 533 * 100%)"></div>
+        <div class="position-absolute ratio ratio-1x1 z-2 display-4" style="top: 41%; right: 38%; width: 20%">
+          <div class="position-absolute top-0 start-0 d-flex d-none-dark align-items-center justify-content-center w-100 h-100 z-1 bg-dark text-white rounded-5">
+            <i class="ci-wifi-off animate-blinking" style="animation-duration: 1.6s"></i>
+          </div>
+          <div class="position-absolute top-0 start-0 d-none d-flex-dark align-items-center justify-content-center w-100 h-100 z-1 text-dark rounded-5" style="background-color: #eef1f6">
+            <i class="ci-wifi-off animate-blinking" style="animation-duration: 1.6s"></i>
+          </div>
+        </div>
+        <img src="/static/img/intro/pages-light.jpg" class="position-absolute top-0 start-0 w-100 h-100 d-none-dark" alt="Offline">
+        <img src="/static/img/intro/pages-dark.png" class="position-absolute top-0 start-0 w-100 h-100 d-none d-block-dark" alt="Offline">
+      </div>
+
+      <!-- Text -->
+      <div class="pt-4 mt-3 pb-5">
+        <h1 class="h2">Oops! Çevrimdışı gibi görünüyorsunuz</h1>
+        <p class="pb-3">Lütfen internet bağlantınızı kontrol edin!</p>
+        <button type="button" class="btn btn-lg btn-primary animate-rotate" onclick="location.reload()">
+          <i class="ci-refresh-cw animate-target me-2 ms-n1"></i>
+          Tekrar dene
+        </button>
+      </div>
+
+      <!-- Footer -->
+      <footer class="mt-auto pb-2">
+        <p class="fs-sm mb-0">
+          © Tüm hakları Kılıç Civataya aittir. Geliştirici <span class="animate-underline"><a class="animate-target text-dark-emphasis text-decoration-none" href="https://www.instagram.com/musa_guney0/" target="_blank" rel="noreferrer">Musa Güney</a></span>
+        </p>
+      </footer>
+    </div>
+  </main>
+
+  <!-- Bootstrap + Theme scripts -->
+  <script src="/static/js/theme.min.js"></script>
+</body></html>

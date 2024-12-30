@@ -8,23 +8,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
 
     <!-- SEO Meta Tags -->
-    <title>Sepet -Kılıç Civata </title>
-    <meta name="description" content="Yerli üretim, yenilikçi çözümler ve rekabetçi fiyatlarla uluslararası kalitenin adresi: Kılıç Civata herzaman yanınızda!">
-    <meta name="keywords" content="vida, civata, saplama">
-    <meta name="author" content="Mustafa Kılıç">
-    <meta name="csrf-token" content="{{ csrf_token }}">
-
+    <title>Hakkımızda - Kılıç Civata</title>
+    <meta name="description" content="Kılıç Civata, 20 yıldır kaliteli vida ve civata üretimi ile sektörde lider konumda olan köklü bir firmadır.">
+    <meta name="keywords" content="Kılıç Cıvata, cıvata üretimi, vida üretimi, kaliteli cıvata, bağlantı elemanları, toptan cıvata, vida çeşitleri, cıvata üreticisi, özel üretim cıvata">
+    <meta name="author" content="Kılıç Civata">
+    
     <!-- Webmanifest + Favicon / App icons -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="manifest" href="{% static 'manifest.json' %}">
     <link rel="icon" type="image/png" href="{% static 'app-icons/icon-32x32.png' %}" sizes="32x32">
     <link rel="apple-touch-icon" href="{% static 'app-icons/icon-180x180.png' %}">
+    
 
     <!-- Theme switcher (color modes) -->
     <script src="{% static 'js/theme-switcher.js' %}"></script>
-
-
 
     <!-- Preloaded local web font (Inter) -->
     <link rel="preload" href="{% static 'fonts/inter-variable-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
@@ -34,15 +32,14 @@
     <link rel="stylesheet" href="{% static 'icons/cartzilla-icons.min.css' %}">
 
     <!-- Vendor styles -->
-    <link rel="stylesheet" href="{% static 'vendor/choices.js/choices.min.css' %}">
-    <link rel="stylesheet" href="{% static 'vendor/nouislider/nouislider.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/swiper/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/glightbox/glightbox.min.css' %}">
 
     <!-- Bootstrap + Theme styles -->
     <link rel="preload" href="{% static 'css/theme.min.css' %}" as="style">
     <link rel="preload" href="{% static 'css/theme.rtl.min.css' %}" as="style">
     <link rel="stylesheet" href="{% static 'css/theme.min.css' %}" id="theme-styles">
   </head>
-
 
   <!-- Body -->
   <body>
@@ -295,7 +292,7 @@
                       <a class="nav-link" href="{% url 'home' %}">Anasayfa</a>
                     </li>
                     <li class="nav-item me-lg-n2 me-xl-0">
-                      <a class="nav-link" href="{% url 'about' %}">Hakkımızda</a>
+                      <a class="nav-link active" href="{% url 'about' %}">Hakkımızda</a>
                     </li>
                     <li class="nav-item me-lg-n2 me-xl-0">
                       <a class="nav-link" href="{% url 'contact' %}">İletişim</a>
@@ -326,148 +323,306 @@
       </div>
     </header>
 
-
     <!-- Page content -->
     <main class="content-wrapper">
 
       <!-- Breadcrumb -->
       <nav class="container pt-3 my-3 my-md-4" aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'home' %}">Anasayfa</a></li>
-          <li class="breadcrumb-item"><a href="{% url 'product_list' %}">Ürünler</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Sepet</li>
+          <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">About</li>
         </ol>
       </nav>
 
 
-      <!-- Items in the cart + Order summary -->
-      <section class="container pb-5 mb-2 mb-md-3 mb-lg-4 mb-xl-5">
-        <h1 class="h3 mb-4">Sepet</h1>
+      <!-- Hero -->
+      <section class="container">
         <div class="row">
 
-          <!-- Items list -->
-          <div class="col-lg-8">
-            <div class="pe-lg-2 pe-xl-3 me-xl-3">
-              <p class="fs-sm">Toplam adet miktarı en az <span class="text-dark-emphasis fw-semibold">1000</span> adet olmalıdır. 1000 adetin altındaki siparişler işleme alınmaz. Şuan sepetinizde toplam <span class="text-dark-emphasis fw-semibold">{{ cart.top }}</span> adet miktarı mevcuttur.<span class="text-dark-emphasis fw-semibold"> Anlayışınız için teşekkür ederiz.</span></p>
-              <div class="progress w-100 overflow-visible mb-4" role="progressbar" aria-label="Free shipping progress" aria-valuenow="75" aria-valuemin="0" aria-valuemax="1000" style="height: 4px">
-                <div class="progress-bar bg-warning rounded-pill position-relative overflow-visible" style="width: {{ cart.top_percentage }}%; height: 4px">
-                  <div class="position-absolute top-50 end-0 d-flex align-items-center justify-content-center translate-middle-y bg-body border border-warning rounded-circle me-n1" style="width: 1.5rem; height: 1.5rem">
-                    <i class="ci-star-filled text-warning"></i>
-                  </div>
-                </div>
-              </div>
+          <!-- Cover image -->
+          <div class="col-md-7 order-md-2 mb-4 mb-md-0">
+            <div class="position-relative h-100">
+              <div class="ratio ratio-16x9"></div>
+              <img src="{% static '/img/kilic-civata-hakkımızda.webp' %}" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover rounded-5" alt="kilic-civata-hakkımızda">
 
-              <table class="table position-relative z-2 mb-4">
-                <thead>
-                  <tr>
-                    <th scope="col" class="fs-sm fw-normal py-3 ps-0"><span class="text-body">Ürün</span></th>
-                    <th scope="col" class="text-body fs-sm fw-normal py-3 d-none d-xl-table-cell"><span class="text-body">Toplam adet</span></th>
-                    <th scope="col" class="text-body fs-sm fw-normal py-3 d-none d-md-table-cell"><span class="text-body">Miktar</span></th>
-                    <th scope="col" class="text-body fs-sm fw-normal py-3 d-none d-md-table-cell"><span class="text-body">Toplam fiyat</span></th>
-                    <th scope="col" class="py-0 px-0">
-                      <div class="nav justify-content-end">
-                        <button type="button" onclick="clearCart()" class="nav-link d-inline-block text-decoration-underline text-nowrap py-3 px-0">Sepeti sıfırla</button>
-                      </div>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="align-middle">
-                  {% for item in cart.items %}
-                  <tr>
-                    <td class="py-3 ps-0">
-                      <div class="d-flex align-items-center">
-                        <a class="flex-shrink-0" href="{% url 'product_detail' slug=item.slug %}">
-                          <img src="{{ item.image }}" width="110" alt="{{ item.name }}" loading="lazy">
-                        </a>
-                        <div class="w-100 min-w-0 ps-2 ps-xl-3">
-                          <h5 class="d-flex animate-underline mb-2">
-                            <a class="d-block fs-sm fw-medium text-truncate animate-target" href="{% url 'product_detail' slug=item.slug %}">{{ item.name }}</a>
-                          </h5>
-                        </div>
-                      </div>
-                    </td>
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                    <td class="h6 py-3 d-none d-xl-table-cell">{{ item.miktar }} adet</td>
-                    
-                    <td class="py-3 d-none d-md-table-cell">
-                      <div class="count-input">
-                        <button type="button" class="btn btn-icon" onclick="updateCartQuantity({{ item.id }}, 'decrement')" aria-label="Decrement quantity">
-                          <i class="ci-minus"></i>
-                        </button>
-                        <input type="number" class="form-control" value="{{ item.quantity }}" readonly>
-                        <button type="button" class="btn btn-icon" onclick="updateCartQuantity({{ item.id }}, 'increment')" aria-label="Increment quantity">
-                          <i class="ci-plus"></i>
-                        </button>
-                      </div>
-                    </td>
-                    <td class="h6 py-3 d-none d-md-table-cell">
-                      {% if item.subtotal == 0 %}
-                        Teklif Alın
-                      {% else %}
-                        {{ item.subtotal|floatformat:2 }} TL
-                      {% endif %}
-                    </td>
-                    <td class="text-end py-3 px-0">
-                      <button type="button" class="btn-close fs-sm" onclick="removeFromCart({{ item.id }})" aria-label="Remove from cart"></button>
-                    </td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
+            </div>
+          </div>
 
-              <div class="nav position-relative z-2 mb-4 mb-lg-0">
-                <a class="nav-link animate-underline px-0" href="{% url 'product_list' %}">
-                  <i class="ci-chevron-left fs-lg me-1"></i>
-                  <span class="animate-target">Alışverişe devam et</span>
+          <!-- Text + button -->
+          <div class="col-md-5 order-md-1">
+            <div class="position-relative py-5 px-4 px-sm-5">
+              <span class="position-absolute top-0 start-0 w-100 h-100 rounded-5 d-none-dark rtl-flip" style="background: linear-gradient(-90deg, #accbee 0%, #e7f0fd 100%)"></span>
+              <span class="position-absolute top-0 start-0 w-100 h-100 rounded-5 d-none d-block-dark rtl-flip" style="background: linear-gradient(-90deg, #1b273a 0%, #1f2632 100%)"></span>
+              <div class="position-relative z-1 py-md-2 py-lg-4 py-xl-5 px-xl-2 px-xxl-4 my-xxl-3">
+                <h1 class="pb-1 pb-md-2 pb-lg-3">Kılıç Civata</h1>
+                <p class="text-dark-emphasis pb-sm-2 pb-lg-0 mb-4 mb-lg-5">20 yıllık tecrübesi ve geniş ürün yelpazesi olan Kılıç Civata; Vida, civata ve saplamaların şekillendirilmesini gerçekleştirir ve müşterilere yönelik çözüm alternatifleri sunar. Bu da müşterilerin ihtiyaçları, gereksinimleri ve bireysel tercihlerine göre seçenek sunmaktadır.</p>
+                <a class="btn btn-lg btn-outline-dark animate-slide-down" href="#mission">
+                  Daha fazla Oku
+                  <i class="ci-arrow-down fs-lg animate-target ms-2 me-n1"></i>
                 </a>
               </div>
             </div>
           </div>
-
-
-          <!-- Order summary (sticky sidebar) -->
-          <aside class="col-lg-4" style="margin-top: -100px">
-            <div class="position-sticky top-0" style="padding-top: 100px">
-              <div class="bg-body-tertiary rounded-5 p-4 mb-3">
-                <div class="p-sm-2 p-lg-0 p-xl-2">
-                  <h5 class="border-bottom pb-4 mb-4">Sepet Özeti</h5>
-                  <ul class="list-unstyled fs-sm gap-3 mb-0">
-                    {% for item in cart.items %}
-                    <li class="d-flex justify-content-between">
-                      {{ item.name }}
-                      <span class="text-dark-emphasis fw-medium">{{ item.miktar }} adet</span>
-                    </li>
-                    {% endfor %}
-                    <br><hr>
-                    <li class="d-flex justify-content-between">
-                      <span class="text-dark-emphasis">Toplam adet:</span>
-                      <span class="text-dark-emphasis fw-medium">{{ cart.top }} adet</span>
-                    </li>
-                  </ul>
-                  <div class="border-top pt-4 mt-4">
-                    <div class="d-flex justify-content-between mb-3">
-                      <span class="fs-sm">Toplam Fiyat:</span>
-                      <span class="h5 mb-0">₺ {{ cart.top_money }}</span>
-                    </div>
-                    <span id="totalMiktar" style="display: none;">{{ cart.top }}</span>
-                    <input type="hidden" id="whatsappUrl" value="{{ cart.whatsapp_url }}">
-                    <button id="checkoutButton" class="btn btn-lg btn-success w-100" onclick="handleCheckout()">
-                      WhatsApp'tan sipariş ver 
-                      <i class="ci-chevron-right fs-lg ms-1 me-n1"></i>
-                    </button>
-                    <div class="nav justify-content-center fs-sm mt-3">
-                      Eğer sepetinizde fiyatı belirlenmemiş ürün varsa Toplam fiyatı whatsapp üzerinden 1'e bir görüşmelerde belirlenir.
-                      <!--<span class="text-dark-emphasis fw-medium ms-1">239 bonuses</span>-->
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
-          </aside>
         </div>
       </section>
 
+
+      <!-- Stats -->
+      <section class="container py-5 mt-md-2 mt-lg-4">
+        <div class="row row-cols-2 row-cols-md-4 g-4">
+          <div class="col text-center">
+            <div class="display-4 text-dark-emphasis mb-2">60+</div>
+            <p class="fs-sm mb-0">Geniş ve çeşitli ürün yelpazesi</p>
+          </div>
+          <div class="col text-center">
+            <div class="display-4 text-dark-emphasis mb-2">20+</div>
+            <p class="fs-sm mb-0">Uzun yıllara dayanan köklü tecrübe</p>
+          </div>
+          <div class="col text-center">
+            <div class="display-4 text-dark-emphasis mb-2">7/24</div>
+            <p class="fs-sm mb-0">Kesintisiz destek ve hizmet sunar </p>
+          </div>
+          <div class="col text-center">
+            <div class="display-4 text-dark-emphasis mb-2">92%</div>
+            <p class="fs-sm mb-0">Müşteri odaklı hizmet anlayışıyla yüksek memnuniyet oranı </p>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- CEO quotation (Mission) -->
+      <section class="container pt-3 pt-sm-4 pt-lg-5 mt-lg-2 mt-xl-4 mt-xxl-5" id="mission" style="scroll-margin-top: 60px">
+        <div class="text-center mx-auto" style="max-width: 690px">
+          <h2 class="text-body fs-sm fw-normal">Kılıç Civata</h2>
+          <h3 class="h1 pb-2 pb-md-3 mx-auto" style="max-width: 400px">Kaliteli ürünleri uygun fiyatlarla Sunar</h3>
+          <p class="fs-xl pb-2 pb-md-3 pb-lg-4">"Kılıç civata, müşteri odaklı bir perspektifi ve talebi önde tutmaktadır. Bunun için müşterilerin ihtiyaçlarını, taleplerini ve beklentilerini ön sıraya koyarak ürünlerini geliştirir."</p>
+          
+          <img src="{% static '/img/mustafa-kilic.webp' %}" width="256" class="d-block rounded-circle mx-auto mb-3" alt="Musatafa Kılıç">
+          <h6 class="mb-0">Mustafa Kılıç, CEO</h6>
+        </div>
+      </section>
+
+
+      <!-- Principles -->
+      <section class="container pt-5">
+        <div class="row pt-2 pt-sm-3 pt-md-4 pt-lg-5">
+          <div class="col-md-5 col-lg-6 pb-1 pb-sm-2 pb-md-0 mb-4 mb-md-0">
+            <div class="ratio ratio-1x1">
+              <img src="{% static '/img/kilic-civata.webp' %}" class="rounded-5" alt="kılıç Civata -hakkımızda">
+            </div>
+          </div>
+          <div class="col-md-7 col-lg-6 pt-md-3 pt-xl-4 pt-xxl-5">
+            <div class="ps-md-3 ps-lg-4 ps-xl-5 ms-xxl-4">
+              <h2 class="text-body fs-sm fw-normal">Kılıç Civata</h2>
+              <h3 class="h1 pb-1 pb-sm-2 pb-lg-3">Başarımızın kaynağı, yılların tecrübesi ve yenilikçi vizyonumuzdan geliyor</h3>
+              <p class="pb-xl-3">Geniş ürünlerin yelpazesi olan Kılıç Civata, vidalar ve civataları şekillendirilmesiyle farklı seçenekler oluşturup müşterilere yönelik çözüm alternatifi sunar. Bu da müşterilerin ihtiyaçları, gereksinimleri ve bireysel tercihlerine göre seçenek sunmaktadır. Çözümler müşterilerin kendine özgü ihtiyaçlarını karşılamak için tasarlanır ve böylece müşterilerin talebini ve ihtiyacını karşılar. Ayrıca, pazardaki mücadeleyi sağlamak ve müşterilerin değişen isteklerini hızlı bir şekilde sonuç alması mümkün olabilmektedir.</p>
+              <p class="pb-xl-3">Ürünlerin müşterilere güvenilir ve mükemmel kalite standartlarında, ürünlerin ve hizmetlerin belirlenen özelliklere ve performansın ölçülmesine yönelik uygun olmasını sağlar. Ürünlerin dayanıklılığı, güvenilirliği, kaliteliliği, performansı ve müşterinin isteğinin sağlanması yeteneği gibi vb. faktörlerden oluşabilmektedir.</p>
+              <p class="pb-xl-3">Kılıç civataya göre müşteri odaklı bir perspektifinin ve talebini önde tutmaktadır. Bunun için müşterilerin ihtiyaçlarını, taleplerini ve beklentilerini ön sıraya koyarak şekillendirir. müşteri deneyimini, memnuniyetini artırmak ve bağlılığını güçlendirmek için müşteriye yönelik geri bildirimlerinin sağlanması ve çözümlerini buna göre uyarlanmasıyla oluşur. Müşterilerine farklı çözümler fikir edinerek onları rakiplerinden daha farklı, özgün alternatifler sunar.</p>
+
+              <!-- Accordion -->
+              <div class="accordion accordion-alt-icon" id="principles">
+
+                <!-- Item (expanded) -->
+                <div class="accordion-item">
+                  <h3 class="accordion-header" id="headingFocus">
+                    <button type="button" class="accordion-button animate-underline collapsed" data-bs-toggle="collapse" data-bs-target="#focus" aria-expanded="false" aria-controls="focus">
+                      <span class="animate-target me-2">Misyonumuz</span>
+                    </button>
+                  </h3>
+                  <div class="accordion-collapse collapse" id="focus" aria-labelledby="headingFocus" data-bs-parent="#principles">
+                    <div class="accordion-body">Kılıç civata'nın kaliteli ürün veya hizmetlerinin özüne odaklanırken, müşterilerin amaçları doğrultusunda ilerlemeyi aynı zamanda kuruluşun topluma olan güvenini ve değerlerini yansıtmaktadır. Faaliyet gösterilen alana yönelik nasıl faydalı olunacağını, toplumsal süreç içerisinde nasıl görevlerin olduğunu belirtmektedir. kuruluştaki çalışanlara, müşterilere ve paydaşlarına yönelik güven ve beklentilerini de yansıtmaktadır. Ayrıca, kuruluşta faaliyet gösterildiği alanda fikir yürüterek farklı ürünler ve potansiyeline yönelik niteliklerini korumak amaçlanmalıdır.</div>
+                  </div>
+                </div>
+
+                <!-- Item -->
+                <div class="accordion-item">
+                  <h3 class="accordion-header" id="headingReputation">
+                    <button type="button" class="accordion-button animate-underline collapsed" data-bs-toggle="collapse" data-bs-target="#reputation" aria-expanded="false" aria-controls="reputation">
+                      <span class="animate-target me-2">Vizyonumuz</span>
+                    </button>
+                  </h3>
+                  <div class="accordion-collapse collapse" id="reputation" aria-labelledby="headingReputation" data-bs-parent="#principles">
+                    <div class="accordion-body">Kılıç civata olarak sektör de ya da bir bireyi ulaşmak istediği hedefine, ideallerine ve amaçlarına yöneliktir. Bir bireyin nereye gitmek istediğini, ne tür bir değişim içinde olması gerektiğini ve topluma nasıl bir katkıda sağlayacağını belirtmektedir. Hatta bu vizyonuyla dünyada bir marka haliyle tanınmaktır. Teknolojik gelişmelerden haberdar olarak geleceğe yönelik hedefleri amaçlar. Bunu yaparken de bilindik firmaların güvenirliliğini ve belirlenen ideal bir gelecek durumunu tanımlamaktadır. Daha çok ilham verici, özgün ve net bir şekilde çözümler ortaya koyarak kolaylaştırmaktır.</div>
+                  </div>
+                </div>
+
+                <!-- Item -->
+                <div class="accordion-item">
+                  <h3 class="accordion-header" id="headingFast">
+                    <button type="button" class="accordion-button animate-underline collapsed" data-bs-toggle="collapse" data-bs-target="#fast" aria-expanded="false" aria-controls="fast">
+                      <span class="animate-target me-2">Değerlerimiz ve İlkelerimiz</span>
+                    </button>
+                  </h3>
+                  <div class="accordion-collapse collapse" id="fast" aria-labelledby="headingFast" data-bs-parent="#principles">
+                    <div class="accordion-body">Kılıç Cıvata olarak temel değerimiz, kaliteyi her zaman ön planda tutarak müşterilerimize en iyi çözümleri sunmaktır. Çalışma prensiplerimiz, güven, yenilikçilik ve müşteri ihtiyacları üzerine kuruludur. İşimize olan tutkumuzla her zaman daha iyisini hedefliyoruz.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Values (Carousel of icon boxes) -->
+      <section class="container-start pt-5">
+        <div class="row align-items-center g-0 pt-2 pt-sm-3 pt-md-4 pt-lg-5">
+          <div class="col-md-4 col-lg-3 pb-1 pb-md-0 pe-3 ps-md-0 mb-4 mb-md-0">
+            <div class="d-flex flex-md-column align-items-end align-items-md-start">
+              <div class="mb-md-5 me-3 me-md-0">
+                <h2 class="text-body fs-sm fw-normal">Değerlerimiz</h2>
+                <h3 class="h1 mb-0">Hedeflerimiz ve Değerlerimiz</h3>
+              </div>
+
+              <!-- External slider prev/next buttons -->
+              <div class="d-flex gap-2">
+                <button type="button" id="prev-values" class="btn btn-icon btn-outline-secondary rounded-circle animate-slide-start me-1" aria-label="Prev">
+                  <i class="ci-chevron-left fs-xl animate-target"></i>
+                </button>
+                <button type="button" id="next-values" class="btn btn-icon btn-outline-secondary rounded-circle animate-slide-end" aria-label="Next">
+                  <i class="ci-chevron-right fs-xl animate-target"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-8 col-lg-9">
+            <div class="ps-md-4 ps-lg-5">
+              <div class="swiper" data-swiper='{
+                "slidesPerView": "auto",
+                "spaceBetween": 24,
+                "loop": true,
+                "navigation": {
+                  "prevEl": "#prev-values",
+                  "nextEl": "#next-values"
+                }
+              }'>
+                <div class="swiper-wrapper">
+
+                  <!-- Item -->
+                  <div class="swiper-slide w-auto h-auto">
+                    <div class="card h-100 rounded-4 px-3" style="max-width: 306px">
+                      <div class="card-body py-5 px-3">
+                        <div class="h4 h5 d-flex align-items-center">
+                          <i class="ci-user-plus fs-4 me-3"></i>
+                          Hizmet
+                        </div>
+                        <p class="mb-0">Özen, dikkat, yardıma istekli olma ve yetenek. Ekip arkadaşlarımızdan müşterilerimize kadar, çevremizdeki herkese karşı destekleyici ve çözüm odaklı bir yaklaşım benimsiyoruz.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item -->
+                  <div class="swiper-slide w-auto h-auto">
+                    <div class="card h-100 rounded-4 px-3" style="max-width: 306px">
+                      <div class="card-body py-5 px-3">
+                        <div class="h4 h5 d-flex align-items-center">
+                          <i class="ci-shopping-bag fs-4 me-3"></i>
+                          Sorumluluk
+                        </div>
+                        <p class="mb-0">Sorumluluk, temel değerlerimizin başında gelir. Sorumluluğu dış koşullara ya da başkalarına yüklemek yerine, karşılaştığımız her durumu geliştirmek için kendi çözümlerimizi sunarız. Sorunları yalnızca eleştirmekle kalmaz, iyileştirme yolları ararız.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item -->
+                  <div class="swiper-slide w-auto h-auto">
+                    <div class="card h-100 rounded-4 px-3" style="max-width: 306px">
+                      <div class="card-body py-5 px-3">
+                        <div class="h4 h5 d-flex align-items-center">
+                          <i class="ci-trending-up fs-4 me-3"></i>
+                          Yenilikçilik
+                        </div>
+                        <p class="mb-0">Sürekli gelişim ve yenilikçilik kültürünü destekliyoruz. Değişime uyum sağlamak ve sektörün bir adım önünde olmak başarımızın temelidir. Yaratıcı düşünceyi, denemeyi ve yeni fikirlerin peşinden gitmeyi teşvik ediyoruz.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Item -->
+                  <div class="swiper-slide w-auto h-auto">
+                    <div class="card h-100 rounded-4 px-3" style="max-width: 306px">
+                      <div class="card-body py-5 px-3">
+                        <div class="h4 h5 d-flex align-items-center">
+                          <i class="ci-rocket fs-4 me-3"></i>
+                          Liderlik
+                        </div>
+                        <p class="mb-0">Kılıç Cıvata ekibi, genç, dinamik ve kararlı bireylerden oluşur. Liderlik vasıflarını taşıyan, yaptıkları işte en iyi olmayı hedefleyen tutkulu bir ekibiz.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+ 
+
+      <!-- Subscription form + Vlog -->
+      <section class="bg-body-tertiary py-5">
+        <div class="container pt-sm-2 pt-md-3 pt-lg-4 pt-xl-5">
+          <div class="row">
+            <div class="col-md-6 col-lg-5 mb-5 mb-md-0">
+              <h2 class="h4 mb-2">Sign up to our newsletter</h2>
+              <p class="text-body pb-2 pb-ms-3">Receive our latest updates about our products &amp; promotions</p>
+              <form class="d-flex needs-validation pb-1 pb-sm-2 pb-md-3 pb-lg-0 mb-4 mb-lg-5" novalidate>
+                <div class="position-relative w-100 me-2">
+                  <input type="email" class="form-control form-control-lg" placeholder="Your email" required>
+                </div>
+                <button type="submit" class="btn btn-lg btn-primary">Subscribe</button>
+              </form>
+              <div class="d-flex gap-3">
+                <a class="btn btn-icon btn-secondary rounded-circle" href="#!" aria-label="Instagram">
+                  <i class="ci-instagram fs-base"></i>
+                </a>
+                <a class="btn btn-icon btn-secondary rounded-circle" href="#!" aria-label="Facebook">
+                  <i class="ci-facebook fs-base"></i>
+                </a>
+                <a class="btn btn-icon btn-secondary rounded-circle" href="#!" aria-label="YouTube">
+                  <i class="ci-youtube fs-base"></i>
+                </a>
+                <a class="btn btn-icon btn-secondary rounded-circle" href="#!" aria-label="Telegram">
+                  <i class="ci-telegram fs-base"></i>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-5 col-xl-4 offset-lg-1 offset-xl-2">
+              <ul class="list-unstyled d-flex flex-column gap-4 ps-md-4 ps-lg-0 mb-3">
+                <li class="nav flex-nowrap align-items-center position-relative">
+                  <img src="assets/img/home/electronics/vlog/01.jpg" class="rounded" width="140" alt="Video cover">
+                  <div class="ps-3">
+                    <div class="fs-xs text-body-secondary lh-sm mb-2">6:16</div>
+                    <a class="nav-link fs-sm hover-effect-underline stretched-link p-0" href="#!">5 New Cool Gadgets You Must See on Cartzilla - Cheap Budget</a>
+                  </div>
+                </li>
+                <li class="nav flex-nowrap align-items-center position-relative">
+                  <img src="assets/img/home/electronics/vlog/02.jpg" class="rounded" width="140" alt="Video cover">
+                  <div class="ps-3">
+                    <div class="fs-xs text-body-secondary lh-sm mb-2">10:20</div>
+                    <a class="nav-link fs-sm hover-effect-underline stretched-link p-0" href="#!">5 Super Useful Gadgets on Cartzilla You Must Have in 2023</a>
+                  </div>
+                </li>
+                <li class="nav flex-nowrap align-items-center position-relative">
+                  <img src="assets/img/home/electronics/vlog/03.jpg" class="rounded" width="140" alt="Video cover">
+                  <div class="ps-3">
+                    <div class="fs-xs text-body-secondary lh-sm mb-2">8:40</div>
+                    <a class="nav-link fs-sm hover-effect-underline stretched-link p-0" href="#!">Top 5 New Amazing Gadgets on Cartzilla You Must See</a>
+                  </div>
+                </li>
+              </ul>
+              <div class="nav ps-md-4 ps-lg-0">
+                <a class="btn nav-link animate-underline text-decoration-none px-0" href="#!">
+                  <span class="animate-target">View all</span>
+                  <i class="ci-chevron-right fs-base ms-1"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
 
@@ -571,43 +726,10 @@
 
     <!-- Vendor scripts -->
     <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
-    
-
+    <script src="{% static 'vendor/glightbox/glightbox.min.js' %}"></script>
     <!-- Bootstrap + Theme scripts -->
     <script src="{% static 'js/theme.min.js' %}"></script>
-    <script src="{% static 'js/sepet.js' %}"></script>
-    <script>
-      function handleCheckout() {
-        // Toplam miktarı al
-        const totalMiktar = parseInt(document.getElementById('totalMiktar').innerText);
 
-        if (totalMiktar < 1000) {
-          const messageBox = document.createElement('div');
-          messageBox.textContent = 'Sepetteki ürünlerin toplam adeti 1000\'den az! Lütfen daha fazla ürün ekleyiniz.';
-          messageBox.style.position = 'fixed';
-          messageBox.style.bottom = '20px';
-          messageBox.style.right = '20px';
-          messageBox.style.padding = '10px 20px';
-          messageBox.style.backgroundColor = '#f44336';
-          messageBox.style.color = 'white';
-          messageBox.style.borderRadius = '5px';
-          messageBox.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
-          messageBox.style.zIndex = '1000';
-
-          document.body.appendChild(messageBox);
-
-          setTimeout(() => {
-              messageBox.remove();
-          }, 2000);
-
-          return;
-        }
-
-        // Toplam miktar uygunsa yönlendir
-        const whatsappUrl = document.getElementById('whatsappUrl').value;
-        window.location.href = whatsappUrl;
-      }
-    </script>
-
+    
   </body>
 </html>

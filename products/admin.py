@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product
+from .models import Category, Product, Subscriber
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -14,3 +14,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['category', 'brand', 'coating']
     search_fields = ['name', 'description', 'seo_title', 'seo_meta_keywords']
     prepopulated_fields = {"slug": ("name",)}
+    
+@admin.register(Subscriber)
+class SubscriberAdmin(admin.ModelAdmin):
+    list_display = ('email',)  # Admin panelinde görünecek sütunlar

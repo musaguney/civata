@@ -1,5 +1,28 @@
 from .models import Category
 
+def footer_context(request):
+    """
+    Footer için gerekli olan bilgileri sağlayan context processor.
+    """
+    categories = Category.objects.all()  # Kategorileri al
+    contact_info = {
+        "address": "İkitelli OSB, İPKAS Plastikçiler Sanayi Sitesi, 3B Blok No:32 Başakşehir/ İstanbul",
+        "email": "info@kiliccivata.com",
+        "phone": "+90 212 549 34 55",
+        "whatsapp": "+90 533 264 65 98",
+    }
+    social_links = {
+        "instagram": "https://www.instagram.com/kilic_civata_vida_baglanti/",
+        "facebook": "https://www.facebook.com/Civatacim",
+        "email": "mailto:info@kiliccivata.com",
+        "sitemap": "/sitemap.xml",
+    }
+    return {
+        "categories": categories,
+        "contact_info": contact_info,
+        "social_links": social_links,
+    }
+
 def menu_data(request):
     # Tüm kategorileri ve ilişkili ürünleri al
     categories = Category.objects.prefetch_related('products').all()
@@ -12,6 +35,7 @@ def menu_data(request):
             'category': category,
             'products': products,
             'first_product_image': first_product.main_image.url if first_product and first_product.main_image else None,
+            'title_type': first_product.title_type if first_product and hasattr(first_product, 'title_type') else None,
         })
 
     # Menü verisini döndür
@@ -29,6 +53,7 @@ def index_product(request):
             index_product.extend([
                 {
                     'id': product.id,
+                    'slug': product.slug,
                     'name': product.name,
                     'image': product.main_image.url if product.main_image else None,
                     'product_type': product.product_type or 'Bilinmiyor',
@@ -40,7 +65,7 @@ def index_product(request):
                     'strength_class': product.strength_class or 'Belirtilmemiş',
                     'brand': product.brand or 'Bilinmiyor',
                     'quantity': product.quantity if product.quantity else 0,
-                    'price': f"{product.price:.2f}" if product.price else 'Fiyat Yok',
+                    'price': f"{product.price:.2f}" if product.price else 'Teklif Alın',
                     'trendyol_link': product.trendyol_link or '#',
                 }
                 for product in products
