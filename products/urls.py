@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import product_list, sepet, add_to_cart, update_cart, remove_from_cart, clear_cart, home, about, contact, product_detail, offline_page
+from .views import product_list, home, about, contact, product_detail, offline_page, category
 from django.views.generic import TemplateView
 from django.contrib.sitemaps.views import sitemap
-from .sitemaps import StaticViewSitemap, ProductSitemap
+from .sitemaps import StaticViewSitemap, CategorySitemap, ProductSitemap
 from django.conf.urls import handler404
 from django.shortcuts import render
 
@@ -14,7 +14,9 @@ handler404 = custom_404
 
 sitemaps = {
     'static': StaticViewSitemap,
+    'categories': CategorySitemap,
     'products': ProductSitemap,
+    
 }
 
 urlpatterns = [
@@ -24,12 +26,10 @@ urlpatterns = [
     path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
     path('product/<slug:slug>/', product_detail, name='product_detail'),
     path('category/', product_list, name='product_list'),
-    path('sepet/', sepet, name='sepet'),
-    path('add-to-cart/<int:product_id>/', add_to_cart, name='add_to_cart'),
-    path('update-cart/<int:product_id>/<str:action>/', update_cart, name='update_cart'),
-    path('remove-from-cart/<int:product_id>/', remove_from_cart, name='remove_from_cart'),
-    path('clear-cart/', clear_cart, name='clear_cart'),
+    path('category/<slug:category_slug>/', product_list, name='product_list_by_category'),  # Kategoriye göre ürünler
+ 
     path('', home, name='home'),  # Ana sayfa
     path('about/', about, name='about'),  # Hakkımızda sayfası
     path('contact/', contact, name='contact'),
+    path('urunlerimiz/', category, name='category'),
 ]

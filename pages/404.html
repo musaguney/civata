@@ -15,6 +15,7 @@
 
     <!-- Webmanifest + Favicon / App icons -->
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="manifest" href="{% static 'manifest.json' %}">
     <link rel="icon" type="image/png" href="{% static 'app-icons/icon-32x32.png' %}" sizes="32x32">
@@ -150,18 +151,16 @@
 
 
 
-              <!-- Cart button -->
-              <button type="button" class="btn btn-icon btn-lg btn-secondary position-relative rounded-circle ms-2"onclick=" window.location.href='{% url 'sepet' %}'">
-                <span
-                  class="position-absolute top-0 start-100 mt-n1 ms-n3 badge text-bg-success border border-3 border-dark rounded-pill"
-                  style="--cz-badge-padding-y: .25em; --cz-badge-padding-x: .42em">
-                  <i class="ci-bell"></i>
-                </span>
-                <span
-                  class="position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 rounded-circle animate-slide-end fs-lg">
-                  <i class="ci-shopping-cart animate-target ms-n1"></i>
-                </span>
-              </button>
+              <!-- WhatsApp button -->
+            <button type="button" class="btn btn-icon btn-lg btn-secondary position-relative rounded-circle ms-2" 
+              onclick="window.open('https://wa.me/905332646598?text=Merhaba,%0Awww.kiliccivata.com%20adresinizden%20iletişime%20geçiyorum.%0A%0AÜrünleriniz%20hakkında%20detaylı%20bilgi%20almak%20istiyorum.%0AStok%20durumu,%20fiyatlar%20ve%20teknik%20özellikler%20konusunda%20yardımcı%20olabilir%20misiniz?%0A%0ATeşekkür%20ederim.%0Aİyi%20çalışmalar.', '_blank')">
+              <span class="position-absolute top-0 start-100 mt-n1 ms-n3 badge text-bg-success border border-3 border-dark rounded-pill" style="--cz-badge-padding-y: .25em; --cz-badge-padding-x: .42em">
+                <i class="ci-bell"></i>
+              </span>
+              <span class="position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 rounded-circle animate-slide-end fs-lg">
+                <i class="ci-whatsapp animate-target ms-n1"></i>
+              </span>
+            </button>
             </div>
           </div>
         </div>
@@ -217,7 +216,7 @@
                       <!-- Mega menu -->
                       <ul class="dropdown-menu w-100 rounded-top-0 rounded-bottom-4 py-1 p-lg-1" style="--cz-dropdown-spacer: 0; --cz-dropdown-item-padding-y: .625rem; --cz-dropdown-item-spacer: 0">
                         <li class="d-lg-none pt-2">
-                          <a class="dropdown-item fw-medium" href="{% url 'product_list' %}">
+                          <a class="dropdown-item fw-medium" href="{% url 'category' %}">
                             <i class="ci-grid fs-xl opacity-60 pe-1 me-2"></i>
                             Tüm Ürünler
                             <i class="ci-chevron-right fs-base ms-auto me-n1"></i>
@@ -243,31 +242,53 @@
                                   <div class="d-flex w-100">
                                     <a class="animate-underline animate-target d-inline h6 text-dark-emphasis text-decoration-none text-truncate" href="#">{{ item.category.name }}</a>
                                   </div>
-                                  <ul class="nav flex-column gap-2 mt-n2">
-                                    {% for product in item.products %}
-                                    <li class="d-flex w-100 pt-1">
-                                      <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0" href="{% url 'product_detail' slug=product.slug %}">{{ product.name }}</a>
-                                    </li>
-                                    {% endfor %}
-                                    
-                                  </ul>
+                                  {% if item.products|length <= 4 %}
+                                    <ul class="nav flex-column gap-2 mt-n2">
+                                      {% for product in item.products %}
+                                        <li class="d-flex w-100 pt-1">
+                                          <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0" href="{% url 'product_detail' slug=product.slug %}">{{ product.name }}</a>
+                                        </li>
+                                      {% endfor %}
+                                    </ul>
+                                  </div>
+                                  {% else %}
+                                    <ul class="nav flex-column gap-2 mt-n2">
+                                      {% for product in item.products %}
+                                        {% if forloop.counter <= 4 %}
+                                          <li class="d-flex w-100 pt-1">
+                                            <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0" href="{% url 'product_detail' slug=product.slug %}">{{ product.name }}</a>
+                                          </li>
+                                        {% endif %}
+                                      {% endfor %}
+                                    </ul>
                                 </div>
+                                <div style="min-width: 194px">
+                                    <ul class="nav flex-column gap-2 mt-2 mt-lg-0">
+                                      {% for product in item.products %}
+                                        {% if forloop.counter > 4 %}
+                                          <li class="d-flex w-100 pt-1">
+                                            <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0" href="{% url 'product_detail' slug=product.slug %}">{{ product.name }}</a>
+                                          </li>
+                                        {% endif %}
+                                      {% endfor %}
+                                    </ul>
+                                </div>
+                                  {% endif %}
                                 <div class="d-none d-lg-block">
                                   <div class="d-none d-xl-block" style="width: 284px"></div>
                                   <div class="d-xl-none" style="width: 240px"></div>
                                   <div class="position-relative d-flex flex-column justify-content-center h-100 bg-body-secondary rounded-5 py-4 px-3">
                                     <div class="text-center px-2">
-                                      <div class="fs-sm text-light-emphasis mb-2"><span class="fw-semibold">Kılıç Civata</span></div>
-                                      <div class="h2 mb-4">{{ item.category.name }}</div>
+                                      
                                     </div>
                                     {% if item.first_product_image %}
-                                    <img src="{{ item.first_product_image }}" width="252" alt="{{ item.category.name }}" loading="lazy">
+                                      <img src="{{ item.first_product_image }}" width="130" alt="{{ item.category.name }}" loading="lazy">
                                     {% else %}
-                                    <p>Resim Yok</p>
+                                      <p>Resim Yok</p>
                                     {% endif %}
                                     <div class="text-center mt-4">
                                       {% if item.first_product_image %}
-                                      <a class="btn btn-sm btn-primary stretched-link" href="{% url 'product_list' %}?title_type={{ item.title_type|urlencode }}">Ürünleri İncele</a>
+                                        <a class="btn btn-sm btn-primary stretched-link" href="{% url 'product_list' %}?title_type={{ item.title_type|urlencode }}">Ürünleri İncele</a>
                                       {% endif %}
                                     </div>
                                   </div>
@@ -276,7 +297,6 @@
                             </div>
                           </li>
                         {% endfor %}
-                        
                       </ul>
                     </div>
                   </div>

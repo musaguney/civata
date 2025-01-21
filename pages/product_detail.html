@@ -14,6 +14,7 @@
 
   <!-- Webmanifest + Favicon / App icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link rel="manifest" href="{% static 'manifest.json' %}">
   <link rel="icon" type="image/png" href="{% static 'app-icons/icon-32x32.png' %}" sizes="32x32">
@@ -30,9 +31,30 @@
     "@type": "Product",
     "name": "{{ product.name }}", 
     "image": [
-      "{{ product.main_image.url }}",
-      {% if product.additional_image1 %}"{{ product.additional_image1.url }}",{% endif %}
-      {% if product.additional_image2 %}"{{ product.additional_image2.url }}"{% endif %}
+      {% if product.main_image %},
+        "{{ product.main_image.url }}"
+      {% endif %}
+      {% if product.additional_image1 %},
+        "{{ product.additional_image1.url }}"
+      {% endif %}
+      {% if product.additional_image2 %},
+        "{{ product.additional_image2.url }}"
+      {% endif %}
+      {% if product.additional_image3 %},
+        "{{ product.additional_image3.url }}"
+      {% endif %}
+      {% if product.additional_image4 %},
+        "{{ product.additional_image4.url }}"
+      {% endif %}
+      {% if product.additional_image5 %},
+        "{{ product.additional_image5.url }}"
+      {% endif %}
+      {% if product.additional_image6 %},
+        "{{ product.additional_image6.url }}"
+      {% endif %}
+      {% if product.additional_image7 %},
+        "{{ product.additional_image7.url }}"
+      {% endif %}
     ],
     "description": "{{ product.seo_meta_description|striptags|truncatechars:160 }}",
     "sku": "{{ product.fakeid }}", 
@@ -47,11 +69,6 @@
         "name": "DIN Kodu",
         "value": "{{ product.dinname }}"
       }
-      {
-        "@type": "PropertyValue",
-        "name": "Çeşit",
-        "value": "{{ product.product_type }}"
-      },
     ]
     "brand": {
       "@type": "Brand",
@@ -243,16 +260,14 @@
 
 
 
-            <!-- Cart button -->
-            <button type="button" class="btn btn-icon btn-lg btn-secondary position-relative rounded-circle ms-2"onclick=" window.location.href='{% url 'sepet' %}'">
-              <span
-                class="position-absolute top-0 start-100 mt-n1 ms-n3 badge text-bg-success border border-3 border-dark rounded-pill"
-                style="--cz-badge-padding-y: .25em; --cz-badge-padding-x: .42em">
+            <!-- WhatsApp button -->
+            <button type="button" class="btn btn-icon btn-lg btn-secondary position-relative rounded-circle ms-2" 
+              onclick="window.open('https://wa.me/905332646598?text=Merhaba,%0Awww.kiliccivata.com%20adresinizden%20iletişime%20geçiyorum.%0A%0AÜrünleriniz%20hakkında%20detaylı%20bilgi%20almak%20istiyorum.%0AStok%20durumu,%20fiyatlar%20ve%20teknik%20özellikler%20konusunda%20yardımcı%20olabilir%20misiniz?%0A%0ATeşekkür%20ederim.%0Aİyi%20çalışmalar.', '_blank')">
+              <span class="position-absolute top-0 start-100 mt-n1 ms-n3 badge text-bg-success border border-3 border-dark rounded-pill" style="--cz-badge-padding-y: .25em; --cz-badge-padding-x: .42em">
                 <i class="ci-bell"></i>
               </span>
-              <span
-                class="position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 rounded-circle animate-slide-end fs-lg">
-                <i class="ci-shopping-cart animate-target ms-n1"></i>
+              <span class="position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 rounded-circle animate-slide-end fs-lg">
+                <i class="ci-whatsapp animate-target ms-n1"></i>
               </span>
             </button>
           </div>
@@ -310,7 +325,7 @@
                     <!-- Mega menu -->
                     <ul class="dropdown-menu w-100 rounded-top-0 rounded-bottom-4 py-1 p-lg-1" style="--cz-dropdown-spacer: 0; --cz-dropdown-item-padding-y: .625rem; --cz-dropdown-item-spacer: 0">
                       <li class="d-lg-none pt-2">
-                        <a class="dropdown-item fw-medium" href="{% url 'product_list' %}">
+                        <a class="dropdown-item fw-medium" href="{% url 'category' %}">
                           <i class="ci-grid fs-xl opacity-60 pe-1 me-2"></i>
                           Tüm Ürünler
                           <i class="ci-chevron-right fs-base ms-auto me-n1"></i>
@@ -336,31 +351,53 @@
                                 <div class="d-flex w-100">
                                   <a class="animate-underline animate-target d-inline h6 text-dark-emphasis text-decoration-none text-truncate" href="#">{{ item.category.name }}</a>
                                 </div>
-                                <ul class="nav flex-column gap-2 mt-n2">
-                                  {% for product in item.products %}
-                                  <li class="d-flex w-100 pt-1">
-                                    <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0" href="{% url 'product_detail' slug=product.slug %}">{{ product.name }}</a>
-                                  </li>
-                                  {% endfor %}
-                                  
-                                </ul>
+                                {% if item.products|length <= 4 %}
+                                  <ul class="nav flex-column gap-2 mt-n2">
+                                    {% for product in item.products %}
+                                      <li class="d-flex w-100 pt-1">
+                                        <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0" href="{% url 'product_detail' slug=product.slug %}">{{ product.name }}</a>
+                                      </li>
+                                    {% endfor %}
+                                  </ul>
+                                </div>
+                                {% else %}
+                                  <ul class="nav flex-column gap-2 mt-n2">
+                                    {% for product in item.products %}
+                                      {% if forloop.counter <= 4 %}
+                                        <li class="d-flex w-100 pt-1">
+                                          <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0" href="{% url 'product_detail' slug=product.slug %}">{{ product.name }}</a>
+                                        </li>
+                                      {% endif %}
+                                    {% endfor %}
+                                  </ul>
                               </div>
+                              <div style="min-width: 194px">
+                                  <ul class="nav flex-column gap-2 mt-2 mt-lg-0">
+                                    {% for product in item.products %}
+                                      {% if forloop.counter > 4 %}
+                                        <li class="d-flex w-100 pt-1">
+                                          <a class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0" href="{% url 'product_detail' slug=product.slug %}">{{ product.name }}</a>
+                                        </li>
+                                      {% endif %}
+                                    {% endfor %}
+                                  </ul>
+                              </div>
+                                {% endif %}
                               <div class="d-none d-lg-block">
                                 <div class="d-none d-xl-block" style="width: 284px"></div>
                                 <div class="d-xl-none" style="width: 240px"></div>
                                 <div class="position-relative d-flex flex-column justify-content-center h-100 bg-body-secondary rounded-5 py-4 px-3">
                                   <div class="text-center px-2">
-                                    <div class="fs-sm text-light-emphasis mb-2"><span class="fw-semibold">Kılıç Civata</span></div>
-                                    <div class="h2 mb-4">{{ item.category.name }}</div>
+                                    
                                   </div>
                                   {% if item.first_product_image %}
-                                  <img src="{{ item.first_product_image }}" width="252" alt="{{ item.category.name }}" loading="lazy">
+                                    <img src="{{ item.first_product_image }}" width="130" alt="{{ item.category.name }}" loading="lazy">
                                   {% else %}
-                                  <p>Resim Yok</p>
+                                    <p>Resim Yok</p>
                                   {% endif %}
                                   <div class="text-center mt-4">
                                     {% if item.first_product_image %}
-                                    <a class="btn btn-sm btn-primary stretched-link" href="{% url 'product_list' %}?title_type={{ item.title_type|urlencode }}">Ürünleri İncele</a>
+                                      <a class="btn btn-sm btn-primary stretched-link" href="{% url 'product_list' %}?title_type={{ item.title_type|urlencode }}">Ürünleri İncele</a>
                                     {% endif %}
                                   </div>
                                 </div>
@@ -369,7 +406,6 @@
                           </div>
                         </li>
                       {% endfor %}
-                      
                     </ul>
                   </div>
                 </div>
@@ -384,7 +420,7 @@
                     <a class="nav-link" href="{% url 'home' %}">Anasayfa</a>
                   </li>
                   <li class="nav-item me-lg-n2 me-xl-0">
-                    <a class="nav-link" href="{% url 'about' %}">Hakkımızda</a>
+                    <a class="nav-link" href="{% url 'about' %}">Kurumsal</a>
                   </li>
                   <li class="nav-item me-lg-n2 me-xl-0">
                     <a class="nav-link" href="{% url 'contact' %}">İletişim</a>
@@ -628,37 +664,85 @@
           <div class="ps-md-4 ps-xl-0">
             <div class="position-relative" id="zoomPane">
               {{ product.name }}
-              <br>
+              <br><br>
               
               <!-- Boyutlar -->
               <div class="pb-3 mb-2 mb-lg-3">
-                <label class="form-label fw-semibold pb-1 mb-2">Boyutu</label>
+                <label class="form-label fw-semibold pb-1 mb-2">Ürettiğimiz Ölçüler</label>
                 <div class="d-flex flex-wrap gap-2">
-                  
-                  <input type="radio" class="btn-check" name="cap-option" checked>
-                  <label for="cap-option" class="btn btn-sm btn-outline-secondary">{{ product.diameter }}</label>
-                  <input type="radio" class="btn-check" name="uzunluk-option" checked>
-                  <label for="uzunluk-option" class="btn btn-sm btn-outline-secondary">{{ product.length }}</label>   
-                                                
+                  {% for measure in product.get_measures %}
+                    <label class="btn btn-sm btn-outline-secondary">{{ measure }}</label>
+                    
+                  {% endfor %}
                   
                 </div>
+                
               </div>
 
 
-              <!-- Türü ve Adet Miktarı -->
-              <div class="pb-3 mb-2 mb-lg-3">
-                <label class="form-label fw-semibold pb-1 mb-2">Türü ve Miktarı</label>
-                <div class="d-flex flex-wrap gap-2">
-                  <input type="radio" class="btn-check" name="tur-option" checked>
-                  <label  for="tur-option" class="btn btn-sm btn-outline-secondary">{{ product.product_type }}</label> 
-                  <input type="radio" class="btn-check" name="miktar-option2" checked>
-                  <label  for="miktar-option" class="btn btn-sm btn-outline-secondary"><strong>{{ product.quantity }} adet</strong> </label>
-                </div>
+                <!-- Shipping options -->
+              <div class="d-flex align-items-center pb-2">
+                <h3 class="h6 mb-0">Ürün Detayları</h3>
+                <a class="btn btn-sm btn-warning ms-auto" href="{{ product.trendyol_link }}" target="_blank">
+                  <i class="ci-external-link fs-sm ms-n1 me-1"></i>
+                  Trendyol Mağazamızdan Satın alın
+                </a>
               </div>
-
+              <table class="table table-borderless fs-sm mb-2">
+                <tbody>
+                  <tr>
+                    <td class="py-2 ps-0">Kategori</td>
+                    
+                    <td class="text-body-emphasis fw-semibold text-end py-2 pe-0">{{ product.category.name }}</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 ps-0">DIN</td>
+                    
+                    <td class="text-body-emphasis fw-semibold text-end py-2 pe-0">{{ product.dinname }}</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 ps-0">ISO</td>
+                    
+                    <td class="text-body-emphasis fw-semibold text-end py-2 pe-0">{{ product.isoname }}</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 ps-0">Kaplama</td>
+                    
+                    <td class="text-body-emphasis fw-semibold text-end py-2 pe-0">{{ product.coating }}</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 ps-0">Malzeme</td>
+                    
+                    <td class="text-body-emphasis fw-semibold text-end py-2 pe-0">{{ product.material }}</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 ps-0">Dayanım Sınıfı</td>
+                    
+                    <td class="text-body-emphasis fw-semibold text-end py-2 pe-0">{{ product.strength_class }}</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 ps-0">Çap</td>
+                    
+                    <td class="text-body-emphasis fw-semibold text-end py-2 pe-0"> <strong>{{ product.diameters }}</strong></td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 ps-0">Uzunluk</td>
+                    
+                    <td class="text-body-emphasis fw-semibold text-end py-2 pe-0"><strong>{{ product.lengths }} *çapa göre değişiklik gösterebilir.</strong></td>
+                  </tr>
+                  <tr id="product_detail">
+                    <td class="py-2 ps-0">Marka</td>
+                    
+                    <td class="text-body-emphasis fw-semibold text-end py-2 pe-0">{{ product.brand }}</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+              <hr>
+              <div class="form-label fw-semibold pb-1 mb-2"><span>Uyarı:</span> Fiyatı, aşağıdaki WhatsApp butonuna tıklayarak öğrenebilirsiniz.</div>
               <!-- Price -->
               <div class="d-flex flex-wrap align-items-center mb-3">
-                <div class="h4 mb-0 me-3">
+                <div class="h4 mb-0 me-3">₺
                   {% if product.price == 0 %}
                     Teklif Alın
                   {% else %}
@@ -667,30 +751,23 @@
 
                 <div class="d-flex align-items-center text-success fs-sm ms-auto">
                   <i class="ci-check-circle fs-base me-2"></i>
-                  <strong>{{ product.quantity }} Adet</strong>
+                  <strong>ISO ve DIN Standartlarına Uygun</strong>
                 </div>
               </div>
 
               <!-- Count + Buttons -->
               <div class="d-flex flex-wrap flex-sm-nowrap flex-md-wrap flex-lg-nowrap gap-3 gap-lg-2 gap-xl-3 mb-4">
-                <div class="count-input flex-shrink-0 order-sm-1">
-                  <button type="button" class="btn btn-icon btn-lg" data-decrement="" aria-label="Decrement quantity">
-                    <i class="ci-minus"></i>
-                  </button>
-                  <input type="number" class="form-control form-control-lg" value="1" min="1" max="1" readonly="">
-                  <button type="button" class="btn btn-icon btn-lg" data-increment="" aria-label="Increment quantity">
-                    <i class="ci-plus"></i>
-                  </button>
-                </div>
                 
-                <button type="button" class="btn btn-icon btn-lg btn-secondary animate-rotate order-sm-4 order-md-3 order-lg-4" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-sm" data-bs-title="Compare" aria-label="Compare">
-                  <i class="ci-refresh-cw fs-lg animate-target"></i>
-                </button>
-                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                <button type="button" class="btn btn-lg btn-primary w-100 animate-slide-end order-sm-2 order-md-4 order-lg-2" aria-label="Add to Cart"onclick="addToCart({{product.id}})">
-                  <i class="ci-shopping-cart fs-lg animate-target ms-n1 me-2"></i>
-                  Sepete ekle
-                </button>
+                
+                
+                <a 
+                  href="https://wa.me/905332646598?text=www.kiliccivata.com%20adresinizden%20geliyorum%0A%0AÜrün%20Adı:%20{{ product.name }}%0A%0AHakkında%20detaylı%20bilgi%20almak%20istiyorum.%0A%0Aİyi%20çalışmalar." 
+                  class="btn btn-lg btn-success w-100 animate-slide-end order-sm-2 order-md-4 order-lg-2"
+                  target="_blank"
+                  aria-label="WhatsApp ile İletişime Geç">
+                  <i class="ci-whatsapp fs-lg animate-target ms-n1 me-2"></i>
+                  WhatsApp ile Bilgi Al
+                </a>
               </div>
 
               <!-- Features -->
@@ -710,64 +787,7 @@
               </div>
             </div>
 
-            <!-- Shipping options -->
-            <div class="d-flex align-items-center pb-2">
-              <h3 class="h6 mb-0">Ürün Detayları</h3>
-              <a class="btn btn-sm btn-warning ms-auto" href="{{ product.trendyol_link }}" target="_blank">
-                <i class="ci-external-link fs-sm ms-n1 me-1"></i>
-                Trendyol Mağazamızdan Satın alın
-              </a>
-            </div>
-            <table class="table table-borderless fs-sm mb-2">
-              <tbody>
-                <tr>
-                  <td class="py-2 ps-0">Miktar</td>
-                  
-                  <td class="text-body-emphasis fw-semibold text-end py-2 pe-0">{{ product.quantity }} adet</td>
-                </tr>
-                <tr>
-                  <td class="py-2 ps-0">DIN</td>
-                  
-                  <td class="text-body-emphasis fw-semibold text-end py-2 pe-0">{{ product.dinname }}</td>
-                </tr>
-                <tr>
-                  <td class="py-2 ps-0">ISO</td>
-                  
-                  <td class="text-body-emphasis fw-semibold text-end py-2 pe-0">{{ product.isoname }}</td>
-                </tr>
-                <tr>
-                  <td class="py-2 ps-0">Kaplama</td>
-                  
-                  <td class="text-body-emphasis fw-semibold text-end py-2 pe-0">{{ product.coating }}</td>
-                </tr>
-                <tr>
-                  <td class="py-2 ps-0">Malzeme</td>
-                  
-                  <td class="text-body-emphasis fw-semibold text-end py-2 pe-0">{{ product.material }}</td>
-                </tr>
-                <tr>
-                  <td class="py-2 ps-0">Dayanım Sınıfı</td>
-                  
-                  <td class="text-body-emphasis fw-semibold text-end py-2 pe-0">{{ product.strength_class }}</td>
-                </tr>
-                <tr>
-                  <td class="py-2 ps-0">Çap</td>
-                  
-                  <td class="text-body-emphasis fw-semibold text-end py-2 pe-0">{{ product.diameter }}</td>
-                </tr>
-                <tr>
-                  <td class="py-2 ps-0">Uzunluk</td>
-                  
-                  <td class="text-body-emphasis fw-semibold text-end py-2 pe-0">{{ product.length }}</td>
-                </tr>
-                <tr id="product_detail">
-                  <td class="py-2 ps-0">Marka</td>
-                  
-                  <td class="text-body-emphasis fw-semibold text-end py-2 pe-0">{{ product.brand }}</td>
-                </tr>
-                
-              </tbody>
-            </table>
+            
 
             
           </div>
@@ -787,7 +807,7 @@
               </div>
               <div class="w-100 min-w-0 ps-2">
                 <h4 class="fs-sm fw-medium text-truncate mb-1">{{ product.name }}</h4>
-                <div class="h6 mb-0">
+                <div class="h6 mb-0">₺
                   
                   {% if product.price == 0 %}
                     Teklif Alın
@@ -798,14 +818,22 @@
             </div>
             <div class="d-flex gap-2 ms-auto">
               
-              <button type="button" class="btn btn-primary animate-slide-end d-none d-sm-inline-flex"onclick="addToCart({{product.id}})">
-                <i class="ci-shopping-cart fs-base animate-target ms-n1 me-2"></i>
-                Sepete ekle
-              </button>
-              
-              <button type="button" class="btn btn-icon btn-primary animate-slide-end d-sm-none" aria-label="Add to Cart"onclick="addToCart({{product.id}})">
-                <i class="ci-shopping-cart fs-lg animate-target"></i>
-              </button>
+              <!-- WhatsApp iletişim butonu - Geniş ekranlar için -->
+              <a 
+              href="https://wa.me/905332646598?text=www.kiliccivata.com%20adresinizden%20geliyorum%0A%0AÜrün%20Adı:%20{{ product.name }}%0A%0AHakkında%20detaylı%20bilgi%20almak%20istiyorum.%0A%0Aİyi%20çalışmalar." 
+              class="btn btn-success animate-slide-end d-none d-sm-inline-flex" 
+              target="_blank">
+              <i class="ci-whatsapp fs-base animate-target ms-n1 me-2"></i>
+              WhatsApp
+              </a>
+
+              <!-- WhatsApp iletişim butonu - Küçük ekranlar için -->
+              <a 
+                href="https://wa.me/905332646598?text=www.kiliccivata.com%20adresinizden%20geliyorum%0A%0AÜrün%20Adı:%20{{ product.name }}%0A%0AHakkında%20detaylı%20bilgi%20almak%20istiyorum.%0A%0Aİyi%20çalışmalar." 
+                class="btn btn-icon btn-success animate-slide-end d-sm-none" 
+                target="_blank">
+                <i class="ci-whatsapp fs-lg animate-target"></i>
+              </a>
             </div>
           </div>
         </div>
@@ -820,10 +848,23 @@
     <section class="container pb-5 mb-2 mb-md-3 mb-lg-4 mb-xl-5">
       <div class="row">
         <div class="col-md-7">
-
+          <h3>{{product.name}}</h3>
+          {{ product.description_first|safe }}
           <!-- Product details -->
-          <h2 class="h3 pb-2 pb-md-3">{{ product.name }}</h2>
-          {{ product.description|safe }}
+          <div class="accordion" id="faq">
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqHeading-1">
+                <button type="button" class="accordion-button hover-effect-underline collapsed" data-bs-toggle="collapse" data-bs-target="#faqCollapse-1" aria-expanded="false" aria-controls="faqCollapse-1">
+                  <span class="me-2">Devamını okumak için tıkla...</span>
+                </button>
+              </h3>
+              <div class="accordion-collapse collapse" id="faqCollapse-1" aria-labelledby="faqHeading-1" data-bs-parent="#faq">
+                <div>{{ product.description|safe }}</div>
+              </div>
+            </div>
+          </div>
+
+          
            
           <div class="nav">
             <a class="nav-link text-primary animate-underline px-0" href="{{ product.trendyol_link }}" target="_blank">
@@ -847,12 +888,12 @@
                 </div>
                 <div class="w-100 min-w-0 ps-2 ps-sm-3">
                   <div class="d-flex align-items-center gap-2 mb-2">
-                    {{ product.quantity }} adet
+                    <p class="fs-sm">{{ product.category.name }} </p>
                   </div>
                   <h4 class="fs-sm fw-medium mb-2">{{ product.name }}</h4>
                   <div class="h5 mb-0">
                     {% if product.price == 0 %}
-                      Teklif Alın
+                     Teklif Alın
                     {% else %}
                       ₺{{ product.price }}
                     {% endif %}
@@ -860,10 +901,14 @@
                 </div>
               </div>
               <div class="d-flex gap-2 gap-lg-3">
-                <button type="button" class="btn btn-primary w-100 animate-slide-end"onclick="addToCart({{product.id}})">
-                  <i class="ci-shopping-cart fs-base animate-target ms-n1 me-2"></i>
-                  Sepete ekle
-                </button>
+                <a 
+                  href="https://wa.me/905332646598?text=www.kiliccivata.com%20adresinizden%20geliyorum%0A%0AÜrün%20Adı:%20{{ product.name }}%0A%0AHakkında%20detaylı%20bilgi%20almak%20istiyorum.%0A%0Aİyi%20çalışmalar." 
+                  class="btn btn-success w-100 animate-slide-end" 
+                  target="_blank"
+                  aria-label="WhatsApp ile İletişime Geç">
+                  <i class="ci-whatsapp fs-base animate-target ms-n1 me-2"></i>
+                  WhatsApp
+                </a>
                 
               </div>
             </div>
@@ -875,7 +920,7 @@
 
     <!-- Viewed products (Carousel) -->
     <section class="container pb-4 pb-md-5 mb-2 mb-sm-0 mb-lg-2 mb-xl-4">
-      <h2 class="h3 border-bottom pb-4 mb-0">{{ product.category.name }}</h2>
+      <h2 class="h3 border-bottom pb-4 mb-0">Tüm Ürünler</h2>
 
       <!-- Product carousel -->
       <div class="position-relative mx-md-1">
@@ -907,31 +952,11 @@
           }
         }">
           <div class="swiper-wrapper">
-            {% for urun in category_products %}
+            {% for urun in all_products %}
               <!-- Item -->
               <div class="swiper-slide">
                 <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
                   <div class="position-relative">
-                    <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                      <div class="d-flex flex-column gap-2">
-                        <button type="button" class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex" aria-label="Compare">
-                          <i class="ci-refresh-cw fs-base animate-target"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                      <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More actions">
-                        <i class="ci-more-vertical fs-lg"></i>
-                      </button>
-                      <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width: auto">
-                        <li>
-                          <a class="dropdown-item" href="#!">
-                            <i class="ci-refresh-cw fs-sm ms-n1 me-2"></i>
-                            yenile
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
                     <a class="d-block rounded-top overflow-hidden p-3 p-sm-4" href="{% url 'product_detail' slug=urun.slug %}">
                       <span class="badge bg-success position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3">Kılıç Civata</span>
                       <div class="ratio" style="--cz-aspect-ratio: calc(240 / 258 * 100%)">
@@ -941,8 +966,7 @@
                   </div>
                   <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
                     <div class="d-flex align-items-center gap-2 mb-2">
-                          
-                      <span class="text-body-tertiary fs-xs">{{ urun.quantity }} Adet</span>
+                      <span class="text-body-tertiary fs-xs">{{ urun.title_type }} </span>
                     </div>
                     
                     <h3 class="pb-1 mb-2">
@@ -952,15 +976,14 @@
                     </h3>
                     <div class="d-flex align-items-center justify-content-between">
                       <div class="h5 lh-1 mb-0">
-                        {% if product.price == 0 %}
-                          Teklif Alın
+                        {% if urun.price == 0 %}
+                        ₺Teklif Alın
                         {% else %}
-                          ₺{{ product.price }}
+                          ₺{{ urun.price }}
                         {% endif %}
-                        
                       </div>
                       
-                      <button type="button" class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2" aria-label="Add to Cart"onclick="addToCart({{product.id}})">
+                      <button type="button" class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2"onclick="window.location.href='{% url 'product_detail' slug=urun.slug %}'">
                         <i class="ci-shopping-cart fs-base animate-target"></i>
                       </button>
                     </div>
@@ -968,9 +991,8 @@
                 </div>
               </div>
             {% empty %}
-              <p>Bu kategoride başka ürün bulunmamaktadır.</p>
+              <p>Henüz ürün bulunmamaktadır.</p>
             {% endfor %}
-
           </div>
         </div>
 
@@ -1011,14 +1033,14 @@
         </div>
         <div class="accordion-item col border-0">
           <h6 class="accordion-header" id="companyHeading">
-            <span class="text-dark-emphasis d-none d-sm-block">ÜRÜNLER</span>
-            <button type="button" class="accordion-button collapsed py-3 d-sm-none" data-bs-toggle="collapse" data-bs-target="#companyLinks" aria-expanded="false" aria-controls="companyLinks">Ürünler</button>
+            <span class="text-dark-emphasis d-none d-sm-block ci-tag">ÜRÜNLER</span>
+            <button type="button" class="accordion-button collapsed py-3 d-sm-none ci-tag" data-bs-toggle="collapse" data-bs-target="#companyLinks" aria-expanded="false" aria-controls="companyLinks"><span>ÜRÜNLERİMİZ</span><span class="ci-chevron-down"></span></button>
           </h6>
           <div class="accordion-collapse collapse d-sm-block" id="companyLinks" aria-labelledby="companyHeading" data-bs-parent="#footerLinks">
             <ul class="nav flex-column gap-2 pt-sm-3 pb-3 mt-n1 mb-1">
               {% for category in categories %}
                 <li class="d-flex w-100 pt-1">
-                  <a href="{% url 'product_list' %}?title_type={{ category.name|urlencode }}" class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0">
+                  <a href="{% url 'product_list_by_category' category.category_slug %}" class="nav-link animate-underline animate-target d-inline fw-normal text-truncate p-0">
                     {{ category.name }}
                   </a>
                 </li>
@@ -1065,7 +1087,7 @@
       <!-- Alt Bilgi -->
       <div class="d-md-flex align-items-center border-top py-4 text-center text-md-start">
         <p class="text-body fs-xs mb-0">
-          &copy; 2024 <strong>Kılıç Civata</strong>. Tüm hakları saklıdır.
+          &copy; 2025 <strong>Kılıç Civata</strong>. Tüm hakları saklıdır.
           Bu site <a href="https://www.instagram.com/musa_guny/" target="_blank" class="text-light">Musa Güney</a>
           ve <a href="https://www.instagram.com/berkant_yurtsever/" target="_blank" class="text-light">Berkant Yurtsever</a>
           tarafından geliştirilmiştir.
@@ -1091,7 +1113,7 @@
 
 
   <!-- Vendor scripts -->
- 
+
   <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
   <script src="{% static 'vendor/drift-zoom/Drift.min.js' %}"></script>
   <script src="{% static 'vendor/simplebar/simplebar.min.js' %}"></script>
@@ -1099,6 +1121,6 @@
 
   <!-- Bootstrap + Theme scripts -->
   <script src="{% static 'js/theme.min.js' %}"></script>
-  <script src="{% static 'js/sepet.js' %}"></script>
+  
 
 </body></html>

@@ -37,42 +37,36 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
-    PRODUCT_TYPES = [
-        ('Vida', 'Vida'),
-        ('Civata', 'Civata'),
-        ('Saplama', 'Saplama'),
-    ]
+  
     
     
     id = models.AutoField(primary_key=True)
     fakeid = models.PositiveIntegerField(unique=True, verbose_name="Fake ID")  # Fake ID alanı
     name = models.CharField(max_length=255)
-    isoname = models.CharField(max_length=255, default="ISO", verbose_name="İso Adı")
-    dinname = models.CharField(max_length=255, default="DIN", verbose_name="Din Adı")
+    isoname = models.CharField(max_length=255, default="ISO standartlarına uygun üretilmiştir.", verbose_name="İso Adı")
+    dinname = models.CharField(max_length=255, default="DIN standartlarına uygun üretilmiştir.", verbose_name="Din Adı")
     slug = models.SlugField(unique=True, verbose_name="SEO URL")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
-    product_type = models.CharField(max_length=255, choices=PRODUCT_TYPES, verbose_name="Ürün Çeşidi")
-    title_type = models.CharField(max_length=255, verbose_name="Başlık Tipi")
+    title_type = models.CharField(
+        default="boş bırak",
+        max_length=255,
+        verbose_name="title_type",
+        blank=True, 
+        null=True
+    )
     
-    diameter = models.CharField(max_length=10, choices=[
-        ('m6', 'M6'), ('m8', 'M8'), ('m10', 'M10'), ('m12', 'M12')
-    ], verbose_name="Çap")
-    length = models.CharField(max_length=10, choices=[
-        ('30mm', '30mm'), ('40mm', '40mm'), ('50mm', '50mm'), ('60mm', '60mm'),
-        ('70mm', '70mm'), ('80mm', '80mm'), ('90mm', '90mm'), ('100mm', '100mm'),
-        ('110mm', '110mm'), ('120mm', '120mm'), ('130mm', '130mm'),
-        ('140mm', '140mm'), ('150mm', '150mm')
-    ], verbose_name="Uzunluk")
+    
     coating = models.CharField(max_length=20, choices=[
-        ('Yok', 'Yok'), ('Var (Zn Cr+3)', 'Var (Zn Cr+3)')
+        ('Yok', 'Yok'), ('Var (Zn Cr⁺³)', 'Var (Zn Cr⁺³)')
     ], verbose_name="Kaplama")
-    material = models.CharField(max_length=255, verbose_name="Malzeme")
-    strength_class = models.CharField(max_length=255, verbose_name="Dayanım Sınıfı")
+    material = models.CharField(max_length=255, default="Soğuk şekillendirme çeliği", verbose_name="Malzeme")
+    strength_class = models.CharField(max_length=255, default="4.6 dan 6.8'e", verbose_name="Dayanım Sınıfı")
     brand = models.CharField(max_length=255, default="Kılıç Civata", verbose_name="Marka")
-    quantity = models.PositiveIntegerField(verbose_name="Adet Miktarı")
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Fiyat")
+    quantity = models.PositiveIntegerField(default="500", verbose_name="Adet Miktarı")
+    price = models.DecimalField(max_digits=10, decimal_places=2, default="0", verbose_name="Fiyat")
+    description_first = RichTextUploadingField(default="ilk açıklama metniiii", verbose_name="ilk açıklama metni")
     description = RichTextUploadingField(verbose_name="Açıklama Metni")
-    trendyol_link = models.URLField(blank=True, verbose_name="Trendyol Linki")
+    trendyol_link = models.URLField(blank=True, default="https://www.trendyol.com/sr?mid=1004242&os=1", verbose_name="Trendyol Linki")
 
     # Resimler
     main_image = models.ImageField(upload_to=product_main_image_upload_path, verbose_name="Ana Resim (516x480)")
@@ -89,6 +83,32 @@ class Product(models.Model):
     seo_meta_keywords = models.CharField(max_length=255, verbose_name="Meta Anahtar Kelimeler", blank=True, null=True)
     seo_meta_author = models.CharField(max_length=255, verbose_name="Meta Yazar", default="Kılıç Civata")
     updated_at = models.DateTimeField(auto_now=True)
+    diameters = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Çaplar",
+        help_text="Çap değerlerini virgülle ayırarak girin. Örnek: m6, m8, m10"
+    )
+    lengths = models.TextField(
+        blank=True, null=True,
+        verbose_name="Uzunluklar",
+        help_text="Uzunluk değerlerini virgülle ayırarak girin. Örnek: 40mm, 50mm, 60mm"
+    )
+    measures = models.TextField(
+        blank=True, null=True,
+        verbose_name="Ölçüler",
+        help_text="Ölçü değerlerini virgülle ayırarak girin. Örnek: 6x70, 8x90"
+    )
+
+    def get_diameters(self):
+        return self.diameters.split(',')
+
+    def get_lengths(self):
+        return self.lengths.split(',')
+
+    def get_measures(self):
+        return self.measures.split(',')
+    
     
     def get_absolute_url(self):
         # Product detay sayfasının URL'sini döndürür
@@ -96,8 +116,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-    
-
 
 @receiver(post_delete, sender=Product)
 def delete_product_files(sender, instance, **kwargs):
